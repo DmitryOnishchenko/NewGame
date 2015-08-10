@@ -1,0 +1,29 @@
+{
+	"name": "Human Soldier",
+	"type": "Unit",
+	"race": "Human",
+	"maxHp": 100,
+	"armor": 5,
+	"damage": 25,
+	"defaultSpeed": 48,
+	"spawnPrice": 40,
+	"pricePerHead": 10,
+
+	"attackSpeed": 2,
+	"attackRange": 40,
+	
+	"hitBoxWidth": 30,
+	"hitBoxHeight": 40,
+	"velocityX": 1,
+	"velocityY": 0,
+	
+	"widthSprite": 102,
+	"heightSprite": 102,
+	"baseLine": 28,
+	"defaultSpriteIndex": 4,
+	"moveSprites": 8,
+	"fightSprites": 8,
+	"dieSprites": 8,
+	"animationSpeedMs": 100,
+	"spritesFile": "/res/units/humans/soldier/knight_main.png"
+}

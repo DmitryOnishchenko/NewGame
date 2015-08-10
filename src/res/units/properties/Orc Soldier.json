@@ -1,0 +1,29 @@
+{
+	"name": "Orc Soldier",
+	"type": "Unit",
+	"race": "Orc",
+	"maxHp": 150,
+	"armor": 0,
+	"damage": 20,
+	"defaultSpeed": 100,
+	"spawnPrice": 30,
+	"pricePerHead": 20,
+
+	"attackSpeed": 3,
+	"attackRange": 20,
+	
+	"hitBoxWidth": 30,
+	"hitBoxHeight": 40,
+	"velocityX": -1,
+	"velocityY": 0,
+	
+	"widthSprite": 109,
+	"heightSprite": 109,
+	"baseLine": 28,
+	"defaultSpriteIndex": 4,
+	"moveSprites": 8,
+	"fightSprites": 8,
+	"dieSprites": 8,
+	"animationSpeedMs": 75,
+	"spritesFile": "/res/units/orcs/soldier/orc_regular_main.png"
+}
