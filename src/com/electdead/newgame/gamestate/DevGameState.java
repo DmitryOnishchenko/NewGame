@@ -10,8 +10,10 @@ import java.util.Random;
 import com.electdead.newgame.assets.Assets;
 import com.electdead.newgame.gameobjects.GameObject;
 import com.electdead.newgame.gameobjects.TypeObject;
-import com.electdead.newgame.gameobjects.components.GraphicsComponent;
-import com.electdead.newgame.gameobjects.components.PhysicsComponent;
+import com.electdead.newgame.gameobjects.components.AIComponent;
+import com.electdead.newgame.gameobjects.components.GraphicsComponentOld;
+import com.electdead.newgame.gameobjects.components.PhysicsComponentOld;
+import com.electdead.newgame.gameobjects.components.SoldierAIComponent;
 import com.electdead.newgame.main.MainApp;
 import com.google.common.collect.TreeMultiset;
 
@@ -40,10 +42,11 @@ public class DevGameState extends AbstractGameState {
 		TypeObject type = (TypeObject) props.get("type");
 		GameObject obj = new GameObject(name, type, x, y);
 		
-		PhysicsComponent pc = new PhysicsComponent(obj);
-		GraphicsComponent gc = new GraphicsComponent(obj);
+		AIComponent aic = new SoldierAIComponent();
+//		PhysicsComponentOld pc = new PhysicsComponentOld(obj);
+//		GraphicsComponent gc = new GraphicsComponent(obj);
 		
-		obj.init(pc, gc);
+		obj.setAIComponent(aic);
 		
 		return obj;
 	}
@@ -60,7 +63,7 @@ public class DevGameState extends AbstractGameState {
 	    	if (!obj.delete) obj.update();
 	    
 	    if (++testSpawnTimer > 25) {
-	    	SWARM();
+//	    	SWARM();
 	    	
 	    	testSpawnTimer = 0;
 	    }

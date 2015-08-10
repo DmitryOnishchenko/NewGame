@@ -31,8 +31,8 @@ public class Assets {
 			
 			String name 			= (String) json.get("name");
 			TypeObject type 		= TypeObject.valueOf((String) json.get("type"));
-			Race race 				= Race.valueOf((String) json.get("race"));
 			
+			Race race 				= Race.valueOf((String) json.get("race"));
 			int maxHp		 		= ((Long) json.get("maxHp")).intValue();
 			int armor 				= ((Long) json.get("armor")).intValue();
 			int damage 				= ((Long) json.get("damage")).intValue();

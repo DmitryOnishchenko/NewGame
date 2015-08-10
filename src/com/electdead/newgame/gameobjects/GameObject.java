@@ -2,7 +2,7 @@ package com.electdead.newgame.gameobjects;
 
 import java.awt.Graphics2D;
 
-import com.electdead.newgame.gameobjects.components.StupidSoldierAIComponent;
+import com.electdead.newgame.gameobjects.components.AIComponent;
 import com.electdead.newgame.gameobjects.components.GraphicsComponent;
 import com.electdead.newgame.gameobjects.components.InputComponent;
 import com.electdead.newgame.gameobjects.components.PhysicsComponent;
@@ -20,7 +20,7 @@ public class GameObject implements Comparable<GameObject> {
 	public boolean delete = false;
 	
 	private InputComponent inputComponent;
-	private StupidSoldierAIComponent aiComponent;
+	private AIComponent aiComponent;
 	private PhysicsComponent physicsComponent;
 	private GraphicsComponent graphicsComponent;
 	
@@ -32,17 +32,23 @@ public class GameObject implements Comparable<GameObject> {
 		this.type = type;
 	}
 	
-	public void init(StupidSoldierAIComponent aic, PhysicsComponent pc, GraphicsComponent gc) {
-		aiComponent = aic;
-		physicsComponent = pc;
-		graphicsComponent = gc;
+	public void setAIComponent(AIComponent aic) {
+		this.aiComponent = aic;
+	}
+	
+	public void setPhysicsComponent(PhysicsComponent pc) {
+		this.physicsComponent = pc;
+	}
+	
+	public void setGraphicsComponent(GraphicsComponent pc) {
+		this.graphicsComponent = pc;
 	}
 	
 	public InputComponent getInput() {
 		return inputComponent;
 	} 
 	
-	public StupidSoldierAIComponent getAI() {
+	public AIComponent getAI() {
 		return aiComponent;
 	}
 	
@@ -64,9 +70,9 @@ public class GameObject implements Comparable<GameObject> {
 	
 	public void update() {
 //		inputComponent.update();
-		aiComponent.update();
-		physicsComponent.update();
-		graphicsComponent.update();
+		if (aiComponent != null) aiComponent.update(this);
+		if (physicsComponent != null) physicsComponent.update(this);
+		if (graphicsComponent != null) graphicsComponent.update(this);
 	}
 	
 	public void render(Graphics2D g2, double deltaTime) {
