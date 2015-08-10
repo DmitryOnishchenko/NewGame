@@ -13,8 +13,10 @@ import com.electdead.newgame.gameobjects.GameObject;
 import com.electdead.newgame.gameobjects.TypeObject;
 import com.electdead.newgame.gameobjects.components.AIComponent;
 import com.electdead.newgame.gameobjects.components.GraphicsComponent;
+import com.electdead.newgame.gameobjects.components.PhysicsComponent;
 import com.electdead.newgame.gameobjects.components.SoldierAIComponent;
 import com.electdead.newgame.gameobjects.components.SoldierGraphicsComponent;
+import com.electdead.newgame.gameobjects.components.SoldierPhysicsComponent;
 import com.electdead.newgame.main.MainApp;
 import com.google.common.collect.TreeMultiset;
 
@@ -52,10 +54,11 @@ public class DevGameState extends AbstractGameState {
 		
 		AIComponent aic = new SoldierAIComponent();
 		GraphicsComponent gc = new SoldierGraphicsComponent(obj);
-//		PhysicsComponentOld pc = new PhysicsComponentOld(obj);
+		PhysicsComponent pc = new SoldierPhysicsComponent(obj);
 //		GraphicsComponent gc = new GraphicsComponent(obj);
 		
 		obj.setAIComponent(aic);
+		obj.setPhysicsComponent(pc);
 		obj.setGraphicsComponent(gc);
 		
 		return obj;
