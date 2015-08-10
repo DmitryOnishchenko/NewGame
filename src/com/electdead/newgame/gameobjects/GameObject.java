@@ -40,8 +40,8 @@ public class GameObject implements Comparable<GameObject> {
 		this.physicsComponent = pc;
 	}
 	
-	public void setGraphicsComponent(GraphicsComponent pc) {
-		this.graphicsComponent = pc;
+	public void setGraphicsComponent(GraphicsComponent gc) {
+		this.graphicsComponent = gc;
 	}
 	
 	public InputComponent getInput() {
@@ -76,7 +76,7 @@ public class GameObject implements Comparable<GameObject> {
 	}
 	
 	public void render(Graphics2D g2, double deltaTime) {
-		graphicsComponent.render(g2, deltaTime);
+		if (graphicsComponent != null) graphicsComponent.render(g2, deltaTime);
 	}
 	
 	public String toString() {

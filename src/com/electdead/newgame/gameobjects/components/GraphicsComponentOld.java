@@ -23,16 +23,16 @@ public class GraphicsComponentOld {
 		HashMap<String, Object> props = Assets.getProperties(obj.name);
 		graphModel = (GraphicsModel) props.get("graphModel");
 		
-		currentSprite = graphModel.getDefaultSpriteIndex();
+//		currentSprite = graphModel.getDefaultSpriteIndex();
 	}
 
 	public void update() {
-		if (++animTimer > graphModel.getAnimationSpeedMs()) {
+		if (++animTimer > graphModel.getAnimationSpeed()) {
 			currentSprite++;
 			animTimer = 0;
 		}
 		if (currentSprite == 12) {
-			currentSprite = graphModel.getDefaultSpriteIndex();
+//			currentSprite = graphModel.getDefaultSpriteIndex();
 		}
 	}
 	
@@ -49,7 +49,7 @@ public class GraphicsComponentOld {
 //		g2.draw(obj.getHitBox());
 //		g2.setPaint(Color.RED);
 //		g2.draw(obj.getAttackBox());
-	    g2.drawImage(graphModel.getSprite(currentSprite), spriteX(), spriteY(), null);
+//	    g2.drawImage(graphModel.getSprite(currentSprite), spriteX(), spriteY(), null);
 //	    g2.drawRect(spriteX(), spriteY(), wSprite, hSprite);
 //	    g2.drawLine(obj.x(), obj.y(), obj.x(), obj.y());
     }

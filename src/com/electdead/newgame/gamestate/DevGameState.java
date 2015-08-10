@@ -1,6 +1,7 @@
 package com.electdead.newgame.gamestate;
 
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -11,9 +12,9 @@ import com.electdead.newgame.assets.Assets;
 import com.electdead.newgame.gameobjects.GameObject;
 import com.electdead.newgame.gameobjects.TypeObject;
 import com.electdead.newgame.gameobjects.components.AIComponent;
-import com.electdead.newgame.gameobjects.components.GraphicsComponentOld;
-import com.electdead.newgame.gameobjects.components.PhysicsComponentOld;
+import com.electdead.newgame.gameobjects.components.GraphicsComponent;
 import com.electdead.newgame.gameobjects.components.SoldierAIComponent;
+import com.electdead.newgame.gameobjects.components.SoldierGraphicsComponent;
 import com.electdead.newgame.main.MainApp;
 import com.google.common.collect.TreeMultiset;
 
@@ -22,7 +23,9 @@ public class DevGameState extends AbstractGameState {
 	public static HashSet<GameObject> gameObjects = new HashSet<>();
 	public static TreeMultiset<GameObject> renderObjects = TreeMultiset.create();
 	
-	private BufferedImage floor = (BufferedImage) Assets.getProperties("Battle background").get("floor");
+	private BufferedImage floorSprite = (BufferedImage) Assets.getProperties("Battle background").get("floor");
+	private BufferedImage map = new BufferedImage(MainApp.WIDTH, MainApp.HEIGHT, BufferedImage.TYPE_INT_ARGB);
+	Graphics2D floor = (Graphics2D) map.getGraphics();
 	
 	private int testSpawnTimer;
 	
@@ -32,8 +35,13 @@ public class DevGameState extends AbstractGameState {
 
 	@Override
     public void init() {
+		floor.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		for (int i = 0; i < 720 / 40; i++) {
+			floor.drawImage(floorSprite, 0, i * 40, null);
+		}
+		
 	    gameObjects.add(createDemoUnit("Human Soldier", 100, 520));
-	    gameObjects.add(createDemoUnit("Orc Soldier", 1280, 520));
+	    gameObjects.add(createDemoUnit("Orc Soldier", 1100, 520));
     }
 	
 	public GameObject createDemoUnit(String name, double x, double y) {
@@ -43,10 +51,12 @@ public class DevGameState extends AbstractGameState {
 		GameObject obj = new GameObject(name, type, x, y);
 		
 		AIComponent aic = new SoldierAIComponent();
+		GraphicsComponent gc = new SoldierGraphicsComponent(obj);
 //		PhysicsComponentOld pc = new PhysicsComponentOld(obj);
 //		GraphicsComponent gc = new GraphicsComponent(obj);
 		
 		obj.setAIComponent(aic);
+		obj.setGraphicsComponent(gc);
 		
 		return obj;
 	}
@@ -64,7 +74,6 @@ public class DevGameState extends AbstractGameState {
 	    
 	    if (++testSpawnTimer > 25) {
 //	    	SWARM();
-	    	
 	    	testSpawnTimer = 0;
 	    }
 	    
@@ -77,9 +86,7 @@ public class DevGameState extends AbstractGameState {
 
 	@Override
     public void render(Graphics2D g2, double deltaTime) {
-		for (int i = 0; i < 720 / 40; i++) {
-			g2.drawImage(floor, 0, i * 40, null);
-		}
+		g2.drawImage(map, 0, 0, null);
 		
 		renderObjects.clear();
 		renderObjects.addAll(gameObjects);

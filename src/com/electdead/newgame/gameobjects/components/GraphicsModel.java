@@ -8,14 +8,9 @@ public class GraphicsModel {
 	private int widthSprite;
 	private int heightSprite;
 	private int baseLine;
-	private int defaultSpriteIndex;
-	private int moveSprites;
-	private int fightSprites;
-	private int dieSprites;
-	private BufferedImage[] sprites;
-	private BufferedImage[] moveAnimation;
-	private BufferedImage[] fightAnimation;
-	private BufferedImage[] dieAnimation;
+	private BufferedImage[] moveSprites;
+	private BufferedImage[] fightSprites;
+	private BufferedImage[] dieSprites;
 	private int animationSpeed;
 	
 	public GraphicsModel() {}
@@ -27,21 +22,13 @@ public class GraphicsModel {
 
 	public int getBaseLine() { return baseLine; }
 
-	public int getDefaultSpriteIndex() { return defaultSpriteIndex; }
+	public BufferedImage[] getMoveSprites() { return moveSprites; }
 
-	public int getMoveSprites() { return moveSprites; }
+	public BufferedImage[] getFightSprites() { return fightSprites; }
 
-	public int getFightSprites() { return fightSprites; }
+	public BufferedImage[] getDieSprites() { return dieSprites; }
 
-	public int getDieSprites() { return dieSprites; }
-
-	public BufferedImage[] getSprites() { return sprites; }
-	
-	public BufferedImage getSprite(int currentSprite) {
-		return sprites[currentSprite];
-	}
-
-	public int getAnimationSpeedMs() { return animationSpeed; }
+	public int getAnimationSpeed() { return animationSpeed; }
 	
 	/* Setters */
 	public void setWidthSprite(int widthSprite) { this.widthSprite = widthSprite; }
@@ -50,17 +37,11 @@ public class GraphicsModel {
 
 	public void setBaseLine(int baseLine) { this.baseLine = baseLine; }
 
-	public void setDefaultSpriteIndex(int defaultSpriteIndex) { this.defaultSpriteIndex = defaultSpriteIndex; }
+	public void setMoveSprites(BufferedImage[] moveSprites) { this.moveSprites = moveSprites; }
 
-	public void setMoveSprites(int moveSprites) { this.moveSprites = moveSprites; }
+	public void setFightSprites(BufferedImage[] fightSprites) { this.fightSprites = fightSprites; }
 
-	public void setFightSprites(int fightSprites) { this.fightSprites = fightSprites; }
-
-	public void setDieSprites(int dieSprites) { this.dieSprites = dieSprites; }
-
-	public void setSprites(BufferedImage[] sprites) { 
-		this.sprites = sprites;
-	}
-
-	public void setAnimationSpeedMs(int animationSpeedMs) { this.animationSpeed = animationSpeedMs / EngineV1.MS_PER_UPDATE; }
+	public void setDieSprites(BufferedImage[] dieSprites) { this.dieSprites = dieSprites; }
+	
+	public void setAnimationSpeed(int animationSpeedMs) { this.animationSpeed = animationSpeedMs / EngineV1.MS_PER_UPDATE; }
 }

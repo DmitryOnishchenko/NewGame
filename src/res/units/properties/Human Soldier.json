@@ -20,10 +20,9 @@
 	"widthSprite": 102,
 	"heightSprite": 102,
 	"baseLine": 28,
-	"defaultSpriteIndex": 4,
-	"moveSprites": 8,
-	"fightSprites": 8,
-	"dieSprites": 8,
+	"moveSprites": [4, 12],
+	"fightSprites": [12, 20],
+	"dieSprites": [20, 28],
 	"animationSpeedMs": 100,
 	"spritesFile": "/res/units/humans/soldier/knight_main.png"
 }
