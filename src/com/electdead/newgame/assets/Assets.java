@@ -56,7 +56,7 @@ public class Assets {
 			int armor 				= getInt(json, "armor");
 			int damage 				= getInt(json, "damage");
 			double defaultSpeed		= getDouble(json, "defaultSpeed");
-			double attackSpeed 		= getDouble(json, "attackSpeed");
+			double attackSpeed 		= getDouble(json, "attackSpeedMs");
 			double attackRange 		= getDouble(json, "attackRange");
 			int spawnPrice 			= getInt(json, "spawnPrice");
 			int pricePerHead 		= getInt(json, "pricePerHead");

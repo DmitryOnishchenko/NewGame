@@ -9,8 +9,8 @@
 	"spawnPrice": 40,
 	"pricePerHead": 10,
 
-	"attackSpeed": 2,
-	"attackRange": 40,
+	"attackSpeedMs": 800,
+	"attackRange": 50,
 	
 	"hitBoxWidth": 30,
 	"hitBoxHeight": 40,
@@ -23,6 +23,6 @@
 	"moveSprites": [4, 12],
 	"fightSprites": [12, 20],
 	"dieSprites": [20, 28],
-	"animationSpeedMs": 100,
+	"animationSpeedMs": 90,
 	"spritesFile": "/res/units/humans/soldier/knight_main.png"
 }

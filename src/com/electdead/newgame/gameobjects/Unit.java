@@ -1,15 +1,18 @@
 package com.electdead.newgame.gameobjects;
 
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 import com.electdead.newgame.assets.Assets;
 import com.electdead.newgame.gameobjects.components.UnitPhysicsModel;
+import com.electdead.newgame.gamestate.DevGameState;
 import com.electdead.newgame.main.MainApp;
 
 public class Unit extends GameObject {
 	public UnitPhysicsModel physModel;
 	public UnitState state;
+	public UnitState nextState;
 	public int currHp;
 	public int damage;
 	public int armor;
@@ -35,6 +38,7 @@ public class Unit extends GameObject {
 				y - physModel.getHitBoxHeight(), physModel.getHitBoxWidth(), physModel.getHitBoxHeight());
 
 		state			= UnitState.MOVE;
+		nextState		= state;
 		currHp			= physModel.getMaxHp();
 		damage			= physModel.getDamage();
 		armor 			= physModel.getArmor();
@@ -64,15 +68,23 @@ public class Unit extends GameObject {
 		currHp -= total;
 		if (currHp <= 0) {
 			delete = true;
+			DevGameState.floorG2.drawImage(randomBlood(), x(), (int) (y - hitBox.height / 2), null);
+//			DevGameState.floorG2.drawImage(randomBlood(), x(), (int) (y - hitBox.height / 2), null);
+//			DevGameState.floorG2.drawImage(randomBlood(), x(), (int) (y - hitBox.height / 2), null);
 		}
 	}
 	
 	public boolean checkDelete() {
 		if ((x + hitBox.width / 2 < -300) ||
 			(x - hitBox.width / 2) > MainApp.WIDTH + 300) {
-			delete = true;			
+			delete = true;
 		}
 		return delete;
+	}
+	
+	public BufferedImage randomBlood() {
+		int index = (int) (Math.random() * 7);
+		return DevGameState.bloodSprites.get(index);
 	}
 	
 	@Override

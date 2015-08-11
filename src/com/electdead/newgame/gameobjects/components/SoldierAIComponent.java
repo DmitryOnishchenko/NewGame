@@ -25,24 +25,22 @@ public class SoldierAIComponent implements AIComponent {
 					unit.attackBox.intersects(enemy.hitBox)) {
 					unit.target = enemy;
 					unit.state = UnitState.FIGHT;
-//					unit.currentSpeed = 0;
+//					unit.nextState = UnitState.FIGHT;
 				}
 			}
 		}
 	}
 	
 	public void attack() {
-		if (unit.state == UnitState.FIGHT) {
-			if (unit.target.isAlive()) {
-				if (unit.attackTimer++ > unit.physModel.getUpdatesPerAttack()) {
-					unit.attackTimer = 0;
-					unit.target.takeDamage(unit.damage);
-					if (!unit.target.isAlive()) {
-						unit.target = null;
-//					unit.state = UnitState.MOVE;
-					}
-				}
-				
+		if (unit.target != null) {
+			if (unit.attackTimer++ > unit.physModel.getAttackSpeed()) {
+				unit.attackTimer = 0;
+				unit.target.takeDamage(unit.damage);
+			}
+			if (!unit.target.isAlive()) {
+				unit.target = null;
+				unit.state = UnitState.MOVE;
+//				unit.nextState = UnitState.MOVE;
 			}
 		}
 	}

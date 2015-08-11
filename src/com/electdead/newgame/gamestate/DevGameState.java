@@ -3,10 +3,14 @@ package com.electdead.newgame.gamestate;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Random;
+
+import javax.imageio.ImageIO;
 
 import com.electdead.newgame.assets.Assets;
 import com.electdead.newgame.gameobjects.GameObject;
@@ -28,10 +32,12 @@ public class DevGameState extends AbstractGameState {
 	public static TreeMultiset<GameObject> renderObjects = TreeMultiset.create();
 	
 	private BufferedImage floorSprite = (BufferedImage) Assets.getProperties("Battle background").get("floor");
-	private BufferedImage map = new BufferedImage(MainApp.WIDTH, MainApp.HEIGHT, BufferedImage.TYPE_INT_ARGB);
-	Graphics2D floor = (Graphics2D) map.getGraphics();
+	private static BufferedImage map = new BufferedImage(MainApp.WIDTH, MainApp.HEIGHT, BufferedImage.TYPE_INT_ARGB);
+	public static Graphics2D floorG2 = (Graphics2D) map.getGraphics();
 	
 	private int testSpawnTimer;
+	private int testSpawnTimer2;
+	public static ArrayList<BufferedImage> bloodSprites = new ArrayList<>();
 	
 	public DevGameState(GameStateManager gsm) {
 		super(gsm);
@@ -39,13 +45,20 @@ public class DevGameState extends AbstractGameState {
 
 	@Override
     public void init() {
-		floor.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		floorG2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		for (int i = 0; i < 720 / 40; i++) {
-			floor.drawImage(floorSprite, 0, i * 40, null);
+			floorG2.drawImage(floorSprite, 0, i * 40, null);
 		}
 		
-	    units.add(createDemoUnit("Human Soldier", 700, 520));
+		try {
+			for (int i = 0; i < 8; i++) {
+				BufferedImage img = ImageIO.read(MainApp.class.getResource("/res/blood/blood_" + i + ".png"));
+				bloodSprites.add(img);
+			}			
+		}	catch (IOException ex) { ex.printStackTrace(); }
+		
 	    units.add(createDemoUnit("Human Soldier", 0, 520));
+	    units.add(createDemoUnit("Human Soldier", 500, 520));
 	    units.add(createDemoUnit("Orc Soldier", 800, 520));
     }
 	
@@ -56,9 +69,8 @@ public class DevGameState extends AbstractGameState {
 		Unit obj = new Unit(name, type, x, y);
 		
 		AIComponent aic = new SoldierAIComponent(obj);
-		GraphicsComponent gc = new UnitGraphicsComponent(obj);
 		PhysicsComponent pc = new UnitPhysicsComponent(obj);
-//		GraphicsComponent gc = new GraphicsComponent(obj);
+		GraphicsComponent gc = new UnitGraphicsComponent(obj);
 		
 		obj.setAIComponent(aic);
 		obj.setPhysicsComponent(pc);
@@ -81,8 +93,8 @@ public class DevGameState extends AbstractGameState {
 	    for (Unit unit : units)
 	    	if (!unit.delete) unit.update();
 	    
-	    if (++testSpawnTimer > 25) {
-//	    	SWARM();
+	    if (++testSpawnTimer > 10) {
+	    	SWARM();
 	    	testSpawnTimer = 0;
 	    }
 	    
@@ -95,7 +107,8 @@ public class DevGameState extends AbstractGameState {
 	    for (Iterator<Unit> iterator = units.iterator(); iterator.hasNext();) {
 	        Unit unit = iterator.next();
 	        if (unit.delete) {
-	        	iterator.remove(); System.out.println(unit);	        	
+	        	iterator.remove();
+//	        	System.out.println(unit);
 	        }
         }
     }
@@ -113,11 +126,18 @@ public class DevGameState extends AbstractGameState {
     }
 	
 	public void SWARM() {
+		int width = 600;
 		Random r = new Random();
-    	GameObject humanSoldier = createDemoUnit("Human Soldier", -100, r.nextDouble() * 600 + 100);
-    	gameObjects.add(humanSoldier);
+    	Unit humanSoldier = createDemoUnit("Human Soldier", -100, r.nextDouble() * width + 100);
+    	units.add(humanSoldier);
     	
-    	GameObject orcSoldier = createDemoUnit("Orc Soldier", 1280, r.nextDouble() * 600 + 100);
-    	gameObjects.add(orcSoldier);
+    	Unit orcSoldier = createDemoUnit("Orc Soldier", 1280, r.nextDouble() * width + 100);
+    	units.add(orcSoldier);
+    	
+    	if (++testSpawnTimer2 >= 6) {
+    		testSpawnTimer2 = 0;
+    		Unit orcSoldier2 = createDemoUnit("Orc Soldier", 1280, r.nextDouble() * width + 100);
+    		units.add(orcSoldier2);    		
+    	}
 	}
 }

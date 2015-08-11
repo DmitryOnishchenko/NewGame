@@ -12,7 +12,7 @@ public class UnitPhysicsModel {
 	private int velocityY;
 	private int damage;
 	private double attackSpeed;
-	private int updatesPerAttack;
+//	private int updatesPerAttack;
 	private double attackRange;
 	private int spawnPrice;
 	private int pricePerHead;
@@ -38,7 +38,7 @@ public class UnitPhysicsModel {
 
 	public double getAttackSpeed() { return attackSpeed; }
 	
-	public int getUpdatesPerAttack() { return updatesPerAttack; }
+//	public int getUpdatesPerAttack() { return updatesPerAttack; }
 
 	public double getAttackRange() { return attackRange; }
 	
@@ -68,8 +68,8 @@ public class UnitPhysicsModel {
 	public void setDamage(int damage) { this.damage = damage; }
 
 	public void setAttackSpeed(double attackSpeed) { 
-		this.attackSpeed = attackSpeed;
-		this.updatesPerAttack = (int) (EngineV1.UPDATE_PER_SEC / attackSpeed);
+		this.attackSpeed = attackSpeed / EngineV1.MS_PER_UPDATE;
+//		this.updatesPerAttack = (int) (EngineV1.UPDATE_PER_SEC / attackSpeed);
 	}
 
 	public void setAttackRange(double attackRange) { this.attackRange = attackRange; }
