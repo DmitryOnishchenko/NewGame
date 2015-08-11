@@ -8,10 +8,10 @@ import com.electdead.newgame.gameobjects.components.InputComponent;
 import com.electdead.newgame.gameobjects.components.PhysicsComponent;
 import com.google.common.base.Joiner;
 
-public class GameObject implements Comparable<GameObject> {
+public abstract class GameObject implements Comparable<GameObject> {
 	public static int ID = 0;
 	
-	public int id;
+	public final int id;
 	public String name;
 	public double x;
 	public double y;
@@ -70,9 +70,9 @@ public class GameObject implements Comparable<GameObject> {
 	
 	public void update() {
 //		inputComponent.update();
-		if (aiComponent != null) aiComponent.update(this);
-		if (physicsComponent != null) physicsComponent.update(this);
-		if (graphicsComponent != null) graphicsComponent.update(this);
+		if (aiComponent != null) aiComponent.update();
+		if (physicsComponent != null) physicsComponent.update();
+		if (graphicsComponent != null) graphicsComponent.update();
 	}
 	
 	public void render(Graphics2D g2, double deltaTime) {

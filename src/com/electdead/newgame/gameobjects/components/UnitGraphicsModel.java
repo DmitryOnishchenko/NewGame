@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 import com.electdead.newgame.engine.EngineV1;
 
-public class GraphicsModel {
+public class UnitGraphicsModel {
 	private int widthSprite;
 	private int heightSprite;
 	private int baseLine;
@@ -13,7 +13,7 @@ public class GraphicsModel {
 	private BufferedImage[] dieSprites;
 	private int animationSpeed;
 	
-	public GraphicsModel() {}
+	public UnitGraphicsModel() {}
 	
 	/* Getters */
 	public int getWidthSprite() { return widthSprite; }

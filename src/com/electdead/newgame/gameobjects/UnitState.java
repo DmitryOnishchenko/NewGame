@@ -1,5 +1,5 @@
 package com.electdead.newgame.gameobjects;
 
-public enum GameObjectState {
+public enum UnitState {
 	STAND, MOVE, FIGHT
 }

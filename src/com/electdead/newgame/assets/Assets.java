@@ -13,8 +13,8 @@ import org.json.simple.parser.JSONParser;
 
 import com.electdead.newgame.gameobjects.Race;
 import com.electdead.newgame.gameobjects.TypeObject;
-import com.electdead.newgame.gameobjects.components.GraphicsModel;
-import com.electdead.newgame.gameobjects.components.PhysicsModel;
+import com.electdead.newgame.gameobjects.components.UnitGraphicsModel;
+import com.electdead.newgame.gameobjects.components.UnitPhysicsModel;
 import com.electdead.newgame.main.MainApp;
 
 public class Assets {
@@ -92,7 +92,7 @@ public class Assets {
 			BufferedImage[] dieSprites = Arrays.copyOfRange(
 					sprites, ((Long) dieArray.get(0)).intValue(), ((Long) dieArray.get(1)).intValue());
 			
-			PhysicsModel physModel = new PhysicsModel();
+			UnitPhysicsModel physModel = new UnitPhysicsModel();
 			physModel.setRace(race);
 			physModel.setMaxHp(maxHp);
 			physModel.setArmor(armor);
@@ -107,7 +107,7 @@ public class Assets {
 			physModel.setSpawnPrice(spawnPrice);
 			physModel.setPricePerHead(pricePerHead);
 			
-			GraphicsModel graphModel = new GraphicsModel();
+			UnitGraphicsModel graphModel = new UnitGraphicsModel();
 			graphModel.setWidthSprite(widthSprite);
 			graphModel.setHeightSprite(heightSprite);
 			graphModel.setBaseLine(baseLine);

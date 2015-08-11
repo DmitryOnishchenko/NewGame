@@ -9,7 +9,7 @@ import com.electdead.newgame.gameobjects.GameObject;
 
 public class GraphicsComponentOld {
 	private GameObject obj;
-	private GraphicsModel graphModel;
+	private UnitGraphicsModel graphModel;
 	private int currentSprite;
 	private BufferedImage[] currentAnimation;
 	private int animTimer;
@@ -21,7 +21,7 @@ public class GraphicsComponentOld {
 	
 	public void init() {
 		HashMap<String, Object> props = Assets.getProperties(obj.name);
-		graphModel = (GraphicsModel) props.get("graphModel");
+		graphModel = (UnitGraphicsModel) props.get("graphModel");
 		
 //		currentSprite = graphModel.getDefaultSpriteIndex();
 	}

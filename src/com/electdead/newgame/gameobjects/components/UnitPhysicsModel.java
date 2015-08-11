@@ -3,7 +3,7 @@ package com.electdead.newgame.gameobjects.components;
 import com.electdead.newgame.engine.EngineV1;
 import com.electdead.newgame.gameobjects.Race;
 
-public class PhysicsModel {
+public class UnitPhysicsModel {
 	private Race race;
 	private int maxHp;
 	private int armor;
@@ -19,7 +19,7 @@ public class PhysicsModel {
 	private double hitBoxWidth;
 	private double hitBoxHeight;
 	
-	public PhysicsModel() {}
+	public UnitPhysicsModel() {}
 	
 	/* Getters */
 	public Race getRace() { return race; }

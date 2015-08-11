@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 import com.electdead.newgame.assets.Assets;
 import com.electdead.newgame.gameobjects.GameObject;
-import com.electdead.newgame.gameobjects.GameObjectState;
+import com.electdead.newgame.gameobjects.UnitState;
 import com.electdead.newgame.gameobjects.Race;
 import com.electdead.newgame.gamestate.DevGameState;
 import com.electdead.newgame.main.MainApp;
@@ -18,7 +18,7 @@ public class PhysicsComponentOld {
 	private double currentSpeed;
 	private int velocityX;
 	private int velocityY;
-	private PhysicsModel physModel;
+	private UnitPhysicsModel physModel;
 	
 	private Rectangle2D.Double hitBox;
 	private GameObject target;
@@ -32,7 +32,7 @@ public class PhysicsComponentOld {
 	
 	private void init() {
 		HashMap<String, Object> props = Assets.getProperties(obj.name);
-		physModel = (PhysicsModel) props.get("physModel");
+		physModel = (UnitPhysicsModel) props.get("physModel");
 
 		hitBox = new Rectangle2D.Double(obj.x - physModel.getHitBoxWidth() / 2,
 				obj.y - physModel.getHitBoxHeight(), physModel.getHitBoxWidth(), physModel.getHitBoxHeight());
@@ -151,7 +151,7 @@ public class PhysicsComponentOld {
 		return physModel.getRace();
 	}
 	
-	public void setState(GameObjectState state) {
+	public void setState(UnitState state) {
 //		this.state = state;
 	}
 }
