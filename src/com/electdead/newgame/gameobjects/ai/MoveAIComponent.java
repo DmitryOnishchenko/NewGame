@@ -6,7 +6,7 @@ import com.electdead.newgame.gameobjects.components.AIComponent;
 public class MoveAIComponent extends AIComponent {
 
 	public MoveAIComponent(AIContainer aic, int priority) {
-		super(aic, priority);
+		super(aic, priority, false);
 	}
 
 	@Override

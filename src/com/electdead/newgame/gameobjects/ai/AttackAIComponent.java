@@ -5,8 +5,8 @@ import com.electdead.newgame.gameobjects.components.AIComponent;
 
 public class AttackAIComponent extends AIComponent {
 
-	public AttackAIComponent(int priority) {
-		super(priority);
+	public AttackAIComponent(AIContainer aic, int priority) {
+		super(aic, priority, true);
 	}
 	
 	@Override

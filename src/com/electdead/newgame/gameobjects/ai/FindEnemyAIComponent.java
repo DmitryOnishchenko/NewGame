@@ -6,8 +6,8 @@ import com.electdead.newgame.gamestate.DevGameState;
 
 public class FindEnemyAIComponent extends AIComponent {
 
-	public FindEnemyAIComponent(int priority) {
-		super(priority);
+	public FindEnemyAIComponent(AIContainer aic, int priority) {
+		super(aic, priority, false);
 	}
 	
 	@Override
