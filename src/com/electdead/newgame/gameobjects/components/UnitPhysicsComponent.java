@@ -16,7 +16,7 @@ public class UnitPhysicsComponent implements PhysicsComponent {
     }
 	
 	public void move() {
-		if (unit.state == UnitState.MOVE) {
+//		if (unit.state == UnitState.MOVE) {
 			double shiftX 		= unit.currentSpeed * unit.velocityX;		
 			unit.x 				+= shiftX;
 			unit.hitBox.x 		+= shiftX;
@@ -26,6 +26,6 @@ public class UnitPhysicsComponent implements PhysicsComponent {
 			unit.y 				+= shiftY;
 			unit.hitBox.y 		+= shiftY;
 			unit.attackBox.y 	+= shiftY;
-		}
+//		}
 	}
 }

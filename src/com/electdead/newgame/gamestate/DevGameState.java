@@ -16,10 +16,9 @@ import com.electdead.newgame.assets.Assets;
 import com.electdead.newgame.gameobjects.GameObject;
 import com.electdead.newgame.gameobjects.TypeObject;
 import com.electdead.newgame.gameobjects.Unit;
-import com.electdead.newgame.gameobjects.components.AIComponent;
+import com.electdead.newgame.gameobjects.ai.AIContainer;
 import com.electdead.newgame.gameobjects.components.GraphicsComponent;
 import com.electdead.newgame.gameobjects.components.PhysicsComponent;
-import com.electdead.newgame.gameobjects.components.SoldierAIComponent;
 import com.electdead.newgame.gameobjects.components.UnitGraphicsComponent;
 import com.electdead.newgame.gameobjects.components.UnitPhysicsComponent;
 import com.electdead.newgame.main.MainApp;
@@ -57,7 +56,7 @@ public class DevGameState extends AbstractGameState {
 			}			
 		}	catch (IOException ex) { ex.printStackTrace(); }
 		
-	    units.add(createDemoUnit("Human Soldier", 0, 520));
+//	    units.add(createDemoUnit("Human Soldier", 0, 520));
 	    units.add(createDemoUnit("Human Soldier", 500, 520));
 	    units.add(createDemoUnit("Orc Soldier", 800, 520));
     }
@@ -66,17 +65,19 @@ public class DevGameState extends AbstractGameState {
 		HashMap<String, Object> props = Assets.getProperties(name);
 		
 		TypeObject type = (TypeObject) props.get("type");
-		Unit obj = new Unit(name, type, x, y);
+		Unit unit = new Unit(name, type, x, y);
 		
-		AIComponent aic = new SoldierAIComponent(obj);
-		PhysicsComponent pc = new UnitPhysicsComponent(obj);
-		GraphicsComponent gc = new UnitGraphicsComponent(obj);
+		AIContainer aic = new AIContainer();
+		unit.actions.add(aic.aiComponents[0]);
 		
-		obj.setAIComponent(aic);
-		obj.setPhysicsComponent(pc);
-		obj.setGraphicsComponent(gc);
+		PhysicsComponent pc = new UnitPhysicsComponent(unit);
+		GraphicsComponent gc = new UnitGraphicsComponent(unit);
 		
-		return obj;
+		unit.setAIContainer(aic);
+		unit.setPhysicsComponent(pc);
+		unit.setGraphicsComponent(gc);
+		
+		return unit;
 	}
 
 	@Override
@@ -94,7 +95,7 @@ public class DevGameState extends AbstractGameState {
 	    	if (!unit.delete) unit.update();
 	    
 	    if (++testSpawnTimer > 10) {
-	    	SWARM();
+//	    	SWARM();
 	    	testSpawnTimer = 0;
 	    }
 	    

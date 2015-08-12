@@ -1,11 +1,11 @@
 package com.electdead.newgame.gameobjects.components;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import com.electdead.newgame.assets.Assets;
 import com.electdead.newgame.gameobjects.Unit;
-import com.electdead.newgame.gameobjects.UnitState;
 import com.electdead.newgame.graphics.Animation;
 
 public class UnitGraphicsComponent implements GraphicsComponent {
@@ -35,7 +35,7 @@ public class UnitGraphicsComponent implements GraphicsComponent {
 	    	if (currentSprite == animationOld.length) {
 	    		currentSprite = 0;
 	    		
-	    		if (unit.state == UnitState.FIGHT) {
+	    		if (unit.target != null) {
 	    			animationOld = model.getFightSprites();
 	    		} else {
 	    			animationOld = model.getMoveSprites();
@@ -46,9 +46,9 @@ public class UnitGraphicsComponent implements GraphicsComponent {
 	}
 	
 	public void updateNew() {
-		if (unit.state != unit.nextState) {
-			animation.get(currentSprite);
-		}
+//		if (unit.state != unit.nextState) {
+//			animation.get(currentSprite);
+//		}
 	}
 	
 	public UnitGraphicsModel getModel() {

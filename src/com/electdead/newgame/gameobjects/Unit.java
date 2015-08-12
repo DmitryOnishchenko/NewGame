@@ -3,16 +3,21 @@ package com.electdead.newgame.gameobjects;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
+import java.util.PriorityQueue;
 
 import com.electdead.newgame.assets.Assets;
+import com.electdead.newgame.gameobjects.components.AIComponent;
 import com.electdead.newgame.gameobjects.components.UnitPhysicsModel;
 import com.electdead.newgame.gamestate.DevGameState;
 import com.electdead.newgame.main.MainApp;
 
 public class Unit extends GameObject {
 	public UnitPhysicsModel physModel;
-	public UnitState state;
-	public UnitState nextState;
+	
+	public boolean readyToAction = true;
+	public PriorityQueue<AIComponent> actions;
+//	public UnitState state;
+//	public UnitState nextState;
 	public int currHp;
 	public int damage;
 	public int armor;
@@ -37,8 +42,9 @@ public class Unit extends GameObject {
 		hitBox = new Rectangle2D.Double(x - physModel.getHitBoxWidth() / 2,
 				y - physModel.getHitBoxHeight(), physModel.getHitBoxWidth(), physModel.getHitBoxHeight());
 
-		state			= UnitState.MOVE;
-		nextState		= state;
+		actions = new PriorityQueue<>(3);
+//		state			= UnitState.STAND;
+//		nextState		= state;
 		currHp			= physModel.getMaxHp();
 		damage			= physModel.getDamage();
 		armor 			= physModel.getArmor();
@@ -89,6 +95,7 @@ public class Unit extends GameObject {
 	
 	@Override
 	public void update() {
+		getAI().update(this);
 		super.update();
 	}
 }
