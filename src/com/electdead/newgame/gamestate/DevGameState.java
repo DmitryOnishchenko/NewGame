@@ -56,7 +56,7 @@ public class DevGameState extends AbstractGameState {
 			}			
 		}	catch (IOException ex) { ex.printStackTrace(); }
 		
-//	    units.add(createDemoUnit("Human Soldier", 0, 520));
+	    units.add(createDemoUnit("Human Soldier", 100, 520));
 	    units.add(createDemoUnit("Human Soldier", 500, 520));
 	    units.add(createDemoUnit("Orc Soldier", 800, 520));
     }
@@ -68,7 +68,7 @@ public class DevGameState extends AbstractGameState {
 		Unit unit = new Unit(name, type, x, y);
 		
 		AIContainer aic = new AIContainer();
-		unit.actions.add(aic.aiComponents[0]);
+//		unit.actions.add(aic.aiComponents[0]);
 		
 		PhysicsComponent pc = new UnitPhysicsComponent(unit);
 		GraphicsComponent gc = new UnitGraphicsComponent(unit);

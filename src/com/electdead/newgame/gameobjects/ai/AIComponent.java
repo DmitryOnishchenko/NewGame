@@ -1,17 +1,16 @@
-package com.electdead.newgame.gameobjects.components;
+package com.electdead.newgame.gameobjects.ai;
 
 import com.electdead.newgame.gameobjects.Unit;
-import com.electdead.newgame.gameobjects.ai.AIContainer;
 
 public abstract class AIComponent implements Comparable<AIComponent> {
 	public AIContainer aic;
 	public final int priority;
-	public boolean needToEndAnim;
+	public boolean fullAnimation;
 	
-	public AIComponent(AIContainer aic, int priority, boolean needToEndAnim) {
+	public AIComponent(AIContainer aic, int priority, boolean fullAnimation) {
 		this.aic = aic;
 		this.priority = priority;
-		this.needToEndAnim = needToEndAnim;
+		this.fullAnimation = fullAnimation;
 	}
 	
 	@Override
@@ -24,5 +23,6 @@ public abstract class AIComponent implements Comparable<AIComponent> {
 		return getClass().getSimpleName();
 	}
 	
+	public abstract void think(Unit unit);
 	public abstract void update(Unit unit);
 }

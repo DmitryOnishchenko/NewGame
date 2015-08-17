@@ -30,16 +30,26 @@ public class UnitGraphicsComponent implements GraphicsComponent {
     }
 	
 	public void updateOld() {
+		if (unit.target != null) {
+			animationOld = model.getFightSprites();
+			if (currentSprite >= animationOld.length)
+				currentSprite = 0;
+		} else {
+			animationOld = model.getMoveSprites();
+			if (currentSprite >= animationOld.length)
+				currentSprite = 0;
+		}
+		
 		if (++animationTimer >= model.getAnimationSpeed()) {
 	    	currentSprite++;
 	    	if (currentSprite == animationOld.length) {
 	    		currentSprite = 0;
 	    		
-	    		if (unit.target != null) {
-	    			animationOld = model.getFightSprites();
-	    		} else {
-	    			animationOld = model.getMoveSprites();
-	    		}
+//	    		if (unit.target != null) {
+//	    			animationOld = model.getFightSprites();
+//	    		} else {
+//	    			animationOld = model.getMoveSprites();
+//	    		}
 	    	}
 	    	animationTimer = 0;
 	    }

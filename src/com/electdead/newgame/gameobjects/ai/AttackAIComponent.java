@@ -1,7 +1,6 @@
 package com.electdead.newgame.gameobjects.ai;
 
 import com.electdead.newgame.gameobjects.Unit;
-import com.electdead.newgame.gameobjects.components.AIComponent;
 
 public class AttackAIComponent extends AIComponent {
 
@@ -10,15 +9,22 @@ public class AttackAIComponent extends AIComponent {
 	}
 	
 	@Override
-	public void update(Unit unit) {
+	public void think(Unit unit) {
 		if (unit.target != null) {
-			attackEnemy(unit);
+			if (unit.attackBox.intersects(unit.target.hitBox)) {
+				aic.setMaxPriorityComponent(this);
+				unit.velocityX = 0;
+			}
 		}
+	}
+	
+	@Override
+	public void update(Unit unit) {
+		attackEnemy(unit);
 	}
 
 	private void attackEnemy(Unit unit) {
 		if (unit.attackTimer++ > unit.physModel.getAttackSpeed()) {
-			unit.readyToAction = false;
 			unit.attackTimer = 0;
 			unit.target.takeDamage(unit.damage);
 //			System.out.println(
@@ -28,7 +34,7 @@ public class AttackAIComponent extends AIComponent {
 //					" with " + unit.damage);
 			if (!unit.target.isAlive()) {
 				unit.target = null;
-				unit.readyToAction = true;
+				aic.maxPriorityComponent = aic.aiComponents[2];
 			}
 		}
 	}
