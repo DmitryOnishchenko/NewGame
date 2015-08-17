@@ -33,7 +33,9 @@ public class Assets {
 		assets.put("Battle background", battleBackgroundProperties);
 		
 		loadAssetsForUnit("Human Soldier");
+		loadAssetsForUnit("Human Archer");
 		loadAssetsForUnit("Orc Soldier");
+		loadAssetsForUnit("Orc Archer");
 	}
 	
 	public static HashMap<String, Object> getProperties(String key) {

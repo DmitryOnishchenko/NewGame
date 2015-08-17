@@ -1,0 +1,28 @@
+{
+	"name": "Orc Archer",
+	"type": "Unit",
+	"race": "Orc",
+	"maxHp": 100,
+	"armor": 5,
+	"damage": 60,
+	"defaultSpeed": 40,
+	"spawnPrice": 80,
+	"pricePerHead": 30,
+
+	"attackSpeedMs": 3000,
+	"attackRange": 410,
+	
+	"hitBoxWidth": 30,
+	"hitBoxHeight": 40,
+	"velocityX": -1,
+	"velocityY": 0,
+	
+	"widthSprite": 100,
+	"heightSprite": 100,
+	"baseLine": 27,
+	"moveSprites": [22, 30],
+	"fightSprites": [0, 16],
+	"dieSprites": [16, 24],
+	"animationSpeedMs": 90,
+	"spritesFile": "/res/units/orcs/archer/archer_main.png"
+}
