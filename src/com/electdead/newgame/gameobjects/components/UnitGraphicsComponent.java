@@ -66,11 +66,11 @@ public class UnitGraphicsComponent implements GraphicsComponent {
 	}
 	
 	private int spriteX() {
-		return (int) (unit.x - model.getWidthSprite() / 2);
+		return (int) (unit.pos.x - model.getWidthSprite() / 2);
 	}
 	
 	private int spriteY() {
-		return (int) (unit.y - model.getHeightSprite() + model.getBaseLine());
+		return (int) (unit.pos.y - model.getHeightSprite() + model.getBaseLine());
 	}
 
 	@Override

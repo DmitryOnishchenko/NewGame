@@ -56,16 +56,16 @@ public class DevGameState extends AbstractGameState {
 			}			
 		}	catch (IOException ex) { ex.printStackTrace(); }
 		
-//	    units.add(createDemoUnit("Human Soldier", 100, 520));
+	    units.add(createDemoUnit("Human Soldier", 100, 520));
 //	    units.add(createDemoUnit("Human Soldier", 500, 520));
 	    units.add(createDemoUnit("Orc Soldier", 800, 520));
-	    units.add(createDemoUnit("Orc Archer", 1000, 520));
+//	    units.add(createDemoUnit("Orc Archer", 1000, 520));
 	    
-	    units.add(createDemoUnit("Human Archer", 100, 520));
-	    units.add(createDemoUnit("Human Archer", 0, 520));
+//	    units.add(createDemoUnit("Human Archer", 100, 520));
+//	    units.add(createDemoUnit("Human Archer", 0, 520));
     }
 	
-	public Unit createDemoUnit(String name, double x, double y) {
+	public Unit createDemoUnit(String name, float x, float y) {
 		HashMap<String, Object> props = Assets.getProperties(name);
 		
 		TypeObject type = (TypeObject) props.get("type");
@@ -133,21 +133,21 @@ public class DevGameState extends AbstractGameState {
 	public void SWARM() {
 		int width = 600;
 		Random r = new Random();
-    	Unit humanUnit1 = createDemoUnit("Human Soldier", -100, r.nextDouble() * width + 100);
+    	Unit humanUnit1 = createDemoUnit("Human Soldier", -100, r.nextFloat() * width + 100);
     	units.add(humanUnit1);
     	
-    	Unit orcUnit1 = createDemoUnit("Orc Soldier", 1280, r.nextDouble() * width + 100);
+    	Unit orcUnit1 = createDemoUnit("Orc Soldier", 1280, r.nextFloat() * width + 100);
     	units.add(orcUnit1);
     	
     	if (++testSpawnTimer2 >= 6) {
     		testSpawnTimer2 = 0;
-    		Unit orcUnit2 = createDemoUnit("Orc Soldier", 1280, r.nextDouble() * width + 100);
+    		Unit orcUnit2 = createDemoUnit("Orc Soldier", 1280, r.nextFloat() * width + 100);
     		units.add(orcUnit2);
     		
-    		Unit orcUnit3 = createDemoUnit("Orc Archer", 1280, r.nextDouble() * width + 100);
+    		Unit orcUnit3 = createDemoUnit("Orc Archer", 1280, r.nextFloat() * width + 100);
     		units.add(orcUnit3);
     		
-    		Unit humanUnit2 = createDemoUnit("Human Archer", -100, r.nextDouble() * width + 100);
+    		Unit humanUnit2 = createDemoUnit("Human Archer", -100, r.nextFloat() * width + 100);
     		units.add(humanUnit2);
     	}
 	}

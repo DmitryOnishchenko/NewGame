@@ -2,22 +2,24 @@ package com.electdead.newgame.gameobjects.components;
 
 import com.electdead.newgame.engine.EngineV1;
 import com.electdead.newgame.gameobjects.Race;
+import com.electdead.newgame.physics.Vector2F;
 
 public class UnitPhysicsModel {
 	private Race race;
 	private int maxHp;
 	private int armor;
-	private double defaultSpeed;
-	private int velocityX;
-	private int velocityY;
+	private float defaultSpeed;
+	private Vector2F dir;
+	private float velocityX;
+	private float velocityY;
 	private int damage;
-	private double attackSpeed;
+	private float attackSpeed;
 //	private int updatesPerAttack;
-	private double attackRange;
+	private float attackRange;
 	private int spawnPrice;
 	private int pricePerHead;
-	private double hitBoxWidth;
-	private double hitBoxHeight;
+	private float hitBoxWidth;
+	private float hitBoxHeight;
 	
 	public UnitPhysicsModel() {}
 	
@@ -28,11 +30,12 @@ public class UnitPhysicsModel {
 	
 	public int getArmor() {	return armor; }
 
-	public double getDefaultSpeed() { return defaultSpeed; }
+	public float getDefaultSpeed() { return defaultSpeed; }
 
-	public int getVelocityX() {	return velocityX; }
-
-	public int getVelocityY() {	return velocityY; }
+	public Vector2F getDir() { return dir; }
+//	public float getVelocityX() {	return velocityX; }
+//
+//	public float getVelocityY() {	return velocityY; }
 
 	public int getDamage() { return damage; }
 
@@ -57,28 +60,29 @@ public class UnitPhysicsModel {
 	
 	public void setArmor(int armor) { this.armor = armor; }
 
-	public void setDefaultSpeed(double defaultSpeed) {
+	public void setDefaultSpeed(float defaultSpeed) {
 		this.defaultSpeed = defaultSpeed / EngineV1.UPDATE_PER_SEC;
 	}
 
-	public void setVelocityX(int velocityX) { this.velocityX = velocityX; }
-
-	public void setVelocityY(int velocityY) { this.velocityY = velocityY; }
+	public void setDir(Vector2F dir) { this.dir = dir; }
+//	public void setVelocityX(float velocityX) { this.velocityX = velocityX; }
+//
+//	public void setVelocityY(float velocityY) { this.velocityY = velocityY; }
 
 	public void setDamage(int damage) { this.damage = damage; }
 
-	public void setAttackSpeed(double attackSpeed) { 
+	public void setAttackSpeed(float attackSpeed) { 
 		this.attackSpeed = attackSpeed / EngineV1.MS_PER_UPDATE;
 //		this.updatesPerAttack = (int) (EngineV1.UPDATE_PER_SEC / attackSpeed);
 	}
 
-	public void setAttackRange(double attackRange) { this.attackRange = attackRange; }
+	public void setAttackRange(float attackRange) { this.attackRange = attackRange; }
 	
 	public void setSpawnPrice(int spawnPrice) { this.spawnPrice = spawnPrice; }
 	
 	public void setPricePerHead(int pricePerHead) { this.pricePerHead = pricePerHead; }
 	
-	public void setHitBoxWidth(double hitBoxWidth) { this.hitBoxWidth = hitBoxWidth; }
+	public void setHitBoxWidth(float hitBoxWidth) { this.hitBoxWidth = hitBoxWidth; }
 	
-	public void setHitBoxHeight(double hitBoxHeight) { this.hitBoxHeight = hitBoxHeight; }
+	public void setHitBoxHeight(float hitBoxHeight) { this.hitBoxHeight = hitBoxHeight; }
 }

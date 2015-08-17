@@ -17,6 +17,6 @@ public class MoveAIComponent extends AIComponent {
 
 	@Override
 	public void update(Unit unit) {
-		unit.velocityX = unit.physModel.getVelocityX();
+		unit.dir = unit.physModel.getDir();
 	}
 }

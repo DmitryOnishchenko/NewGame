@@ -1,6 +1,7 @@
 package com.electdead.newgame.gameobjects.ai;
 
 import com.electdead.newgame.gameobjects.Unit;
+import com.electdead.newgame.physics.Vector2F;
 
 public class AttackAIComponent extends AIComponent {
 
@@ -13,7 +14,7 @@ public class AttackAIComponent extends AIComponent {
 		if (unit.target != null) {
 			if (unit.attackBox.intersects(unit.target.hitBox)) {
 				aic.setMaxPriorityComponent(this);
-				unit.velocityX = 0;
+				unit.dir = new Vector2F();
 			}
 		}
 	}

@@ -7,22 +7,22 @@ package com.electdead.newgame.physics;
  */
 public class Vector2F
 {
-	public float xpos;
-	public float ypos;
+	public float x;
+	public float y;
 	
 	public static float worldXpos;
 	public static float worldYpos;
 	
 	public Vector2F()
 	{
-		this.xpos = 0.0f;
-		this.ypos = 0.0f;
+		this.x = 0.0f;
+		this.y = 0.0f;
 	}
 	
 	public Vector2F(float xpos, float ypos)
 	{
-		this.xpos = xpos;
-		this.ypos = ypos;
+		this.x = xpos;
+		this.y = ypos;
 	}
 	
 	public static Vector2F zero()
@@ -32,42 +32,42 @@ public class Vector2F
 	
 	public void normalize()
 	{
-		double length = Math.sqrt(xpos * xpos + ypos * ypos);
+		double length = Math.sqrt(x * x + y * y);
 		
 		if (length != 0.0) {
 			float s = 1.0f / (float) length;
-			xpos = xpos * s;
-			ypos = ypos * s;
+			x = x * s;
+			y = y * s;
 		}
 	}
 	
 	public Vector2F getScreenLocation()
 	{
-		return new Vector2F(xpos, ypos);
+		return new Vector2F(x, y);
 	}
 	
 	public Vector2F getWorldLocation()
 	{
-		return new Vector2F(xpos - worldXpos, ypos - worldYpos);
+		return new Vector2F(x - worldXpos, y - worldYpos);
 	}
 	
 	public boolean equals(Vector2F other)
 	{
-		return (xpos == other.xpos && ypos == other.ypos);
+		return (x == other.x && y == other.y);
 	}
 	
 	public Vector2F copy(Vector2F vec)
 	{
-		xpos = vec.xpos;
-		ypos = vec.ypos;
-		return new Vector2F(xpos, ypos);
+		x = vec.x;
+		y = vec.y;
+		return new Vector2F(x, y);
 	}
 	
 	public Vector2F add(Vector2F vec)
 	{
-		xpos = xpos + vec.xpos;
-		ypos = ypos + vec.ypos;
-		return new Vector2F(xpos, ypos);
+		x = x + vec.x;
+		y = y + vec.y;
+		return new Vector2F(x, y);
 	}
 	
 	public static void setWorldVariables(float wx, float wy)
@@ -78,15 +78,15 @@ public class Vector2F
 	
 	public static double getDistanceOnScreen(Vector2F vec1, Vector2F vec2)
 	{
-		float v1 = vec1.xpos - vec2.xpos;
-		float v2 = vec1.ypos - vec2.ypos;
+		float v1 = vec1.x - vec2.x;
+		float v2 = vec1.y - vec2.y;
 		return Math.sqrt(v1 * v1 + v2 * v2);
 	}
 	
 	public double getDistanceBetweenWorldVectors(Vector2F vec)
 	{
-		float dx = Math.abs(getWorldLocation().xpos - vec.getWorldLocation().xpos);
-		float dy = Math.abs(getWorldLocation().ypos - vec.getWorldLocation().ypos);
+		float dx = Math.abs(getWorldLocation().x - vec.getWorldLocation().x);
+		float dy = Math.abs(getWorldLocation().y - vec.getWorldLocation().y);
 		return Math.abs(dx * dx - dy * dy);
 	}
 }

@@ -16,6 +16,7 @@ import com.electdead.newgame.gameobjects.TypeObject;
 import com.electdead.newgame.gameobjects.components.UnitGraphicsModel;
 import com.electdead.newgame.gameobjects.components.UnitPhysicsModel;
 import com.electdead.newgame.main.MainApp;
+import com.electdead.newgame.physics.Vector2F;
 
 public class Assets {
 	private static final HashMap<String, HashMap<String, Object>> assets = new HashMap<>();
@@ -57,16 +58,17 @@ public class Assets {
 			int maxHp		 		= getInt(json, "maxHp");
 			int armor 				= getInt(json, "armor");
 			int damage 				= getInt(json, "damage");
-			double defaultSpeed		= getDouble(json, "defaultSpeed");
-			double attackSpeed 		= getDouble(json, "attackSpeedMs");
-			double attackRange 		= getDouble(json, "attackRange");
+			float defaultSpeed		= getFloat(json, "defaultSpeed");
+			float attackSpeed 		= getFloat(json, "attackSpeedMs");
+			float attackRange 		= getFloat(json, "attackRange");
 			int spawnPrice 			= getInt(json, "spawnPrice");
 			int pricePerHead 		= getInt(json, "pricePerHead");
 			
-			double hitBoxWidth 		= getDouble(json, "hitBoxWidth");
-			double hitBoxHeight 	= getDouble(json, "hitBoxHeight");
-			int velocityX 			= getInt(json, "velocityX");
-			int velocityY 			= getInt(json, "velocityY");
+			float hitBoxWidth 		= getFloat(json, "hitBoxWidth");
+			float hitBoxHeight 		= getFloat(json, "hitBoxHeight");
+			float velocityX 		= getFloat(json, "velocityX");
+			float velocityY 		= getFloat(json, "velocityY");
+			Vector2F dir 			= new Vector2F(velocityX, velocityY);
 			
 			int widthSprite 		= getInt(json, "widthSprite");
 			int heightSprite 		= getInt(json, "heightSprite");
@@ -99,8 +101,9 @@ public class Assets {
 			physModel.setMaxHp(maxHp);
 			physModel.setArmor(armor);
 			physModel.setDefaultSpeed(defaultSpeed);
-			physModel.setVelocityX(velocityX);
-			physModel.setVelocityY(velocityY);
+			physModel.setDir(dir);
+//			physModel.setVelocityX(velocityX);
+//			physModel.setVelocityY(velocityY);
 			physModel.setDamage(damage);
 			physModel.setAttackSpeed(attackSpeed);
 			physModel.setAttackRange(attackRange);
@@ -132,7 +135,7 @@ public class Assets {
 		return ((Long) json.get(name)).intValue();
 	}
 	
-	public static double getDouble(JSONObject json, String name) {
-		return ((Long) json.get(name)).doubleValue();
+	public static float getFloat(JSONObject json, String name) {
+		return ((Long) json.get(name)).floatValue();
 	}
 }

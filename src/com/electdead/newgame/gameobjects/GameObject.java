@@ -6,6 +6,7 @@ import com.electdead.newgame.gameobjects.ai.AIContainer;
 import com.electdead.newgame.gameobjects.components.GraphicsComponent;
 import com.electdead.newgame.gameobjects.components.InputComponent;
 import com.electdead.newgame.gameobjects.components.PhysicsComponent;
+import com.electdead.newgame.physics.Vector2F;
 import com.google.common.base.Joiner;
 
 public abstract class GameObject implements Comparable<GameObject> {
@@ -13,8 +14,10 @@ public abstract class GameObject implements Comparable<GameObject> {
 	
 	public final int id;
 	public String name;
-	public double x;
-	public double y;
+	public Vector2F pos;
+	
+//	public double x;
+//	public double y;
 	public TypeObject type;
 	public boolean visible = true;
 	public boolean delete = false;
@@ -24,11 +27,10 @@ public abstract class GameObject implements Comparable<GameObject> {
 	private PhysicsComponent physicsComponent;
 	private GraphicsComponent graphicsComponent;
 	
-	public GameObject(String name, TypeObject type, double x, double y) {
+	public GameObject(String name, TypeObject type, float x, float y) {
 		this.id = ++ID;
 		this.name = name;
-		this.x = x;
-		this.y = y;
+		this.pos = new Vector2F(x, y);
 		this.type = type;
 	}
 	
@@ -61,11 +63,11 @@ public abstract class GameObject implements Comparable<GameObject> {
 	}
 	
 	public int x() {
-		return (int) x;
+		return (int) pos.x;
 	}
 	
 	public int y() {
-		return (int) y;
+		return (int) pos.y;
 	}
 	
 	public void update() {
@@ -80,7 +82,7 @@ public abstract class GameObject implements Comparable<GameObject> {
 	}
 	
 	public String toString() {
-		return Joiner.on("").join("GameObject[x: ", x, ", y:", y,"]");
+		return Joiner.on("").join("GameObject[x: ", pos.x, ", y:", pos.y,"]");
 	}
 	
 	public int compareTo(GameObject obj) {
