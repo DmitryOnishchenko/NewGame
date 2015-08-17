@@ -3,8 +3,10 @@ package com.electdead.newgame.engine;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsEnvironment;
 import java.awt.RenderingHints;
-import java.awt.image.BufferedImage;
+import java.awt.image.VolatileImage;
 
 import com.electdead.newgame.gamestate.GameStateManager;
 import com.electdead.newgame.input.InputHandler;
@@ -16,7 +18,7 @@ public class EngineV1 extends AbstractGameLoop {
 	public static final int MS_PER_UPDATE = 10;
 	public static final int UPDATE_PER_SEC = 1000 / MS_PER_UPDATE;
 	public static final boolean useFpsLimit = true;
-	private BufferedImage frameImg;
+	private VolatileImage frameImg;
 	private Graphics2D g2;
 
 	/* Managers */
@@ -29,9 +31,15 @@ public class EngineV1 extends AbstractGameLoop {
 
 	public void init() {
 		addKeyListener(new InputHandler());
+		
 		gsm = new GameStateManager();
 		gsm.init();
-		frameImg = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		
+		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		GraphicsConfiguration gc = ge.getDefaultScreenDevice().getDefaultConfiguration();
+		frameImg = gc.createCompatibleVolatileImage(width, height);
+		frameImg.validate(gc);
+//		frameImg = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		g2 = (Graphics2D) frameImg.getGraphics();
 		/* Test for text */
 //		g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
