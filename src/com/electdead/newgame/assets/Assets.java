@@ -33,6 +33,13 @@ public class Assets {
 		battleBackgroundProperties.put("floor", floor);
 		assets.put("Battle background", battleBackgroundProperties);
 		
+		/* Projectiles */
+		HashMap<String, Object> projectiles = new HashMap<>();
+		BufferedImage woodenArrow = ImageLoader.loadImage(MainApp.class, "/res/projectiles/wooden_arrow.png");
+		projectiles.put("woodenArrow", woodenArrow);
+		assets.put("projectiles", projectiles);
+		
+		/* Units */
 		loadAssetsForUnit("Human Soldier");
 		loadAssetsForUnit("Human Archer");
 		loadAssetsForUnit("Orc Soldier");
