@@ -5,25 +5,21 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 import com.electdead.newgame.assets.Assets;
+import com.electdead.newgame.gameobjects.ai.AIContainer;
 import com.electdead.newgame.gameobjects.components.UnitPhysicsModel;
 import com.electdead.newgame.gamestate.DevGameState;
 import com.electdead.newgame.main.MainApp;
 import com.electdead.newgame.physics.Vector2F;
 
 public class Unit extends GameObject {
+	private AIContainer aiContainer;
 	public UnitPhysicsModel physModel;
 	
-//	public boolean readyToAction = true;
-//	public PriorityQueue<AIComponent> actions;
-//	public UnitState state;
-//	public UnitState nextState;
 	public int currHp;
 	public int damage;
 	public int armor;
 	public float currentSpeed;
 	public Vector2F dir;
-//	public int velocityX;
-//	public int velocityY;
 	
 	public Rectangle2D.Double hitBox;
 	public Unit target;
@@ -41,28 +37,27 @@ public class Unit extends GameObject {
 
 		hitBox = new Rectangle2D.Double(pos.x - physModel.getHitBoxWidth() / 2,
 				pos.y - physModel.getHitBoxHeight(), physModel.getHitBoxWidth(), physModel.getHitBoxHeight());
-
-//		actions = new PriorityQueue<>(3);
-//		state			= UnitState.STAND;
-//		nextState		= state;
+		
 		currHp			= physModel.getMaxHp();
 		damage			= physModel.getDamage();
 		armor 			= physModel.getArmor();
 		currentSpeed	= physModel.getDefaultSpeed();
 		dir				= physModel.getDir();
-//		velocityX		= physModel.getVelocityX();
-//		velocityY		= physModel.getVelocityY();
 		attackTimer		= 0;
 
 		if (dir.x > 0) {
 			attackBox = new Rectangle2D.Double(
 					pos.x, pos.y - hitBox.height,
-					physModel.getAttackRange(), hitBox.height);			
+					physModel.getAttackRange(), hitBox.height);
 		} else {
 			attackBox = new Rectangle2D.Double(
 					pos.x - physModel.getAttackRange(), pos.y - hitBox.height,
 					physModel.getAttackRange(), hitBox.height);			
 		}
+	}
+	
+	public void setAIContainer(AIContainer aic) {
+		this.aiContainer = aic;
 	}
 	
 	public boolean isAlive() {
@@ -76,8 +71,6 @@ public class Unit extends GameObject {
 		if (currHp <= 0) {
 			delete = true;
 			DevGameState.floorG2.drawImage(randomBlood(), x(), (int) (pos.y - hitBox.height / 2), null);
-//			DevGameState.floorG2.drawImage(randomBlood(), x(), (int) (y - hitBox.height / 2), null);
-//			DevGameState.floorG2.drawImage(randomBlood(), x(), (int) (y - hitBox.height / 2), null);
 		}
 	}
 	
@@ -96,7 +89,7 @@ public class Unit extends GameObject {
 	
 	@Override
 	public void update() {
-		getAI().update(this);
+		aiContainer.update(this);
 		super.update();
 	}
 }
