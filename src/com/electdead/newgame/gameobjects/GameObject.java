@@ -58,7 +58,7 @@ public abstract class GameObject implements Comparable<GameObject> {
 	}
 
 	public void update() {
-		// inputComponent.update();
+		inputComponent.update();
 		if (physicsComponent != null)
 			physicsComponent.update();
 		if (graphicsComponent != null)

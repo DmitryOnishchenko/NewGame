@@ -109,8 +109,6 @@ public class Assets {
 			physModel.setArmor(armor);
 			physModel.setDefaultSpeed(defaultSpeed);
 			physModel.setDir(dir);
-//			physModel.setVelocityX(velocityX);
-//			physModel.setVelocityY(velocityY);
 			physModel.setDamage(damage);
 			physModel.setAttackSpeed(attackSpeed);
 			physModel.setAttackRange(attackRange);
