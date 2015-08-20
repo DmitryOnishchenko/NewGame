@@ -98,7 +98,7 @@ public class DevGameState extends AbstractGameState {
 	    for (Unit unit : units)
 	    	if (!unit.delete) unit.update();
 	    
-	    if (++testSpawnTimer > 10) {
+	    if (++testSpawnTimer > 25) {
 	    	SWARM();
 	    	testSpawnTimer = 0;
 	    }
@@ -127,7 +127,7 @@ public class DevGameState extends AbstractGameState {
 		renderObjects.addAll(units);
 		
 		for (GameObject obj : renderObjects)
-			if (!obj.delete) obj.render(g2, deltaTime);
+			if (obj.visible) obj.render(g2, deltaTime);
     }
 	
 	public void SWARM() {
