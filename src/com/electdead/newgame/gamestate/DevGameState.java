@@ -71,7 +71,7 @@ public class DevGameState extends AbstractGameState {
 		TypeObject type = (TypeObject) props.get("type");
 		Unit unit = new Unit(name, type, x, y);
 		
-		AIContainer aic = new AIContainer();
+		AIContainer aic = new AIContainer(unit);
 //		unit.actions.add(aic.aiComponents[0]);
 		
 		PhysicsComponent pc = new UnitPhysicsComponent(unit);

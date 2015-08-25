@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 import com.electdead.newgame.assets.Assets;
+import com.electdead.newgame.gameobjects.actions.Action;
 import com.electdead.newgame.gameobjects.ai.AIContainer;
 import com.electdead.newgame.gameobjects.components.UnitPhysicsModel;
 import com.electdead.newgame.gamestate.DevGameState;
@@ -14,6 +15,8 @@ import com.electdead.newgame.physics.Vector2F;
 public class Unit extends GameObject {
 	private AIContainer aiContainer;
 	public UnitPhysicsModel physModel;
+	
+	public Action currentAction;
 	
 	public int currHp;
 	public int damage;

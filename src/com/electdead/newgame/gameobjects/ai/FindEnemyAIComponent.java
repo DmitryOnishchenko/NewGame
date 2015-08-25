@@ -1,12 +1,13 @@
 package com.electdead.newgame.gameobjects.ai;
 
 import com.electdead.newgame.gameobjects.Unit;
+import com.electdead.newgame.gameobjects.actions.Action;
 import com.electdead.newgame.gamestate.DevGameState;
 
 public class FindEnemyAIComponent extends AIComponent {
 
-	public FindEnemyAIComponent(AIContainer aic, int priority) {
-		super(aic, priority, false);
+	public FindEnemyAIComponent(AIContainer aic, int priority, Action action) {
+		super(aic, priority, action);
 	}
 	
 	@Override
