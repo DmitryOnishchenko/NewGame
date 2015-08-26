@@ -11,7 +11,8 @@ public class UnitPhysicsComponent implements PhysicsComponent {
 
 	@Override
     public void update() {
-		move();
+//		move();
+//		unit.currentAction.execute();
     }
 	
 	public void move() {

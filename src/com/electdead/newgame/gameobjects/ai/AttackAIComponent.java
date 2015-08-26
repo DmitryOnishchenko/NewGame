@@ -1,13 +1,12 @@
 package com.electdead.newgame.gameobjects.ai;
 
 import com.electdead.newgame.gameobjects.Unit;
-import com.electdead.newgame.gameobjects.actions.Action;
 import com.electdead.newgame.physics.Vector2F;
 
 public class AttackAIComponent extends AIComponent {
 
-	public AttackAIComponent(AIContainer aic, int priority, Action action) {
-		super(aic, priority, action);
+	public AttackAIComponent(AIContainer aic, int priority) {
+		super(aic, priority);
 	}
 	
 	@Override

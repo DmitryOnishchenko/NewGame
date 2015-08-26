@@ -1,37 +1,69 @@
 package com.electdead.newgame.gameobjects.ai;
 
 import com.electdead.newgame.gameobjects.Unit;
+import com.electdead.newgame.gameobjects.actions.Action;
+import com.electdead.newgame.gameobjects.actions.AttackAction;
+import com.electdead.newgame.gameobjects.actions.MoveAction;
+import com.electdead.newgame.graphics.Animation;
 
 public class AIContainer {
+	public boolean locked;
 	public Unit unit;
 	public AIComponent maxPriorityComponent;
 	public AIComponent[] aiComponents;
-	
+
 	public AIContainer(Unit unit) {
 		this.unit = unit;
-		
+
+		/* AI components */
 		aiComponents = new AIComponent[3];
-		aiComponents[0] = new AttackAIComponent(this, 2, null);
-		aiComponents[1] = new FindEnemyAIComponent(this, 0, null);
-		aiComponents[2] = new MoveAIComponent(this, 4, null);
 		
-		/* Last ai component (lowest priority) */
-		maxPriorityComponent = aiComponents[2];
-		unit.currentAction = maxPriorityComponent.getAction();
+		/* Attack */
+		AIComponent attackAIComponent = new AttackAIComponent(this, 2);
+		Action attackAction = new AttackAction(attackAIComponent, unit, true);
+		Animation attackAnimation = new Animation(attackAction, unit.graphModel.getFightSprites());
+		attackAction.setAnimation(attackAnimation);
+		attackAIComponent.setAction(attackAction);
+		aiComponents[0] = attackAIComponent;
+		
+		/* Find enemy */
+		aiComponents[1] = new FindEnemyAIComponent(this, 0);
+		
+		/* Move */
+		AIComponent moveAIComponent = new MoveAIComponent(this, 4);
+		Action moveAction = new MoveAction(moveAIComponent, unit, false);
+		Animation moveAnimation = new Animation(moveAction, unit.graphModel.getMoveSprites());
+		moveAction.setAnimation(moveAnimation);
+		moveAIComponent.setAction(moveAction);
+		aiComponents[2] = moveAIComponent;
+
+		/* Set last ai component (lowest priority) */
+		unlock();
+	}
+
+	public void update(Unit unit) {
+		if (!locked) {
+			for (AIComponent ai : aiComponents) {
+				if (ai.priority <= maxPriorityComponent.priority) {
+					ai.think(unit);
+				}
+			}
+			unit.action = maxPriorityComponent.getAction();
+		}
 	}
 	
 	public void setMaxPriorityComponent(AIComponent ai) {
 		if (ai.priority <= maxPriorityComponent.priority) {
 			maxPriorityComponent = ai;
+			locked = maxPriorityComponent.getAction().needFullAnimation;
 		}
 	}
 	
-	public void update(Unit unit) {
-		for (AIComponent ai : aiComponents) {
-			if (ai.priority < maxPriorityComponent.priority) {
-				ai.think(unit);
-			}
-		}
-		maxPriorityComponent.update(unit);
+	public void unlock() {
+		/* Set last ai component (lowest priority) */
+		maxPriorityComponent = aiComponents[2];
+//		maxPriorityComponent.init();
+		unit.action = maxPriorityComponent.getAction();
+		locked = false;
 	}
 }

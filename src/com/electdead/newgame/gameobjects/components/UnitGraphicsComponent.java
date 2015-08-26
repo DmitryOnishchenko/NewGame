@@ -15,8 +15,6 @@ public class UnitGraphicsComponent implements GraphicsComponent {
 	private int currentSprite = 0;
 	private int animationTimer = 0;
 	
-	private Animation animation;
-	
 	public UnitGraphicsComponent(Unit obj) {
 		this.unit = obj;
 		this.model = (UnitGraphicsModel) Assets.getProperties(obj.name).get("graphicsModel");
@@ -25,8 +23,8 @@ public class UnitGraphicsComponent implements GraphicsComponent {
 
 	@Override
     public void update() {
-	    updateOld();
-//	    updateNew();
+//	    updateOld();
+	    updateNew();
     }
 	
 	public void updateOld() {
@@ -56,9 +54,7 @@ public class UnitGraphicsComponent implements GraphicsComponent {
 	}
 	
 	public void updateNew() {
-//		if (unit.state != unit.nextState) {
-//			animation.get(currentSprite);
-//		}
+		unit.action.animation.next();
 	}
 	
 	public UnitGraphicsModel getModel() {
@@ -79,7 +75,8 @@ public class UnitGraphicsComponent implements GraphicsComponent {
 //		g2.draw(unit.hitBox);
 //		g2.setPaint(Color.RED);
 //		g2.draw(unit.attackBox);
-		g2.drawImage(animationOld[currentSprite], spriteX(), spriteY(), null);
+//		g2.drawImage(animationOld[currentSprite], spriteX(), spriteY(), null);
+		g2.drawImage(unit.action.animation.get(), spriteX(), spriteY(), null);
     }
 
 }

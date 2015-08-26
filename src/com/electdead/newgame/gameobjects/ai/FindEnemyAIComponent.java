@@ -1,13 +1,12 @@
 package com.electdead.newgame.gameobjects.ai;
 
 import com.electdead.newgame.gameobjects.Unit;
-import com.electdead.newgame.gameobjects.actions.Action;
 import com.electdead.newgame.gamestate.DevGameState;
 
 public class FindEnemyAIComponent extends AIComponent {
 
-	public FindEnemyAIComponent(AIContainer aic, int priority, Action action) {
-		super(aic, priority, action);
+	public FindEnemyAIComponent(AIContainer aic, int priority) {
+		super(aic, priority);
 	}
 	
 	@Override
@@ -16,6 +15,7 @@ public class FindEnemyAIComponent extends AIComponent {
 			findTarget(unit);
 		}
 	}
+	
 	@Override
 	public void update(Unit unit) {}
 
@@ -24,8 +24,6 @@ public class FindEnemyAIComponent extends AIComponent {
 			if (unit.physModel.getRace() != enemy.physModel.getRace() &&
 				unit.attackBox.intersects(enemy.hitBox)) {
 				unit.target = enemy;
-//				unit.velocityX = 0;
-//				aic.setMaxPriorityComponent(this);
 			}
 		}
 	}

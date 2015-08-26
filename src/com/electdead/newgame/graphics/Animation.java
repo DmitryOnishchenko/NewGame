@@ -2,34 +2,37 @@ package com.electdead.newgame.graphics;
 
 import java.awt.image.BufferedImage;
 
-import com.electdead.newgame.gameobjects.UnitState;
+import com.electdead.newgame.gameobjects.actions.Action;
 
 public class Animation {
-	private UnitState nextState;
-//	private int currentSprite = 0;
+	public Action action;
+	private int currentSprite;
 	private int animationTimer;
-	private int animationSpeed;
 	private BufferedImage[] sprites;
-	private boolean interrupted;
 	
-	public Animation(BufferedImage[] sprites, int animationTimer, int animationSpeed, boolean interrupted) {
+	public Animation(Action action, BufferedImage[] sprites) {
+		this.action = action;
 		this.sprites = sprites;
-		this.animationTimer = animationTimer;
-		this.animationSpeed = animationSpeed;
-		this.interrupted = interrupted;
+		currentSprite = sprites.length - 1;
 	}
 	
-	public void next(int currentSprite) {
-		if (++animationTimer >= animationSpeed) {
-	    	currentSprite++;
+	public void next() {
+		if (++animationTimer >= action.unit.graphModel.getAnimationSpeed()) {
+			currentSprite++;
 	    	if (currentSprite == sprites.length) {
 	    		currentSprite = 0;
+	    		if (action.needFullAnimation) 
+	    			action.animationFinished();
 	    	}
 	    	animationTimer = 0;
 	    }
 	}
 	
-	public BufferedImage get(int currentSprite) {
+	public BufferedImage get() {
 		return sprites[currentSprite];
+	}
+	
+	public boolean isLast() {
+		return currentSprite == sprites.length;
 	}
 }

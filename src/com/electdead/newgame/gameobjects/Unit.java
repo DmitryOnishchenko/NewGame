@@ -7,6 +7,7 @@ import java.util.HashMap;
 import com.electdead.newgame.assets.Assets;
 import com.electdead.newgame.gameobjects.actions.Action;
 import com.electdead.newgame.gameobjects.ai.AIContainer;
+import com.electdead.newgame.gameobjects.components.UnitGraphicsModel;
 import com.electdead.newgame.gameobjects.components.UnitPhysicsModel;
 import com.electdead.newgame.gamestate.DevGameState;
 import com.electdead.newgame.main.MainApp;
@@ -15,8 +16,10 @@ import com.electdead.newgame.physics.Vector2F;
 public class Unit extends GameObject {
 	private AIContainer aiContainer;
 	public UnitPhysicsModel physModel;
+	public UnitGraphicsModel graphModel;
 	
-	public Action currentAction;
+	public Action action;
+	public boolean readyToNewAction;
 	
 	public int currHp;
 	public int damage;
@@ -37,6 +40,7 @@ public class Unit extends GameObject {
 	private void init() {
 		HashMap<String, Object> props = Assets.getProperties(name);
 		physModel = (UnitPhysicsModel) props.get("physicsModel");
+		graphModel = (UnitGraphicsModel) props.get("graphicsModel");
 
 		hitBox = new Rectangle2D.Double(pos.x - physModel.getHitBoxWidth() / 2,
 				pos.y - physModel.getHitBoxHeight(), physModel.getHitBoxWidth(), physModel.getHitBoxHeight());
@@ -93,6 +97,7 @@ public class Unit extends GameObject {
 	@Override
 	public void update() {
 		aiContainer.update(this);
+		action.execute();
 		super.update();
 	}
 }
