@@ -3,7 +3,7 @@
 	"type": "Unit",
 	"race": "Human",
 	"maxHp": 100,
-	"armor": 5,
+	"armor": 10,
 	"damage": 25,
 	"defaultSpeed": 48,
 	"spawnPrice": 40,
@@ -11,6 +11,8 @@
 
 	"attackSpeedMs": 800,
 	"attackRange": 50,
+	"searchWidth": 300,
+	"searchHeight": 100,
 	
 	"hitBoxWidth": 30,
 	"hitBoxHeight": 25,

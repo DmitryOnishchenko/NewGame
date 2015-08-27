@@ -5,16 +5,18 @@ import com.electdead.newgame.gamestate.DevGameState;
 import com.electdead.newgame.physics.Vector2F;
 
 public class FindEnemyAIComponent extends AIComponent {
-
+	private int delay = 0;
+	
 	public FindEnemyAIComponent(AIContainer aic, int priority) {
 		super(aic, priority);
 	}
 	
 	@Override
 	public void think(Unit unit) {
-//		if (unit.target == null) {
+		if (delay++ > 50) {
+			delay = 0;
 			findTarget(unit);
-//		}
+		}
 	}
 	
 	@Override

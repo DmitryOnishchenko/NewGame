@@ -1,5 +1,6 @@
 package com.electdead.newgame.gameobjects.components;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 import com.electdead.newgame.assets.Assets;

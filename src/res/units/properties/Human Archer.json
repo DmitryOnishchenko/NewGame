@@ -11,6 +11,8 @@
 
 	"attackSpeedMs": 1500,
 	"attackRange": 350,
+	"searchWidth": 300,
+	"searchHeight": 100,
 	
 	"hitBoxWidth": 30,
 	"hitBoxHeight": 25,
