@@ -34,6 +34,7 @@ public class UnitGraphicsComponent implements GraphicsComponent {
 //		g2.draw(unit.hitBox);
 //		g2.setPaint(Color.RED);
 //		g2.draw(unit.attackBox);
+//		g2.draw(unit.searchCircle);
 		g2.drawImage(unit.action.animation.get(), spriteX(), spriteY(), null);
     }
 

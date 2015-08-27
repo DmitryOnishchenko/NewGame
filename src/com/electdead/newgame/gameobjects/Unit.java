@@ -1,5 +1,6 @@
 package com.electdead.newgame.gameobjects;
 
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
@@ -31,6 +32,7 @@ public class Unit extends GameObject {
 	public Rectangle2D.Double hitBox;
 	public Unit target;
 	public Rectangle2D.Double attackBox;
+	public Ellipse2D.Double searchCircle;
 	
 	public Unit(String name, TypeObject type, float x, float y) {
 		super(name, type, x, y);
@@ -44,6 +46,9 @@ public class Unit extends GameObject {
 
 		hitBox = new Rectangle2D.Double(pos.x - physModel.getHitBoxWidth() / 2,
 				pos.y - physModel.getHitBoxHeight(), physModel.getHitBoxWidth(), physModel.getHitBoxHeight());
+		
+		searchCircle = new Ellipse2D.Double();
+		searchCircle.setFrameFromCenter(pos.x, pos.y, pos.x + 300, pos.y + 150);
 		
 		currHp			= physModel.getMaxHp();
 		damage			= physModel.getDamage();

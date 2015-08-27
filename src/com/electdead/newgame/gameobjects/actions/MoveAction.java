@@ -15,11 +15,13 @@ public class MoveAction extends Action {
 		unit.pos.x 			+= shiftX;
 		unit.hitBox.x 		+= shiftX;
 		unit.attackBox.x 	+= shiftX;
+		unit.searchCircle.x += shiftX;
 		
 		float shiftY 		= unit.currentSpeed * unit.dir.y;
 		unit.pos.y 			+= shiftY;
 		unit.hitBox.y 		+= shiftY;
 		unit.attackBox.y 	+= shiftY;
+		unit.searchCircle.y += shiftY;
 	}
 	
 	@Override
