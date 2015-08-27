@@ -38,11 +38,16 @@ public class AIContainer {
 		aiComponents[2] = moveAIComponent;
 
 		/* Set last ai component (lowest priority) */
-		unlock();
+		maxPriorityComponent = aiComponents[2];
+		unit.action = maxPriorityComponent.getAction();
+		locked = false;
 	}
 
 	public void update(Unit unit) {
 		if (!locked) {
+			if (maxPriorityComponent == null) {
+				maxPriorityComponent = aiComponents[2];				
+			}
 			for (AIComponent ai : aiComponents) {
 				if (ai.priority <= maxPriorityComponent.priority) {
 					ai.think(unit);
@@ -60,10 +65,7 @@ public class AIContainer {
 	}
 	
 	public void unlock() {
-		/* Set last ai component (lowest priority) */
-		maxPriorityComponent = aiComponents[2];
-//		maxPriorityComponent.init();
-		unit.action = maxPriorityComponent.getAction();
+		maxPriorityComponent = null;
 		locked = false;
 	}
 }

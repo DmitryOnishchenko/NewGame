@@ -14,13 +14,14 @@ import com.electdead.newgame.main.MainApp;
 import com.electdead.newgame.physics.Vector2F;
 
 public class Unit extends GameObject {
-	private AIContainer aiContainer;
+	/* Common */
 	public UnitPhysicsModel physModel;
 	public UnitGraphicsModel graphModel;
 	
+	private AIContainer aiContainer;
 	public Action action;
-	public boolean readyToNewAction;
 	
+	/* Main */
 	public int currHp;
 	public int damage;
 	public int armor;
@@ -29,7 +30,6 @@ public class Unit extends GameObject {
 	
 	public Rectangle2D.Double hitBox;
 	public Unit target;
-	public int attackTimer;
 	public Rectangle2D.Double attackBox;
 	
 	public Unit(String name, TypeObject type, float x, float y) {
@@ -50,7 +50,6 @@ public class Unit extends GameObject {
 		armor 			= physModel.getArmor();
 		currentSpeed	= physModel.getDefaultSpeed();
 		dir				= physModel.getDir();
-		attackTimer		= 0;
 
 		if (dir.x > 0) {
 			attackBox = new Rectangle2D.Double(

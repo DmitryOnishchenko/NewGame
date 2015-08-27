@@ -6,14 +6,14 @@ import com.electdead.newgame.gameobjects.actions.Action;
 
 public class Animation {
 	public Action action;
-	private int currentSprite;
+	private int currentSprite = 0;
 	private int animationTimer;
 	private BufferedImage[] sprites;
 	
 	public Animation(Action action, BufferedImage[] sprites) {
 		this.action = action;
 		this.sprites = sprites;
-		currentSprite = sprites.length - 1;
+		currentSprite = 0;
 	}
 	
 	public void next() {

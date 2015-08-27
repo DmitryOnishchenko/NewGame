@@ -4,15 +4,16 @@ import com.electdead.newgame.gameobjects.Unit;
 import com.electdead.newgame.gameobjects.ai.AIComponent;
 
 public class AttackAction extends Action {
-
+	private int attackTimer = 0;
+	
 	public AttackAction(AIComponent aiComponent, Unit unit, boolean needFullAnimation) {
 		super(aiComponent, unit, needFullAnimation);
 	}
 
 	@Override
 	public void execute() {
-		if (!wait && unit.attackTimer++ > unit.physModel.getAttackSpeed()) {
-			unit.attackTimer = 0;
+		if (!wait && attackTimer++ > unit.physModel.getAttackSpeed()) {
+			attackTimer = 0;
 			unit.target.takeDamage(unit.damage);
 			if (!unit.target.isAlive()) {
 				unit.target = null;

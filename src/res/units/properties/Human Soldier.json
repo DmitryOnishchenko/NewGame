@@ -13,7 +13,7 @@
 	"attackRange": 50,
 	
 	"hitBoxWidth": 30,
-	"hitBoxHeight": 40,
+	"hitBoxHeight": 25,
 	"velocityX": 1,
 	"velocityY": 0,
 	
