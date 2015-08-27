@@ -48,7 +48,7 @@ public class Unit extends GameObject {
 				pos.y - physModel.getHitBoxHeight(), physModel.getHitBoxWidth(), physModel.getHitBoxHeight());
 		
 		searchCircle = new Ellipse2D.Double();
-		searchCircle.setFrameFromCenter(pos.x, pos.y, pos.x + 300, pos.y + 150);
+		searchCircle.setFrameFromCenter(pos.x, pos.y, pos.x + 300, pos.y + 100);
 		
 		currHp			= physModel.getMaxHp();
 		damage			= physModel.getDamage();

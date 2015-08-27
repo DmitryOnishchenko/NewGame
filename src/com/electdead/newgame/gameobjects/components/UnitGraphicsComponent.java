@@ -1,7 +1,6 @@
 package com.electdead.newgame.gameobjects.components;
 
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 
 import com.electdead.newgame.assets.Assets;
 import com.electdead.newgame.gameobjects.Unit;

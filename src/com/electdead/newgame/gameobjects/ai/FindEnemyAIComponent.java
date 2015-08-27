@@ -21,27 +21,26 @@ public class FindEnemyAIComponent extends AIComponent {
 	public void update(Unit unit) {}
 
 	private void findTarget(Unit unit) {
-		double min = Double.MAX_VALUE;
-		Unit minTarget = null;
+		double minLength = Double.MAX_VALUE;
+		Vector2F newDir = null;
+		Unit target = null;
 		
 		for (Unit enemy : DevGameState.units) {
 			if (unit.physModel.getRace() != enemy.physModel.getRace() &&
 				unit.searchCircle.intersects(enemy.hitBox)) {
 				
-				Vector2F l = enemy.pos.copy();
-				l.sub(unit.pos);
-				double length = l.length();
-				if (length < min) {
-					min = length;
-					minTarget = enemy;
+				newDir = enemy.pos.copy();
+				newDir.sub(unit.pos);
+				double length = newDir.length();
+				if (length < minLength) {
+					minLength = length;
+					target = enemy;
 				}	
 			}
 		}
 		
-		if (minTarget != null) {
-			unit.target = minTarget;
-			Vector2F newDir = minTarget.pos.copy();
-			newDir.sub(unit.pos);
+		if (target != null) {
+			unit.target = target;
 			newDir.normalize();
 			unit.dir = newDir;			
 		}
