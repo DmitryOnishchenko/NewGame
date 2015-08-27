@@ -1,9 +1,11 @@
 package com.electdead.newgame.gameobjects;
 
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
+import java.util.Random;
 
 import com.electdead.newgame.assets.Assets;
 import com.electdead.newgame.gameobjects.actions.Action;
@@ -81,7 +83,8 @@ public class Unit extends GameObject {
 		currHp -= total;
 		if (currHp <= 0) {
 			delete = true;
-			DevGameState.floorG2.drawImage(randomBlood(), x(), (int) (pos.y - hitBox.height / 2), null);
+			
+			drawBlood();
 		}
 	}
 	
@@ -103,5 +106,16 @@ public class Unit extends GameObject {
 		aiContainer.update(this);
 		action.execute();
 		super.update();
+	}
+	
+	private void drawBlood() {
+		Random r = new Random();
+		AffineTransform at = new AffineTransform();
+		at.translate(pos.x, pos.y);
+		at.rotate(Math.PI / r.nextInt(4));
+		at.scale(r.nextDouble() + 0.2, r.nextDouble() + 0.2);
+//		at.translate(-pos.x, -pos.y);
+//		DevGameState.floorG2.drawImage(randomBlood(), x(), (int) (pos.y - hitBox.height / 2), null);
+		DevGameState.floorG2.drawImage(randomBlood(), at, null);
 	}
 }
