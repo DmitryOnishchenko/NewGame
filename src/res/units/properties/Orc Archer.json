@@ -4,18 +4,17 @@
 	"race": "Orc",
 	"maxHp": 100,
 	"armor": 5,
-	"damage": 60,
+	"damage": 70,
 	"defaultSpeed": 40,
 	"spawnPrice": 80,
 	"pricePerHead": 30,
 
 	"attackSpeedMs": 3000,
 	"attackRange": 410,
-	"searchWidth": 300,
-	"searchHeight": 100,
+	"searchRange": 470,
 	
-	"hitBoxWidth": 30,
-	"hitBoxHeight": 30,
+	"hitBoxWidth": 15,
+	"hitBoxHeight": 15,
 	"velocityX": -1,
 	"velocityY": 0,
 	

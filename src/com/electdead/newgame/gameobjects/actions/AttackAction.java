@@ -12,13 +12,14 @@ public class AttackAction extends Action {
 
 	@Override
 	public void execute() {
+		if (unit.target != null && !unit.target.isAlive()) {
+			unit.target = null;
+			wait = true;
+		}
+		
 		if (!wait && attackTimer++ > unit.physModel.getAttackSpeed()) {
 			attackTimer = 0;
 			unit.target.takeDamage(unit.damage);
-			if (!unit.target.isAlive()) {
-				unit.target = null;
-				wait = true;
-			}
 		}
 	}
 	

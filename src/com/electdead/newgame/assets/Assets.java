@@ -68,6 +68,7 @@ public class Assets {
 			float defaultSpeed		= getFloat(json, "defaultSpeed");
 			float attackSpeed 		= getFloat(json, "attackSpeedMs");
 			float attackRange 		= getFloat(json, "attackRange");
+			float searchRange 		= getFloat(json, "searchRange");
 			int spawnPrice 			= getInt(json, "spawnPrice");
 			int pricePerHead 		= getInt(json, "pricePerHead");
 			
@@ -112,6 +113,7 @@ public class Assets {
 			physModel.setDamage(damage);
 			physModel.setAttackSpeed(attackSpeed);
 			physModel.setAttackRange(attackRange);
+			physModel.setSearchRange(searchRange);
 			physModel.setHitBoxWidth(hitBoxWidth);
 			physModel.setHitBoxHeight(hitBoxHeight);
 			physModel.setSpawnPrice(spawnPrice);

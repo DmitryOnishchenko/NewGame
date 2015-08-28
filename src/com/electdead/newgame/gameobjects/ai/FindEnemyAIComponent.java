@@ -13,7 +13,7 @@ public class FindEnemyAIComponent extends AIComponent {
 	
 	@Override
 	public void think(Unit unit) {
-		if (delay++ > 50) {
+		if (delay++ > 25) {
 			delay = 0;
 			findTarget(unit);
 		}
@@ -29,7 +29,7 @@ public class FindEnemyAIComponent extends AIComponent {
 		
 		for (Unit enemy : DevGameState.units) {
 			if (unit.physModel.getRace() != enemy.physModel.getRace() &&
-				unit.searchCircle.intersects(enemy.hitBox)) {
+				intersects(unit, enemy)) {
 				
 				newDir = enemy.pos.copy();
 				newDir.sub(unit.pos);
@@ -46,5 +46,13 @@ public class FindEnemyAIComponent extends AIComponent {
 			newDir.normalize();
 			unit.dir = newDir;			
 		}
+	}
+	
+	public boolean intersects(Unit unit, Unit enemy) {
+		double unitSearchRange = unit.physModel.getSearchRange();
+		double enemyHitBoxRadius = enemy.hitBox.width / 2;
+		double distance = Vector2F.getDistanceOnScreen(unit.pos, enemy.pos);
+		
+		return distance < (unitSearchRange + enemyHitBoxRadius);
 	}
 }

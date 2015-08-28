@@ -10,12 +10,10 @@ public class UnitPhysicsModel {
 	private int armor;
 	private float defaultSpeed;
 	private Vector2F dir;
-	private float velocityX;
-	private float velocityY;
 	private int damage;
 	private float attackSpeed;
-//	private int updatesPerAttack;
 	private float attackRange;
+	private float searchRange;
 	private int spawnPrice;
 	private int pricePerHead;
 	private float hitBoxWidth;
@@ -33,25 +31,22 @@ public class UnitPhysicsModel {
 	public float getDefaultSpeed() { return defaultSpeed; }
 
 	public Vector2F getDir() { return dir; }
-//	public float getVelocityX() {	return velocityX; }
-//
-//	public float getVelocityY() {	return velocityY; }
 
 	public int getDamage() { return damage; }
 
-	public double getAttackSpeed() { return attackSpeed; }
-	
-//	public int getUpdatesPerAttack() { return updatesPerAttack; }
+	public float getAttackSpeed() { return attackSpeed; }
 
-	public double getAttackRange() { return attackRange; }
+	public float getAttackRange() { return attackRange; }
+	
+	public float getSearchRange() { return searchRange; }
 	
 	public int getSpawnPrice() { return spawnPrice; }
 	
 	public int getPricePerHead() { return pricePerHead; }
 	
-	public double getHitBoxWidth() { return hitBoxWidth; }
+	public float getHitBoxWidth() { return hitBoxWidth; }
 	
-	public double getHitBoxHeight() { return hitBoxHeight; }
+	public float getHitBoxHeight() { return hitBoxHeight; }
 
 	/* Setters */
 	public void setRace(Race race) { this.race = race; }
@@ -65,18 +60,16 @@ public class UnitPhysicsModel {
 	}
 
 	public void setDir(Vector2F dir) { this.dir = dir; }
-//	public void setVelocityX(float velocityX) { this.velocityX = velocityX; }
-//
-//	public void setVelocityY(float velocityY) { this.velocityY = velocityY; }
-
+	
 	public void setDamage(int damage) { this.damage = damage; }
 
 	public void setAttackSpeed(float attackSpeed) { 
 		this.attackSpeed = attackSpeed / EngineV1.MS_PER_UPDATE;
-//		this.updatesPerAttack = (int) (EngineV1.UPDATE_PER_SEC / attackSpeed);
 	}
 
 	public void setAttackRange(float attackRange) { this.attackRange = attackRange; }
+	
+	public void setSearchRange(float searchRange) { this.searchRange = searchRange; }
 	
 	public void setSpawnPrice(int spawnPrice) { this.spawnPrice = spawnPrice; }
 	

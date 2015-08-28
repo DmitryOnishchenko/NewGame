@@ -4,18 +4,17 @@
 	"race": "Human",
 	"maxHp": 50,
 	"armor": 0,
-	"damage": 45,
+	"damage": 50,
 	"defaultSpeed": 70,
 	"spawnPrice": 60,
 	"pricePerHead": 20,
 
 	"attackSpeedMs": 1500,
 	"attackRange": 350,
-	"searchWidth": 300,
-	"searchHeight": 100,
+	"searchRange": 400,
 	
-	"hitBoxWidth": 30,
-	"hitBoxHeight": 25,
+	"hitBoxWidth": 15,
+	"hitBoxHeight": 15,
 	"velocityX": 1,
 	"velocityY": 0,
 	

@@ -2,7 +2,6 @@ package com.electdead.newgame.gameobjects;
 
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Random;
@@ -31,9 +30,9 @@ public class Unit extends GameObject {
 	public float currentSpeed;
 	public Vector2F dir;
 	
-	public Rectangle2D.Double hitBox;
+	public Ellipse2D.Double hitBox;
 	public Unit target;
-	public Rectangle2D.Double attackBox;
+	public Ellipse2D.Double attackBox;
 	public Ellipse2D.Double searchCircle;
 	
 	public Unit(String name, TypeObject type, float x, float y) {
@@ -46,26 +45,24 @@ public class Unit extends GameObject {
 		physModel = (UnitPhysicsModel) props.get("physicsModel");
 		graphModel = (UnitGraphicsModel) props.get("graphicsModel");
 
-		hitBox = new Rectangle2D.Double(pos.x - physModel.getHitBoxWidth() / 2,
-				pos.y - physModel.getHitBoxHeight(), physModel.getHitBoxWidth(), physModel.getHitBoxHeight());
+		hitBox = new Ellipse2D.Double();
+		hitBox.setFrameFromCenter(pos.x, pos.y,
+				pos.x + physModel.getHitBoxWidth(), pos.y + physModel.getHitBoxHeight());
 		
 		searchCircle = new Ellipse2D.Double();
-		searchCircle.setFrameFromCenter(pos.x, pos.y, pos.x + 300, pos.y + 100);
+		searchCircle.setFrameFromCenter(pos.x, pos.y, pos.x + physModel.getSearchRange(), pos.y + physModel.getSearchRange());
 		
 		currHp			= physModel.getMaxHp();
 		damage			= physModel.getDamage();
 		armor 			= physModel.getArmor();
 		currentSpeed	= physModel.getDefaultSpeed();
 		dir				= physModel.getDir();
-
+		
+		attackBox = new Ellipse2D.Double();
 		if (dir.x > 0) {
-			attackBox = new Rectangle2D.Double(
-					pos.x, pos.y - hitBox.height,
-					physModel.getAttackRange(), hitBox.height);
+			attackBox.setFrameFromCenter(pos.x, pos.y, pos.x + physModel.getAttackRange(), pos.y - physModel.getAttackRange());
 		} else {
-			attackBox = new Rectangle2D.Double(
-					pos.x - physModel.getAttackRange(), pos.y - hitBox.height,
-					physModel.getAttackRange(), hitBox.height);			
+			attackBox.setFrameFromCenter(pos.x, pos.y, pos.x + physModel.getAttackRange(), pos.y - physModel.getAttackRange());
 		}
 	}
 	

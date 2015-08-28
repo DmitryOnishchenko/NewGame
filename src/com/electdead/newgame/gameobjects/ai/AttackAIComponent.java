@@ -12,7 +12,7 @@ public class AttackAIComponent extends AIComponent {
 	@Override
 	public void think(Unit unit) {
 		if (unit.target != null) {
-			if (unit.attackBox.intersects(unit.target.hitBox)) {
+			if (intersects(unit, unit.target)) {
 				aic.setMaxPriorityComponent(this);
 				unit.dir = new Vector2F();
 			}
@@ -21,4 +21,12 @@ public class AttackAIComponent extends AIComponent {
 	
 	@Override
 	public void update(Unit unit) {}
+	
+	public boolean intersects(Unit unit, Unit enemy) {
+		double unitAttackRange = unit.physModel.getAttackRange();
+		double enemyHitBoxRadius = enemy.hitBox.width / 2;
+		double distance = Vector2F.getDistanceOnScreen(unit.pos, enemy.pos);
+		
+		return distance < (unitAttackRange + enemyHitBoxRadius);
+	}
 }

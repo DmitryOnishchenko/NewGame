@@ -56,13 +56,14 @@ public class DevGameState extends AbstractGameState {
 			}			
 		}	catch (IOException ex) { ex.printStackTrace(); }
 		
-//	    units.add(createDemoUnit("Human Soldier", 100, 520));
-	    units.add(createDemoUnit("Human Soldier", 100, 450));
-	    units.add(createDemoUnit("Orc Soldier", 800, 520));
-//	    units.add(createDemoUnit("Orc Archer", 900, 520));
+	    units.add(createDemoUnit("Human Soldier", 100, 480));
+	    units.add(createDemoUnit("Orc Soldier", 800, 500));
 	    
+//	    units.add(createDemoUnit("Human Soldier", 500, 520));
 //	    units.add(createDemoUnit("Human Archer", 300, 520));
-//	    units.add(createDemoUnit("Human Archer", 200, 520));
+	    
+	    units.add(createDemoUnit("Human Archer", 200, 520));
+	    units.add(createDemoUnit("Orc Archer", 900, 300));
     }
 	
 	public Unit createDemoUnit(String name, float x, float y) {
@@ -98,7 +99,7 @@ public class DevGameState extends AbstractGameState {
 	    for (Unit unit : units)
 	    	if (!unit.delete) unit.update();
 	    
-	    if (++testSpawnTimer > 25) {
+	    if (++testSpawnTimer > 33) {
 	    	SWARM();
 	    	testSpawnTimer = 0;
 	    }
