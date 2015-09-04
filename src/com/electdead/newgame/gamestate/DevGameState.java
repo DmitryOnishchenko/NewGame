@@ -2,6 +2,7 @@ package com.electdead.newgame.gamestate;
 
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,7 +25,6 @@ import com.electdead.newgame.gameobjects.components.UnitPhysicsComponent;
 import com.electdead.newgame.main.MainApp;
 import com.google.common.collect.TreeMultiset;
 
-
 public class DevGameState extends AbstractGameState {
 	public static HashSet<GameObject> gameObjects = new HashSet<>();
 	public static HashSet<Unit> units = new HashSet<>();
@@ -37,6 +37,8 @@ public class DevGameState extends AbstractGameState {
 	private int testSpawnTimer;
 	private int testSpawnTimer2;
 	public static ArrayList<BufferedImage> bloodSprites = new ArrayList<>();
+	
+	private Random random = new Random();
 	
 	public DevGameState(GameStateManager gsm) {
 		super(gsm);
@@ -56,14 +58,14 @@ public class DevGameState extends AbstractGameState {
 			}			
 		}	catch (IOException ex) { ex.printStackTrace(); }
 		
-	    units.add(createDemoUnit("Human Soldier", 100, 480));
-	    units.add(createDemoUnit("Orc Soldier", 800, 500));
+//	    units.add(createDemoUnit("Human Soldier", 100, 480));
+//	    units.add(createDemoUnit("Orc Soldier", 800, 500));
 	    
 //	    units.add(createDemoUnit("Human Soldier", 500, 520));
 //	    units.add(createDemoUnit("Human Archer", 300, 520));
 	    
-	    units.add(createDemoUnit("Human Archer", 200, 520));
-	    units.add(createDemoUnit("Orc Archer", 900, 300));
+//	    units.add(createDemoUnit("Human Archer", 200, 520));
+//	    units.add(createDemoUnit("Orc Archer", 900, 300));
     }
 	
 	public Unit createDemoUnit(String name, float x, float y) {
@@ -86,9 +88,18 @@ public class DevGameState extends AbstractGameState {
 	}
 
 	@Override
-    public void processInput() {
-	    // TODO Auto-generated method stub
-	    
+    public void processInput(KeyEvent event) {
+	    if (event != null && event.getID() == KeyEvent.KEY_PRESSED) {
+	    	if (event.getKeyChar() == 'a') {
+	    		units.add(createDemoUnit("Human Soldier", -100, random.nextFloat() * 500 + 100));
+	    	} else if (event.getKeyChar() == 's') {
+	    		units.add(createDemoUnit("Human Archer", -100, random.nextFloat() * 500 + 100));
+	    	} else if (event.getKeyChar() == ';') {
+	    		units.add(createDemoUnit("Orc Soldier", 1280, random.nextFloat() * 500 + 100));
+	    	} else if (event.getKeyChar() == '\'') {
+	    		units.add(createDemoUnit("Orc Archer", 1280, random.nextFloat() * 500 + 100));
+	    	}
+	    }
     }
 
 	@Override
@@ -99,8 +110,8 @@ public class DevGameState extends AbstractGameState {
 	    for (Unit unit : units)
 	    	if (!unit.delete) unit.update();
 	    
-	    if (++testSpawnTimer > 33) {
-	    	SWARM();
+	    if (++testSpawnTimer > 100) {
+//	    	SWARM();
 	    	testSpawnTimer = 0;
 	    }
 	    

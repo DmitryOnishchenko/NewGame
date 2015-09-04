@@ -1,6 +1,7 @@
 package com.electdead.newgame.gamestate;
 
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -31,7 +32,7 @@ public class TestDemoGameState extends AbstractGameState {
 	}
 
 	@Override
-	public void processInput() {
+	public void processInput(KeyEvent event) {
 		
 	}
 	

@@ -103,6 +103,7 @@ public class Unit extends GameObject {
 		aiContainer.update(this);
 		action.execute();
 		super.update();
+		checkDelete();
 	}
 	
 	private void drawBlood() {

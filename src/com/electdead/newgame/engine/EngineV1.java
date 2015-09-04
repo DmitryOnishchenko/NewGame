@@ -10,7 +10,7 @@ import java.awt.image.VolatileImage;
 
 import com.electdead.newgame.gamestate.DevGameState;
 import com.electdead.newgame.gamestate.GameStateManager;
-import com.electdead.newgame.input.InputHandler;
+import com.electdead.newgame.input.EngineInputHandler;
 
 @SuppressWarnings("serial")
 public class EngineV1 extends AbstractGameLoop {
@@ -24,6 +24,7 @@ public class EngineV1 extends AbstractGameLoop {
 
 	/* Managers */
 	private GameStateManager gsm;
+	private static EngineInputHandler inputHandler;
 	
 	public EngineV1(int width, int height) {
 		super(width, height, MAX_FPS); 
@@ -31,7 +32,9 @@ public class EngineV1 extends AbstractGameLoop {
 	}
 
 	public void init() {
-		addKeyListener(new InputHandler());
+		inputHandler = new EngineInputHandler();
+		addKeyListener(inputHandler);
+		
 		
 		gsm = new GameStateManager();
 		gsm.init();
@@ -48,9 +51,14 @@ public class EngineV1 extends AbstractGameLoop {
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 	}
 	
+	public static EngineInputHandler getInputHandler() {
+		return inputHandler;
+	}
+	
 	@Override
 	public void processInput() {
-		gsm.processInput();
+		gsm.processInput(inputHandler.getKeyEvent());
+		inputHandler.clear();
 	}
 	
 	@Override

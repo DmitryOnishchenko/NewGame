@@ -1,6 +1,7 @@
 package com.electdead.newgame.gamestate;
 
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
 import java.util.Stack;
 
 public class GameStateManager {
@@ -16,8 +17,8 @@ public class GameStateManager {
 		states.peek().init();
 	}
 	
-	public void processInput() {
-		states.peek().processInput();
+	public void processInput(KeyEvent event) {
+		states.peek().processInput(event);
 	}
 	
 	public void update() {

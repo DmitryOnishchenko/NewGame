@@ -1,6 +1,7 @@
 package com.electdead.newgame.gamestate;
 
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
 
 public abstract class AbstractGameState {
 	public GameStateManager gsm;
@@ -10,7 +11,7 @@ public abstract class AbstractGameState {
 	}
 	
 	public abstract void init();
-	public abstract void processInput();
+	public abstract void processInput(KeyEvent event);
 	public abstract void update();
 	public abstract void render(Graphics2D g2, double deltaTime);
 }
