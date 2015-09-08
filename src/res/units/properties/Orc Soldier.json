@@ -24,6 +24,6 @@
 	"moveSprites": [4, 12],
 	"fightSprites": [12, 18],
 	"dieSprites": [20, 26],
-	"animationSpeedMs": 75,
+	"animationSpeedMs": 80,
 	"spritesFile": "/res/units/orcs/soldier/orc_regular_main.png"
 }

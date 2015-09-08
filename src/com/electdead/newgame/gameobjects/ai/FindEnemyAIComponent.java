@@ -13,7 +13,9 @@ public class FindEnemyAIComponent extends AIComponent {
 	
 	@Override
 	public void think(Unit unit) {
-		if (delay++ > 25) {
+		if (unit.target == null) {
+			findTarget(unit);
+		} else if (delay++ > 50) {
 			delay = 0;
 			findTarget(unit);
 		}
