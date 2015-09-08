@@ -3,10 +3,10 @@ package com.electdead.newgame.gameobjects.actions;
 import com.electdead.newgame.gameobjects.Unit;
 import com.electdead.newgame.gameobjects.ai.AIComponent;
 
-public class AttackAction extends Action {
+public class MeleeAttackAction extends Action {
 	private int attackTimer = 0;
 	
-	public AttackAction(AIComponent aiComponent, Unit unit, boolean needFullAnimation) {
+	public MeleeAttackAction(AIComponent aiComponent, Unit unit, boolean needFullAnimation) {
 		super(aiComponent, unit, needFullAnimation);
 	}
 

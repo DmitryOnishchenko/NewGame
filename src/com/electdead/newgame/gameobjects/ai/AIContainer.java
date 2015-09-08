@@ -2,8 +2,9 @@ package com.electdead.newgame.gameobjects.ai;
 
 import com.electdead.newgame.gameobjects.Unit;
 import com.electdead.newgame.gameobjects.actions.Action;
-import com.electdead.newgame.gameobjects.actions.AttackAction;
+import com.electdead.newgame.gameobjects.actions.MeleeAttackAction;
 import com.electdead.newgame.gameobjects.actions.MoveAction;
+import com.electdead.newgame.gameobjects.actions.RangeAttackAction;
 import com.electdead.newgame.graphics.Animation;
 
 public class AIContainer {
@@ -20,7 +21,12 @@ public class AIContainer {
 		
 		/* Attack */
 		AIComponent attackAIComponent = new AttackAIComponent(this, 2);
-		Action attackAction = new AttackAction(attackAIComponent, unit, true);
+		Action attackAction = null;
+		if (unit.name.endsWith("Archer")) {
+			attackAction = new RangeAttackAction(attackAIComponent, unit, true);
+		} else {
+			attackAction = new MeleeAttackAction(attackAIComponent, unit, true);			
+		}
 		Animation attackAnimation = new Animation(attackAction, unit.graphModel.getFightSprites());
 		attackAction.setAnimation(attackAnimation);
 		attackAIComponent.setAction(attackAction);

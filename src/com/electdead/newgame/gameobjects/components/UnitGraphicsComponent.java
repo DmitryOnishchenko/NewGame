@@ -61,11 +61,11 @@ public class UnitGraphicsComponent implements GraphicsComponent {
 			}
 		}
 		
-		if (unit.target != null) {
-			if (unit.physModel.getRace() == Race.Human) g2.setPaint(Color.YELLOW);
-			else g2.setPaint(Color.BLUE);
-			g2.drawLine(unit.x(), unit.y(), unit.target.x(), unit.target.y());
-		}
+//		if (unit.target != null) {
+//			if (unit.physModel.getRace() == Race.Human) g2.setPaint(Color.YELLOW);
+//			else g2.setPaint(Color.BLUE);
+//			g2.drawLine(unit.x(), unit.y(), unit.target.x(), unit.target.y());
+//		}
 		
 //		g2.drawImage(unit.action.animation.get(), spriteX(), spriteY(), null);
 		g2.drawImage(image, spriteX(), spriteY(), null);
