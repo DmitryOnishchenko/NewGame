@@ -22,8 +22,8 @@
 	"heightSprite": 100,
 	"baseLine": 27,
 	"moveSprites": [22, 30],
-	"fightSprites": [0, 15],
-	"dieSprites": [16, 24],
+	"fightSprites": [0, 17],
+	"dieSprites": [30, 50],
 	"animationSpeedMs": 90,
 	"spritesFile": "/res/units/orcs/archer/archer_main.png"
 }

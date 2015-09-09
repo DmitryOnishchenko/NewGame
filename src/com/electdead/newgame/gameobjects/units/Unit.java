@@ -10,6 +10,7 @@ import com.electdead.newgame.assets.Assets;
 import com.electdead.newgame.gameobjects.GameObject;
 import com.electdead.newgame.gameobjects.TypeObject;
 import com.electdead.newgame.gameobjects.units.actions.Action;
+import com.electdead.newgame.gameobjects.units.actions.DieAction;
 import com.electdead.newgame.gameobjects.units.ai.AIContainer;
 import com.electdead.newgame.gamestate.DevGameState;
 import com.electdead.newgame.graphics.UnitGraphicsModel;
@@ -22,7 +23,7 @@ public class Unit extends GameObject {
 	public UnitPhysicsModel physModel;
 	public UnitGraphicsModel graphModel;
 	
-	private AIContainer aiContainer;
+	public AIContainer aiContainer;
 	public Action action;
 	
 	/* Main */
@@ -81,12 +82,14 @@ public class Unit extends GameObject {
 		if (total <= 0) total = 1;
 		currHp -= total;
 		if (currHp <= 0) {
-			delete = true;
-			
+//			delete = true;
+			aiContainer.locked = true;
+			action = new DieAction(this);
 			drawBlood();
 		}
 	}
 	
+	@Override
 	public boolean checkDelete() {
 		if ((pos.x + hitBox.width / 2 < -300) ||
 			(pos.x - hitBox.width / 2) > MainApp.WIDTH + 300) {
@@ -116,6 +119,7 @@ public class Unit extends GameObject {
 		at.scale(r.nextDouble() + 0.2, r.nextDouble() + 0.2);
 //		at.translate(-pos.x, -pos.y);
 //		DevGameState.floorG2.drawImage(randomBlood(), x(), (int) (pos.y - hitBox.height / 2), null);
-		DevGameState.floorG2.drawImage(randomBlood(), at, null);
+		for (int i = 0; i < 5; i++)
+			DevGameState.floorG2.drawImage(randomBlood(), at, null);
 	}
 }

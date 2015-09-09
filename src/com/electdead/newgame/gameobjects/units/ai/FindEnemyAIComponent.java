@@ -30,7 +30,8 @@ public class FindEnemyAIComponent extends AIComponent {
 		Unit target = null;
 		
 		for (Unit enemy : DevGameState.units) {
-			if (unit.physModel.getRace() != enemy.physModel.getRace() &&
+			if (enemy.isAlive() &&
+				unit.physModel.getRace() != enemy.physModel.getRace() &&
 				intersects(unit, enemy)) {
 				
 				newDir = enemy.pos.copy();

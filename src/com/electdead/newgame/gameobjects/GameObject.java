@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 
 import com.electdead.newgame.graphics.GraphicsComponent;
 import com.electdead.newgame.input.InputComponent;
+import com.electdead.newgame.main.MainApp;
 import com.electdead.newgame.physics.PhysicsComponent;
 import com.electdead.newgame.physics.Vector2F;
 import com.google.common.base.Joiner;
@@ -69,6 +70,14 @@ public abstract class GameObject implements Comparable<GameObject> {
 	public void render(Graphics2D g2, double deltaTime) {
 		if (graphicsComponent != null)
 			graphicsComponent.render(g2, deltaTime);
+	}
+	
+	public boolean checkDelete() {
+		if ((pos.x < -300) ||
+			(pos.x) > MainApp.WIDTH + 300) {
+			delete = true;
+		}
+		return delete;
 	}
 
 	public String toString() {

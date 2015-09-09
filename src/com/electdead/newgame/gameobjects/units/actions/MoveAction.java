@@ -11,6 +11,10 @@ public class MoveAction extends Action {
 
 	@Override
 	public void execute() {
+		if (!unit.isAlive()) {
+			return;
+		}
+		
 		float shiftX 		= unit.currentSpeed * unit.dir.x;		
 		unit.pos.x 			+= shiftX;
 		unit.hitBox.x 		+= shiftX;
