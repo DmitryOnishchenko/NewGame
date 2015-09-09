@@ -16,13 +16,13 @@ import javax.imageio.ImageIO;
 import com.electdead.newgame.assets.Assets;
 import com.electdead.newgame.gameobjects.GameObject;
 import com.electdead.newgame.gameobjects.TypeObject;
-import com.electdead.newgame.gameobjects.Unit;
-import com.electdead.newgame.gameobjects.ai.AIContainer;
-import com.electdead.newgame.gameobjects.components.GraphicsComponent;
-import com.electdead.newgame.gameobjects.components.PhysicsComponent;
-import com.electdead.newgame.gameobjects.components.UnitGraphicsComponent;
-import com.electdead.newgame.gameobjects.components.UnitPhysicsComponent;
+import com.electdead.newgame.gameobjects.units.Unit;
+import com.electdead.newgame.gameobjects.units.ai.AIContainer;
+import com.electdead.newgame.graphics.GraphicsComponent;
+import com.electdead.newgame.graphics.UnitGraphicsComponent;
 import com.electdead.newgame.main.MainApp;
+import com.electdead.newgame.physics.PhysicsComponent;
+import com.electdead.newgame.physics.UnitPhysicsComponent;
 import com.google.common.collect.TreeMultiset;
 
 public class DevGameState extends AbstractGameState {
@@ -39,6 +39,7 @@ public class DevGameState extends AbstractGameState {
 	public static ArrayList<BufferedImage> bloodSprites = new ArrayList<>();
 	
 	private Random random = new Random();
+	private boolean SWARM = false;
 	
 	public DevGameState(GameStateManager gsm) {
 		super(gsm);
@@ -98,6 +99,8 @@ public class DevGameState extends AbstractGameState {
 	    		units.add(createDemoUnit("Orc Soldier", 1280, random.nextFloat() * 500 + 100));
 	    	} else if (event.getKeyChar() == '\'') {
 	    		units.add(createDemoUnit("Orc Archer", 1280, random.nextFloat() * 500 + 100));
+	    	} else if (event.getKeyChar() == '\\') {
+	    		SWARM = !SWARM;
 	    	}
 	    }
     }
@@ -110,8 +113,8 @@ public class DevGameState extends AbstractGameState {
 	    for (Unit unit : units)
 	    	if (!unit.delete) unit.update();
 	    
-	    if (++testSpawnTimer > 100) {
-//	    	SWARM();
+	    if (SWARM && ++testSpawnTimer > 25) {
+	    	SWARM();
 	    	testSpawnTimer = 0;
 	    }
 	    
@@ -142,7 +145,7 @@ public class DevGameState extends AbstractGameState {
     }
 	
 	public void SWARM() {
-		int width = 600;
+		int width = 500;
 		Random r = new Random();
     	Unit humanUnit1 = createDemoUnit("Human Soldier", -100, r.nextFloat() * width + 100);
     	units.add(humanUnit1);

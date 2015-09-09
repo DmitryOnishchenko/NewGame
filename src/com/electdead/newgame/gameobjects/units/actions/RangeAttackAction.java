@@ -1,9 +1,9 @@
-package com.electdead.newgame.gameobjects.actions;
+package com.electdead.newgame.gameobjects.units.actions;
 
 import com.electdead.newgame.gameobjects.TypeObject;
-import com.electdead.newgame.gameobjects.Unit;
-import com.electdead.newgame.gameobjects.ai.AIComponent;
 import com.electdead.newgame.gameobjects.projectiles.Projectile;
+import com.electdead.newgame.gameobjects.units.Unit;
+import com.electdead.newgame.gameobjects.units.ai.AIComponent;
 import com.electdead.newgame.gamestate.DevGameState;
 import com.electdead.newgame.physics.Vector2F;
 

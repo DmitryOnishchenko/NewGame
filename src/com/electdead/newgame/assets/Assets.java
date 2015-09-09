@@ -11,11 +11,11 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import com.electdead.newgame.gameobjects.Race;
 import com.electdead.newgame.gameobjects.TypeObject;
-import com.electdead.newgame.gameobjects.components.UnitGraphicsModel;
-import com.electdead.newgame.gameobjects.components.UnitPhysicsModel;
+import com.electdead.newgame.gameobjects.units.Race;
+import com.electdead.newgame.graphics.UnitGraphicsModel;
 import com.electdead.newgame.main.MainApp;
+import com.electdead.newgame.physics.UnitPhysicsModel;
 import com.electdead.newgame.physics.Vector2F;
 
 public class Assets {

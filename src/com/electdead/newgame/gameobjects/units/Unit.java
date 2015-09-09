@@ -1,4 +1,4 @@
-package com.electdead.newgame.gameobjects;
+package com.electdead.newgame.gameobjects.units;
 
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
@@ -7,12 +7,14 @@ import java.util.HashMap;
 import java.util.Random;
 
 import com.electdead.newgame.assets.Assets;
-import com.electdead.newgame.gameobjects.actions.Action;
-import com.electdead.newgame.gameobjects.ai.AIContainer;
-import com.electdead.newgame.gameobjects.components.UnitGraphicsModel;
-import com.electdead.newgame.gameobjects.components.UnitPhysicsModel;
+import com.electdead.newgame.gameobjects.GameObject;
+import com.electdead.newgame.gameobjects.TypeObject;
+import com.electdead.newgame.gameobjects.units.actions.Action;
+import com.electdead.newgame.gameobjects.units.ai.AIContainer;
 import com.electdead.newgame.gamestate.DevGameState;
+import com.electdead.newgame.graphics.UnitGraphicsModel;
 import com.electdead.newgame.main.MainApp;
+import com.electdead.newgame.physics.UnitPhysicsModel;
 import com.electdead.newgame.physics.Vector2F;
 
 public class Unit extends GameObject {

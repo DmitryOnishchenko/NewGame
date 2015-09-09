@@ -1,10 +1,10 @@
-package com.electdead.newgame.gameobjects.ai;
+package com.electdead.newgame.gameobjects.units.ai;
 
-import com.electdead.newgame.gameobjects.Unit;
-import com.electdead.newgame.gameobjects.actions.Action;
-import com.electdead.newgame.gameobjects.actions.MeleeAttackAction;
-import com.electdead.newgame.gameobjects.actions.MoveAction;
-import com.electdead.newgame.gameobjects.actions.RangeAttackAction;
+import com.electdead.newgame.gameobjects.units.Unit;
+import com.electdead.newgame.gameobjects.units.actions.Action;
+import com.electdead.newgame.gameobjects.units.actions.MeleeAttackAction;
+import com.electdead.newgame.gameobjects.units.actions.MoveAction;
+import com.electdead.newgame.gameobjects.units.actions.RangeAttackAction;
 import com.electdead.newgame.graphics.Animation;
 
 public class AIContainer {

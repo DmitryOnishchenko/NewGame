@@ -1,7 +1,7 @@
-package com.electdead.newgame.gameobjects.ai;
+package com.electdead.newgame.gameobjects.units.ai;
 
-import com.electdead.newgame.gameobjects.Unit;
-import com.electdead.newgame.gameobjects.actions.Action;
+import com.electdead.newgame.gameobjects.units.Unit;
+import com.electdead.newgame.gameobjects.units.actions.Action;
 
 public abstract class AIComponent implements Comparable<AIComponent> {
 	public AIContainer aic;

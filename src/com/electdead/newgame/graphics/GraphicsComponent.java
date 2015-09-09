@@ -1,4 +1,4 @@
-package com.electdead.newgame.gameobjects.components;
+package com.electdead.newgame.graphics;
 
 import java.awt.Graphics2D;
 

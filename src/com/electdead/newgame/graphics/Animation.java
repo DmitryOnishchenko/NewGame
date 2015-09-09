@@ -2,7 +2,7 @@ package com.electdead.newgame.graphics;
 
 import java.awt.image.BufferedImage;
 
-import com.electdead.newgame.gameobjects.actions.Action;
+import com.electdead.newgame.gameobjects.units.actions.Action;
 
 public class Animation {
 	public Action action;

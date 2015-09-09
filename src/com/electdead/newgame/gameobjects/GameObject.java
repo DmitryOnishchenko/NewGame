@@ -2,9 +2,9 @@ package com.electdead.newgame.gameobjects;
 
 import java.awt.Graphics2D;
 
-import com.electdead.newgame.gameobjects.components.GraphicsComponent;
-import com.electdead.newgame.gameobjects.components.InputComponent;
-import com.electdead.newgame.gameobjects.components.PhysicsComponent;
+import com.electdead.newgame.graphics.GraphicsComponent;
+import com.electdead.newgame.input.InputComponent;
+import com.electdead.newgame.physics.PhysicsComponent;
 import com.electdead.newgame.physics.Vector2F;
 import com.google.common.base.Joiner;
 

@@ -1,6 +1,6 @@
-package com.electdead.newgame.gameobjects.components;
+package com.electdead.newgame.physics;
 
-import com.electdead.newgame.gameobjects.Unit;
+import com.electdead.newgame.gameobjects.units.Unit;
 
 public class UnitPhysicsComponent implements PhysicsComponent {
 	private Unit unit;

@@ -1,4 +1,4 @@
-package com.electdead.newgame.gameobjects.components;
+package com.electdead.newgame.graphics;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -7,8 +7,8 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 
 import com.electdead.newgame.assets.Assets;
-import com.electdead.newgame.gameobjects.Race;
-import com.electdead.newgame.gameobjects.Unit;
+import com.electdead.newgame.gameobjects.units.Race;
+import com.electdead.newgame.gameobjects.units.Unit;
 
 public class UnitGraphicsComponent implements GraphicsComponent {
 	private Unit unit;

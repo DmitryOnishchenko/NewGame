@@ -1,6 +1,6 @@
-package com.electdead.newgame.gameobjects.ai;
+package com.electdead.newgame.gameobjects.units.ai;
 
-import com.electdead.newgame.gameobjects.Unit;
+import com.electdead.newgame.gameobjects.units.Unit;
 
 public class MoveAIComponent extends AIComponent {
 

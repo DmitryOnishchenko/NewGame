@@ -1,6 +1,6 @@
-package com.electdead.newgame.gameobjects.ai;
+package com.electdead.newgame.gameobjects.units.ai;
 
-import com.electdead.newgame.gameobjects.Unit;
+import com.electdead.newgame.gameobjects.units.Unit;
 import com.electdead.newgame.physics.Vector2F;
 
 public class AttackAIComponent extends AIComponent {
