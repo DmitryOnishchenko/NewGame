@@ -1,5 +1,6 @@
 package com.electdead.newgame.gamestate;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
@@ -39,7 +40,7 @@ public class DevGameState extends AbstractGameState {
 	public static ArrayList<BufferedImage> bloodSprites = new ArrayList<>();
 	
 	private Random random = new Random();
-	private boolean SWARM = false;
+	public static boolean SWARM = false;
 	
 	public DevGameState(GameStateManager gsm) {
 		super(gsm);
@@ -63,10 +64,10 @@ public class DevGameState extends AbstractGameState {
 //	    units.add(createDemoUnit("Orc Soldier", 800, 500));
 	    
 //	    units.add(createDemoUnit("Human Soldier", 500, 520));
-	    units.add(createDemoUnit("Human Archer", 400, 520));
+//	    units.add(createDemoUnit("Human Archer", 400, 520));
 	    
 //	    units.add(createDemoUnit("Human Archer", 200, 520));
-	    units.add(createDemoUnit("Orc Archer", 900, 300));
+//	    units.add(createDemoUnit("Orc Archer", 900, 300));
     }
 	
 	public Unit createDemoUnit(String name, float x, float y) {
@@ -95,11 +96,11 @@ public class DevGameState extends AbstractGameState {
 	    		units.add(createDemoUnit("Human Soldier", -100, random.nextFloat() * 500 + 100));
 	    	} else if (event.getKeyChar() == 's') {
 	    		units.add(createDemoUnit("Human Archer", -100, random.nextFloat() * 500 + 100));
-	    	} else if (event.getKeyChar() == ';') {
+	    	} else if (event.getKeyChar() == 'k') {
 	    		units.add(createDemoUnit("Orc Soldier", 1280, random.nextFloat() * 500 + 100));
-	    	} else if (event.getKeyChar() == '\'') {
+	    	} else if (event.getKeyChar() == 'l') {
 	    		units.add(createDemoUnit("Orc Archer", 1280, random.nextFloat() * 500 + 100));
-	    	} else if (event.getKeyChar() == '`') {
+	    	} else if (event.getKeyChar() == 'h') {
 	    		SWARM = !SWARM;
 	    	}
 	    }
@@ -142,6 +143,15 @@ public class DevGameState extends AbstractGameState {
 		
 		for (GameObject obj : renderObjects)
 			if (obj.visible) obj.render(g2, deltaTime);
+		
+		g2.setPaint(Color.WHITE);
+		g2.drawString("GameObjects: " + gameObjects.size() + " | Units: " + units.size(), 5, 36);
+		
+		g2.drawString("To spawn Human Soldier press \"A\"", 5, 72);
+		g2.drawString("To spawn Human Archer press \"S\"", 5, 90);
+		g2.drawString("To spawn Orc Soldier press \"K\"", 1100, 72);
+		g2.drawString("To spawn Orc Archer press \"L\"", 1100, 90);
+		g2.drawString("To start Demo Mode press \"H\"", 580, 90);
     }
 	
 	public void SWARM() {
@@ -153,7 +163,12 @@ public class DevGameState extends AbstractGameState {
     	Unit orcUnit1 = createDemoUnit("Orc Soldier", 1280, r.nextFloat() * width + 100);
     	units.add(orcUnit1);
     	
-    	if (++testSpawnTimer2 >= 6) {
+    	if (++testSpawnTimer2 >= 10) {
+    		Unit orcUnit2 = createDemoUnit("Orc Soldier", 1280, r.nextFloat() * width + 100);
+    		units.add(orcUnit2);
+    	}
+    	
+    	if (++testSpawnTimer2 >= 10) {
     		testSpawnTimer2 = 0;
     		Unit orcUnit2 = createDemoUnit("Orc Soldier", 1280, r.nextFloat() * width + 100);
     		units.add(orcUnit2);

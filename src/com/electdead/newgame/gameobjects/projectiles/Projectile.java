@@ -10,7 +10,7 @@ import com.electdead.newgame.physics.Vector2F;
 
 public class Projectile extends GameObject {
 	public Vector2F dir;
-	public float speed = 4;
+	public float speed = 5;
 	public BufferedImage sprite = (BufferedImage) Assets.getProperties("projectiles").get("woodenArrow");
 	
 	public Projectile(String name, TypeObject type, float x, float y) {
@@ -24,6 +24,8 @@ public class Projectile extends GameObject {
 		
 		float shiftY = speed * dir.y;
 		pos.y += shiftY;
+		
+		checkDelete();
 	}
 	
 	@Override

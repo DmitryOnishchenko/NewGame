@@ -73,8 +73,8 @@ public abstract class GameObject implements Comparable<GameObject> {
 	}
 	
 	public boolean checkDelete() {
-		if ((pos.x < -300) ||
-			(pos.x) > MainApp.WIDTH + 300) {
+		if ((pos.x < 0) ||
+			(pos.x) > MainApp.WIDTH) {
 			delete = true;
 		}
 		return delete;

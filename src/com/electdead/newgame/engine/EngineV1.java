@@ -80,7 +80,6 @@ public class EngineV1 extends AbstractGameLoop {
 			fps++;
 			g2.setPaint(Color.WHITE);
 			g2.drawString("FPS: " + fpsInfo + " | TPS: " + tpsInfo, 5, 18);
-			g2.drawString("Units: " + DevGameState.units.size(), 5, 33);
 		}
 		
 		/* Draw frame */

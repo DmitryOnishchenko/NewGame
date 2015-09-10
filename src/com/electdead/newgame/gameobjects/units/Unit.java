@@ -91,6 +91,16 @@ public class Unit extends GameObject {
 	
 	@Override
 	public boolean checkDelete() {
+		if (physModel.getRace() == Race.Human) {
+			if (pos.x >= 1280) {
+				DevGameState.SWARM = false;
+			}
+		} else {
+			if (pos.x <= 0) {
+				DevGameState.SWARM = false;
+			}
+		}
+		
 		if ((pos.x + hitBox.width / 2 < -300) ||
 			(pos.x - hitBox.width / 2) > MainApp.WIDTH + 300) {
 			delete = true;
