@@ -99,7 +99,7 @@ public class DevGameState extends AbstractGameState {
 	    		units.add(createDemoUnit("Orc Soldier", 1280, random.nextFloat() * 500 + 100));
 	    	} else if (event.getKeyChar() == '\'') {
 	    		units.add(createDemoUnit("Orc Archer", 1280, random.nextFloat() * 500 + 100));
-	    	} else if (event.getKeyChar() == '\\') {
+	    	} else if (event.getKeyChar() == '`') {
 	    		SWARM = !SWARM;
 	    	}
 	    }

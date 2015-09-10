@@ -1,9 +1,9 @@
 package com.electdead.newgame.assets;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileReader;
-import java.net.URL;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -53,10 +53,13 @@ public class Assets {
 	private static void loadAssetsForUnit(String unitName) {
 		try {
 			/* Load from .json */
-			URL url = MainApp.class.getResource(UNITS_PROPERTIES + unitName + ".json");
-			File file = new File(url.toURI());
+			InputStream in = MainApp.class.getResourceAsStream(UNITS_PROPERTIES + unitName + ".json");
+			InputStreamReader rin = new InputStreamReader(in);
+			BufferedReader br = new BufferedReader(rin);
+//			URL url = MainApp.class.getResource(UNITS_PROPERTIES + unitName + ".json");
+//			File file = new File(url.toURI());
 			JSONParser parser = new JSONParser();
-			JSONObject json = (JSONObject) parser.parse(new FileReader(file));
+			JSONObject json = (JSONObject) parser.parse(br);
 			
 			String name 			= (String) json.get("name");
 			TypeObject type 		= TypeObject.valueOf((String) json.get("type"));
