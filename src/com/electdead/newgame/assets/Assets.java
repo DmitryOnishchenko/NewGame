@@ -38,10 +38,10 @@ public class Assets {
         assets.put("projectiles", projectiles);
 		
 		/* Units */
-//        loadAssetsForUnit("Human Soldier");
-//        loadAssetsForUnit("Human Archer");
+        loadAssetsForUnit("Human Soldier");
+        loadAssetsForUnit("Human Archer");
         loadAssetsForUnit("Orc Soldier");
-//        loadAssetsForUnit("Orc Archer");
+        loadAssetsForUnit("Orc Archer");
     }
 
     public static HashMap<String, Object> getProperties(String key) {
@@ -107,8 +107,8 @@ public class Assets {
             graphModel.setHeightSprite(heightSprite);
             graphModel.setBaseLine(baseLine);
             graphModel.setMoveSpritesRight(moveSprites);
-            graphModel.setFightSprites(fightSprites);
-            graphModel.setDieSprites(dieSprites);
+            graphModel.setFightSpritesRight(fightSprites);
+            graphModel.setDieSpritesRight(dieSprites);
             graphModel.setAnimationSpeed(animationSpeedMs);
 
             HashMap<String, Object> props = new HashMap<>();

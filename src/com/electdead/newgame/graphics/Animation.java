@@ -9,12 +9,17 @@ public class Animation {
     public Action action;
     private int currentSprite = 0;
     private int animationTimer;
-    private BufferedImage[] sprites;
+    public BufferedImage[] sprites;
+    private BufferedImage[] spritesRight;
+    private BufferedImage[] spritesLeft;
     private int dirX;
 
-    public Animation(Action action, BufferedImage[] sprites) {
+    public Animation(Action action, BufferedImage[] sprites,
+                     BufferedImage[] spritesRight, BufferedImage[] spritesLeft) {
         this.action = action;
         this.sprites = sprites;
+        this.spritesRight = spritesRight;
+        this.spritesLeft = spritesLeft;
         this.dirX = 1;
         this.currentSprite = 0;
         checkDir(action.unit.dir);
@@ -22,7 +27,7 @@ public class Animation {
 
     public void next() {
         if (++animationTimer >= action.unit.graphModel.getAnimationSpeed()) {
-            checkDir(action.unit.dir);
+//            checkDir(action.unit.dir);
 
             currentSprite++;
             if (currentSprite == sprites.length) {
@@ -38,7 +43,7 @@ public class Animation {
         return sprites[currentSprite];
     }
 
-    private void checkDir(Vector2F unitDir) {
+    public void checkDir(Vector2F unitDir) {
         int unitX = 0;
         if (unitDir.x > 0) {
             unitX = 1;
@@ -53,9 +58,9 @@ public class Animation {
 
     private void swapDir(int unitX) {
         if (unitX == 1) {
-            sprites = action.unit.graphModel.getMoveSpritesRight();
+            sprites = spritesRight;
         } else {
-            sprites = action.unit.graphModel.getMoveSpritesLeft();
+            sprites = spritesLeft;
         }
     }
 }

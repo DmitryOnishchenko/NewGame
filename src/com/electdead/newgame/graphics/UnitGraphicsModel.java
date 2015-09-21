@@ -9,11 +9,13 @@ public class UnitGraphicsModel {
     private int widthSprite;
     private int heightSprite;
     private int baseLine;
+    private int animationSpeed;
     private BufferedImage[] moveSpritesRight;
     private BufferedImage[] moveSpritesLeft;
-    private BufferedImage[] fightSprites;
-    private BufferedImage[] dieSprites;
-    private int animationSpeed;
+    private BufferedImage[] fightSpritesRight;
+    private BufferedImage[] fightSpritesLeft;
+    private BufferedImage[] dieSpritesRight;
+    private BufferedImage[] dieSpritesLeft;
 
     public UnitGraphicsModel() {}
 
@@ -24,15 +26,19 @@ public class UnitGraphicsModel {
 
     public int getBaseLine() { return baseLine; }
 
+    public int getAnimationSpeed() { return animationSpeed; }
+
     public BufferedImage[] getMoveSpritesRight() { return moveSpritesRight; }
 
     public BufferedImage[] getMoveSpritesLeft() { return moveSpritesLeft; }
 
-    public BufferedImage[] getFightSprites() { return fightSprites; }
+    public BufferedImage[] getFightSpritesRight() { return fightSpritesRight; }
 
-    public BufferedImage[] getDieSprites() { return dieSprites; }
+    public BufferedImage[] getFightSpritesLeft() { return fightSpritesLeft; }
 
-    public int getAnimationSpeed() { return animationSpeed; }
+    public BufferedImage[] getDieSpritesRight() { return dieSpritesRight; }
+
+    public BufferedImage[] getDieSpritesLeft() { return dieSpritesLeft; }
 
     /* Setters */
     public void setWidthSprite(int widthSprite) { this.widthSprite = widthSprite; }
@@ -41,16 +47,29 @@ public class UnitGraphicsModel {
 
     public void setBaseLine(int baseLine) { this.baseLine = baseLine; }
 
-    public void setMoveSpritesRight(BufferedImage[] moveSpritesRight) {
-        this.moveSpritesRight = moveSpritesRight;
-        this.moveSpritesLeft = new BufferedImage[moveSpritesRight.length];
-        System.arraycopy(moveSpritesRight, 0, moveSpritesLeft, 0, moveSpritesRight.length);
-        ImageUtils.flipHorizontally(moveSpritesLeft);
+    public void setAnimationSpeed(int animationSpeedMs) {
+        this.animationSpeed = animationSpeedMs / EngineV1.MS_PER_UPDATE;
     }
 
-    public void setFightSprites(BufferedImage[] fightSprites) { this.fightSprites = fightSprites; }
+    public void setMoveSpritesRight(BufferedImage[] moveSpritesRight) {
+        this.moveSpritesRight = moveSpritesRight;
+        this.moveSpritesLeft = createMirror(moveSpritesRight);
+    }
 
-    public void setDieSprites(BufferedImage[] dieSprites) { this.dieSprites = dieSprites; }
+    public void setFightSpritesRight(BufferedImage[] fightSpritesRight) {
+        this.fightSpritesRight = fightSpritesRight;
+        this.fightSpritesLeft = createMirror(fightSpritesRight);
+    }
 
-    public void setAnimationSpeed(int animationSpeedMs) { this.animationSpeed = animationSpeedMs / EngineV1.MS_PER_UPDATE; }
+    public void setDieSpritesRight(BufferedImage[] dieSpritesRight) {
+        this.dieSpritesRight = dieSpritesRight;
+        this.dieSpritesLeft = createMirror(dieSpritesRight);
+    }
+
+    private BufferedImage[] createMirror(BufferedImage[] src) {
+        BufferedImage[] dst = new BufferedImage[src.length];
+        System.arraycopy(src, 0, dst, 0, src.length);
+        ImageUtils.flipHorizontally(dst);
+        return dst;
+    }
 }
