@@ -25,7 +25,7 @@
   "moveSpritesFile": "/res/units/humans/archer/archer_move.png",
   "moveSpritesIndex": [0, 8],
   "fightSpritesFile": "/res/units/humans/archer/archer_fight.png",
-  "fightSpritesIndex": [0, 17],
+  "fightSpritesIndex": [0, 14],
   "dieSpritesFile": "/res/units/humans/archer/archer_die.png",
-  "dieSpritesIndex": [0, 20]
+  "dieSpritesIndex": [0, 8]
 }
