@@ -38,7 +38,7 @@ public class AIContainer {
 		/* Move */
 		AIComponent moveAIComponent = new MoveAIComponent(this, 4);
 		Action moveAction = new MoveAction(moveAIComponent, unit, false);
-		Animation moveAnimation = new Animation(moveAction, unit.graphModel.getMoveSprites());
+		Animation moveAnimation = new Animation(moveAction, unit.graphModel.getMoveSpritesRight());
 		moveAction.setAnimation(moveAnimation);
 		moveAIComponent.setAction(moveAction);
 		aiComponents[2] = moveAIComponent;
