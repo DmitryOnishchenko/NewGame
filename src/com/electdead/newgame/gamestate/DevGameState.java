@@ -54,15 +54,15 @@ public class DevGameState extends AbstractGameState {
             }
         }	catch (IOException ex) { ex.printStackTrace(); }
 
-	    units.add(createDemoUnit("Orc Soldier", 800, 500));
+//	    units.add(createDemoUnit("Orc Soldier", 800, 500));
 
 //        units.add(createDemoUnit("Human Soldier", 200, 480));
 //        units.add(createDemoUnit("Human Soldier", 0, 540));
-        units.add(createDemoUnit("Human Soldier", 500, 520));
+//        units.add(createDemoUnit("Human Soldier", 500, 520));
 //	    units.add(createDemoUnit("Human Archer", 400, 520));
 
 //	    units.add(createDemoUnit("Human Archer", 200, 520));
-	    units.add(createDemoUnit("Orc Archer", 900, 300));
+//	    units.add(createDemoUnit("Orc Archer", 900, 300));
     }
 
     public Unit createDemoUnit(String name, float x, float y) {
@@ -92,9 +92,9 @@ public class DevGameState extends AbstractGameState {
             } else if (event.getKeyChar() == 's') {
                 units.add(createDemoUnit("Human Archer", -100, random.nextFloat() * 500 + 100));
             } else if (event.getKeyChar() == 'k') {
-                units.add(createDemoUnit("Orc Soldier", 1280, random.nextFloat() * 500 + 100));
+                units.add(createDemoUnit("Orc Soldier", 1380, random.nextFloat() * 500 + 100));
             } else if (event.getKeyChar() == 'l') {
-                units.add(createDemoUnit("Orc Archer", 1280, random.nextFloat() * 500 + 100));
+                units.add(createDemoUnit("Orc Archer", 1380, random.nextFloat() * 500 + 100));
             } else if (event.getKeyChar() == 'h') {
                 SWARM = !SWARM;
             } else if (event.getKeyChar() == 'j') {
@@ -155,26 +155,26 @@ public class DevGameState extends AbstractGameState {
     public void SWARM() {
         int width = 500;
         Random r = new Random();
-        Unit humanUnit1 = createDemoUnit("Human Soldier", -100, r.nextFloat() * width + 100);
+        Unit humanUnit1 = createDemoUnit("Human Soldier", -100, r.nextFloat() * width + 150);
         units.add(humanUnit1);
 
-        Unit orcUnit1 = createDemoUnit("Orc Soldier", 1280, r.nextFloat() * width + 100);
+        Unit orcUnit1 = createDemoUnit("Orc Soldier", 1380, r.nextFloat() * width + 150);
         units.add(orcUnit1);
 
         if (++testSpawnTimer2 >= 10) {
-            Unit orcUnit2 = createDemoUnit("Orc Soldier", 1280, r.nextFloat() * width + 100);
+            Unit orcUnit2 = createDemoUnit("Orc Soldier", 1380, r.nextFloat() * width + 150);
             units.add(orcUnit2);
         }
 
         if (++testSpawnTimer2 >= 10) {
             testSpawnTimer2 = 0;
-            Unit orcUnit2 = createDemoUnit("Orc Soldier", 1280, r.nextFloat() * width + 100);
+            Unit orcUnit2 = createDemoUnit("Orc Soldier", 1380, r.nextFloat() * width + 150);
             units.add(orcUnit2);
 
-            Unit orcUnit3 = createDemoUnit("Orc Archer", 1280, r.nextFloat() * width + 100);
+            Unit orcUnit3 = createDemoUnit("Orc Archer", 1380, r.nextFloat() * width + 150);
             units.add(orcUnit3);
 
-            Unit humanUnit2 = createDemoUnit("Human Archer", -100, r.nextFloat() * width + 100);
+            Unit humanUnit2 = createDemoUnit("Human Archer", -100, r.nextFloat() * width + 150);
             units.add(humanUnit2);
         }
     }

@@ -21,7 +21,7 @@ public class DieAction extends Action {
 
     @Override
     public void execute() {
-        if (finished && delay++ > 500) {
+        if (finished && delay++ > 1000) {
             unit.delete = true;
         }
     }
