@@ -82,7 +82,7 @@ public class Unit extends GameObject {
         if (total <= 0) total = 1;
         currHp -= total;
         if (currHp <= 0) {
-//			delete = true;
+            zLevel = 0;
             aiContainer.locked = true;
             action = new DieAction(this, action);
             action.checkAnimationDir();

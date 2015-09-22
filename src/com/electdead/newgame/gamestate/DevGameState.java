@@ -10,7 +10,6 @@ import com.electdead.newgame.graphics.UnitGraphicsComponent;
 import com.electdead.newgame.main.MainApp;
 import com.electdead.newgame.physics.PhysicsComponent;
 import com.electdead.newgame.physics.UnitPhysicsComponent;
-import com.google.common.collect.TreeMultiset;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -20,9 +19,10 @@ import java.io.IOException;
 import java.util.*;
 
 public class DevGameState extends AbstractGameState {
-    public static HashSet<GameObject> gameObjects = new HashSet<>();
-    public static HashSet<Unit> units = new HashSet<>();
-    public static TreeMultiset<GameObject> renderObjects = TreeMultiset.create();
+    public static ArrayList<GameObject> gameObjects = new ArrayList<>();
+    public static ArrayList<Unit> units = new ArrayList<>();
+//    public static TreeMultiset<GameObject> renderObjects = TreeMultiset.create();
+    public static ArrayList<GameObject> renderObjects = new ArrayList<>();
 
     private BufferedImage floorSprite = (BufferedImage) Assets.getProperties("Battle background").get("floor");
     private static BufferedImage map = new BufferedImage(MainApp.WIDTH, MainApp.HEIGHT, BufferedImage.TYPE_INT_ARGB);
@@ -96,7 +96,7 @@ public class DevGameState extends AbstractGameState {
             } else if (event.getKeyChar() == 'l') {
                 units.add(createDemoUnit("Orc Archer", 1380, random.nextFloat() * 500 + 100));
             } else if (event.getKeyChar() == 'h') {
-                SWARM = !SWARM;
+                    SWARM = !SWARM;
             } else if (event.getKeyChar() == 'j') {
                 DEBUG = !DEBUG;
             }
@@ -137,6 +137,7 @@ public class DevGameState extends AbstractGameState {
         renderObjects.clear();
         renderObjects.addAll(gameObjects);
         renderObjects.addAll(units);
+        Collections.sort(renderObjects);
 
         for (GameObject obj : renderObjects)
             if (obj.visible) obj.render(g2, deltaTime);
@@ -148,7 +149,7 @@ public class DevGameState extends AbstractGameState {
         g2.drawString("To spawn Human Archer press \"S\"", 5, 90);
         g2.drawString("To spawn Orc Soldier press \"K\"", 1100, 72);
         g2.drawString("To spawn Orc Archer press \"L\"", 1100, 90);
-        g2.drawString("To activate Debug mode press \"J\"", 580, 72);
+        g2.drawString("To activate Debug mode press \"J\" (dangerous! units < 40)", 580, 72);
         g2.drawString("To start Demo Mode press \"H\"", 580, 90);
     }
 
@@ -161,7 +162,7 @@ public class DevGameState extends AbstractGameState {
         Unit orcUnit1 = createDemoUnit("Orc Soldier", 1380, r.nextFloat() * width + 150);
         units.add(orcUnit1);
 
-        if (++testSpawnTimer2 >= 10) {
+        if (++testSpawnTimer2 >= 8) {
             Unit orcUnit2 = createDemoUnit("Orc Soldier", 1380, r.nextFloat() * width + 150);
             units.add(orcUnit2);
         }
