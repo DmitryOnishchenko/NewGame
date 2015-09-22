@@ -14,7 +14,7 @@ public class AttackAIComponent extends AIComponent {
 		if (unit.target != null) {
 			if (intersects(unit, unit.target)) {
 				aic.setMaxPriorityComponent(this);
-				unit.dir = new Vector2F();
+				unit.moveDir = new Vector2F();
 			}
 		}
 	}

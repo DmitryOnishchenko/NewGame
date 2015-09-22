@@ -12,12 +12,12 @@ public class MoveAIComponent extends AIComponent {
 	public void think(Unit unit) {
 		if (unit.target == null) {
 			aic.setMaxPriorityComponent(this);
-			unit.dir = unit.physModel.getDir();
+			unit.moveDir = unit.physModel.getMoveDir();
 		}
 	}
 
 	@Override
 	public void update(Unit unit) {
-		unit.dir = unit.physModel.getDir();
+		unit.moveDir = unit.physModel.getMoveDir();
 	}
 }

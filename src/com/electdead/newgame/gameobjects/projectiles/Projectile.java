@@ -1,15 +1,15 @@
 package com.electdead.newgame.gameobjects.projectiles;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-
 import com.electdead.newgame.assets.Assets;
 import com.electdead.newgame.gameobjects.GameObject;
 import com.electdead.newgame.gameobjects.TypeObject;
 import com.electdead.newgame.physics.Vector2F;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
+
 public class Projectile extends GameObject {
-	public Vector2F dir;
+	public Vector2F moveDir;
 	public float speed = 5;
 	public BufferedImage sprite = (BufferedImage) Assets.getProperties("projectiles").get("woodenArrow");
 	
@@ -19,10 +19,10 @@ public class Projectile extends GameObject {
 	
 	@Override
 	public void update() {
-		float shiftX = speed * dir.x;
+		float shiftX = speed * moveDir.x;
 		pos.x += shiftX;
 		
-		float shiftY = speed * dir.y;
+		float shiftY = speed * moveDir.y;
 		pos.y += shiftY;
 		
 		checkDelete();

@@ -17,12 +17,12 @@ public class UnitPhysicsComponent implements PhysicsComponent {
 	
 	public void move() {
 //		if (unit.state == UnitState.MOVE) {
-			float shiftX 		= unit.currentSpeed * unit.dir.x;		
+			float shiftX 		= unit.currentSpeed * unit.moveDir.x;
 			unit.pos.x 			+= shiftX;
 			unit.hitBox.x 		+= shiftX;
 			unit.attackBox.x 	+= shiftX;
 			
-			float shiftY 		= unit.currentSpeed * unit.dir.y;
+			float shiftY 		= unit.currentSpeed * unit.moveDir.y;
 			unit.pos.y 				+= shiftY;
 			unit.hitBox.y 		+= shiftY;
 			unit.attackBox.y 	+= shiftY;

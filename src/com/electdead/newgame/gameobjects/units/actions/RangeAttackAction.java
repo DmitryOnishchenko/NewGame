@@ -40,7 +40,7 @@ public class RangeAttackAction extends Action {
 		Vector2F newDir = unit.target.pos.copy();
 		newDir.sub(unit.pos);
 		newDir.normalize();
-		arrow.dir = newDir;
+		arrow.moveDir = newDir;
 		
 		DevGameState.gameObjects.add(arrow);
 	}

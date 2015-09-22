@@ -47,7 +47,7 @@ public class FindEnemyAIComponent extends AIComponent {
 		if (target != null) {
 			unit.target = target;
 			newDir.normalize();
-			unit.dir = newDir;			
+			unit.moveDir = newDir;
 		}
 	}
 	

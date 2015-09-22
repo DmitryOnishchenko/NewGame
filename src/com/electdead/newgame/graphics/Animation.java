@@ -22,13 +22,11 @@ public class Animation {
         this.spritesLeft = spritesLeft;
         this.dirX = 1;
         this.currentSprite = 0;
-        checkDir(action.unit.dir);
+        checkDir(action.unit.moveDir);
     }
 
     public void next() {
         if (++animationTimer >= action.unit.graphModel.getAnimationSpeed()) {
-//            checkDir(action.unit.dir);
-
             currentSprite++;
             if (currentSprite == sprites.length) {
                 currentSprite = 0;

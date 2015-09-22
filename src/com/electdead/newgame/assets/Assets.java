@@ -92,7 +92,7 @@ public class Assets {
             physModel.setMaxHp(maxHp);
             physModel.setArmor(armor);
             physModel.setDefaultSpeed(defaultSpeed);
-            physModel.setDir(dir);
+            physModel.setMoveDir(dir);
             physModel.setDamage(damage);
             physModel.setAttackSpeed(attackSpeed);
             physModel.setAttackRange(attackRange);

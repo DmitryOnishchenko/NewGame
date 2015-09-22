@@ -8,7 +8,7 @@ public class UnitPhysicsModel {
 	private int maxHp;
 	private int armor;
 	private float defaultSpeed;
-	private Vector2F dir;
+	private Vector2F moveDir;
 	private int damage;
 	private float attackSpeed;
 	private float attackRange;
@@ -29,7 +29,7 @@ public class UnitPhysicsModel {
 
 	public float getDefaultSpeed() { return defaultSpeed; }
 
-	public Vector2F getDir() { return dir; }
+	public Vector2F getMoveDir() { return moveDir; }
 
 	public int getDamage() { return damage; }
 
@@ -58,7 +58,7 @@ public class UnitPhysicsModel {
 		this.defaultSpeed = defaultSpeed / EngineV1.UPDATE_PER_SEC;
 	}
 
-	public void setDir(Vector2F dir) { this.dir = dir; }
+	public void setMoveDir(Vector2F moveDir) { this.moveDir = moveDir; }
 	
 	public void setDamage(int damage) { this.damage = damage; }
 
