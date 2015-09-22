@@ -15,7 +15,7 @@ public class MoveAction extends Action {
             return;
         }
 
-        animation.checkDir(unit.moveDir);
+        checkAnimationDir();
 
         float shiftX        = unit.currentSpeed * unit.moveDir.x;
         unit.pos.x          += shiftX;

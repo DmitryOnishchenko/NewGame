@@ -54,10 +54,11 @@ public class DevGameState extends AbstractGameState {
             }
         }	catch (IOException ex) { ex.printStackTrace(); }
 
-//	    units.add(createDemoUnit("Human Soldier", 100, 480));
 	    units.add(createDemoUnit("Orc Soldier", 800, 500));
 
-	    units.add(createDemoUnit("Human Soldier", 500, 520));
+//        units.add(createDemoUnit("Human Soldier", 200, 480));
+//        units.add(createDemoUnit("Human Soldier", 0, 540));
+        units.add(createDemoUnit("Human Soldier", 500, 520));
 //	    units.add(createDemoUnit("Human Archer", 400, 520));
 
 //	    units.add(createDemoUnit("Human Archer", 200, 520));

@@ -1,7 +1,6 @@
 package com.electdead.newgame.graphics;
 
 import com.electdead.newgame.gameobjects.units.actions.Action;
-import com.electdead.newgame.physics.Vector2F;
 
 import java.awt.image.BufferedImage;
 
@@ -12,7 +11,7 @@ public class Animation {
     public BufferedImage[] sprites;
     private BufferedImage[] spritesRight;
     private BufferedImage[] spritesLeft;
-    private int dirX;
+    public int previousDirX;
 
     public Animation(Action action, BufferedImage[] sprites,
                      BufferedImage[] spritesRight, BufferedImage[] spritesLeft) {
@@ -20,9 +19,8 @@ public class Animation {
         this.sprites = sprites;
         this.spritesRight = spritesRight;
         this.spritesLeft = spritesLeft;
-        this.dirX = 1;
+        this.previousDirX = 1;
         this.currentSprite = 0;
-        checkDir(action.unit.moveDir);
     }
 
     public void next() {
@@ -41,24 +39,20 @@ public class Animation {
         return sprites[currentSprite];
     }
 
-    public void checkDir(Vector2F unitDir) {
-        int unitX = 0;
-        if (unitDir.x > 0) {
-            unitX = 1;
+    public void swapDir(float unitDirX) {
+        previousDirX = unitDirX > 0 ? 1 : -1;
+        if (sprites == spritesRight) {
+            sprites = spritesLeft;
         } else {
-            unitX = -1;
-        }
-        if (unitX != dirX) {
-            swapDir(unitX);
-            dirX = unitX;
+            sprites = spritesRight;
         }
     }
 
-    private void swapDir(int unitX) {
-        if (unitX == 1) {
-            sprites = spritesRight;
-        } else {
-            sprites = spritesLeft;
-        }
+    public boolean watchWest() {
+        return previousDirX < 0;
+    }
+
+    public boolean watchEast() {
+        return previousDirX > 0;
     }
 }

@@ -84,7 +84,8 @@ public class Unit extends GameObject {
         if (currHp <= 0) {
 //			delete = true;
             aiContainer.locked = true;
-            action = new DieAction(this);
+            action = new DieAction(this, action);
+            action.checkAnimationDir();
             drawBlood();
         }
     }

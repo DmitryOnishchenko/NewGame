@@ -18,8 +18,18 @@ public class MeleeAttackAction extends Action {
         }
 
         if (!wait && attackTimer++ > unit.physModel.getAttackSpeed()) {
+            checkAnimationDir();
             attackTimer = 0;
             unit.target.takeDamage(unit.damage);
+        }
+    }
+
+    @Override
+    public void checkAnimationDir() {
+        if (targetOnEast() && animation.watchWest()) {
+            animation.swapDir(1);
+        } else if (targetOnWest() && animation.watchEast()) {
+            animation.swapDir(-1);
         }
     }
 
@@ -27,5 +37,13 @@ public class MeleeAttackAction extends Action {
     public void animationFinished() {
         wait = false;
         aiComponent.aic.unlock();
+    }
+
+    private boolean targetOnEast() {
+        return unit.x() < unit.target.x();
+    }
+
+    private boolean targetOnWest() {
+        return unit.x() > unit.target.x();
     }
 }

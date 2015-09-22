@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
 
 public class Projectile extends GameObject {
 	public Vector2F moveDir;
-	public float speed = 5;
+	public float speed = 7;
 	public BufferedImage sprite = (BufferedImage) Assets.getProperties("projectiles").get("woodenArrow");
 	
 	public Projectile(String name, TypeObject type, float x, float y) {

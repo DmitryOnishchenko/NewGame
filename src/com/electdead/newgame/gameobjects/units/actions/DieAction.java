@@ -8,20 +8,28 @@ import java.awt.image.BufferedImage;
 public class DieAction extends Action {
     private int delay = 0;
     private boolean finished = false;
+    private Action lastAction;
     private BufferedImage[] lastSprite;
 
-    public DieAction(Unit unit) {
+    public DieAction(Unit unit, Action lastAction) {
         super(null, unit, true);
         BufferedImage[] dieSpritesRight = unit.graphModel.getDieSpritesRight();
         BufferedImage[] dieSpritesLeft = unit.graphModel.getDieSpritesLeft();
         animation = new Animation(this, dieSpritesRight, dieSpritesRight, dieSpritesLeft);
-//        lastSprite = new BufferedImage[] {dieSpritesRight[dieSpritesRight.length - 1]};
+        this.lastAction = lastAction;
     }
 
     @Override
     public void execute() {
         if (finished && delay++ > 500) {
             unit.delete = true;
+        }
+    }
+
+    @Override
+    public void checkAnimationDir() {
+        if (lastAction.animation.watchWest()) {
+            animation.swapDir(0);
         }
     }
 
