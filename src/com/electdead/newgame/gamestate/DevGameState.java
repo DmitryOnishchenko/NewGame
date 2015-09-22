@@ -96,7 +96,7 @@ public class DevGameState extends AbstractGameState {
             } else if (event.getKeyChar() == 'l') {
                 units.add(createDemoUnit("Orc Archer", 1380, random.nextFloat() * 500 + 100));
             } else if (event.getKeyChar() == 'h') {
-                    SWARM = !SWARM;
+                SWARM = !SWARM;
             } else if (event.getKeyChar() == 'j') {
                 DEBUG = !DEBUG;
             }
