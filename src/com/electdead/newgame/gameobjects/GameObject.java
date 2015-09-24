@@ -85,9 +85,9 @@ public abstract class GameObject implements Comparable<GameObject> {
         if (result == 0) {
             result = pos.x - obj.pos.x;
         }
-//        if (result == 0) {
-//            result = id - obj.id;
-//        }
+        if (result == 0) {
+            result = id - obj.id;
+        }
 
         return (int)result;
     }

@@ -111,7 +111,7 @@ public class DevGameState extends AbstractGameState {
         for (Unit unit : units)
             if (!unit.delete) unit.update();
 
-        if (SWARM && ++testSpawnTimer > 25) {
+        if (SWARM && ++testSpawnTimer > 10) {
             SWARM();
             testSpawnTimer = 0;
         }
@@ -177,6 +177,9 @@ public class DevGameState extends AbstractGameState {
 
             Unit humanUnit2 = createDemoUnit("Human Archer", -100, r.nextFloat() * width + 150);
             units.add(humanUnit2);
+
+            Unit humanUnit3 = createDemoUnit("Human Archer", -100, r.nextFloat() * width + 150);
+            units.add(humanUnit3);
         }
     }
 }
