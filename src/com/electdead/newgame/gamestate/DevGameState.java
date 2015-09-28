@@ -34,7 +34,7 @@ public class DevGameState extends AbstractGameState {
 
     private Random random = new Random();
     public static boolean SWARM = false;
-    public static boolean DEBUG = false;
+    public static int DEBUG = 0;
 
     public DevGameState(GameStateManager gsm) {
         super(gsm);
@@ -98,7 +98,8 @@ public class DevGameState extends AbstractGameState {
             } else if (event.getKeyChar() == 'h') {
                 SWARM = !SWARM;
             } else if (event.getKeyChar() == 'j') {
-                DEBUG = !DEBUG;
+                DEBUG++;
+                if (DEBUG == 3) DEBUG = 0;
             }
         }
     }
