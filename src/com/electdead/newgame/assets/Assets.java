@@ -21,7 +21,7 @@ public class Assets {
     private static final String UNITS_PROPERTIES = "/res/units/properties/";
 
     //TODO Test scale
-    private static float SCALE = 0.5f;
+    public static float SCALE = 0.5f;
 
     private Assets() {}
 

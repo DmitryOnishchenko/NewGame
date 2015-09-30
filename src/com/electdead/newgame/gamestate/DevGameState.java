@@ -1,6 +1,7 @@
 package com.electdead.newgame.gamestate;
 
 import com.electdead.newgame.assets.Assets;
+import com.electdead.newgame.assets.ImageUtils;
 import com.electdead.newgame.gameobjects.GameObject;
 import com.electdead.newgame.gameobjects.TypeObject;
 import com.electdead.newgame.gameobjects.units.Unit;
@@ -50,6 +51,7 @@ public class DevGameState extends AbstractGameState {
         try {
             for (int i = 0; i < 8; i++) {
                 BufferedImage img = ImageIO.read(MainApp.class.getResource("/res/blood/blood_" + i + ".png"));
+                img = ImageUtils.resizeImage(img, Assets.SCALE);
                 bloodSprites.add(img);
             }
         }	catch (IOException ex) { ex.printStackTrace(); }

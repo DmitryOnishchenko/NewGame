@@ -1,12 +1,14 @@
 package com.electdead.newgame.gameobjects.units.actions;
 
+import com.electdead.newgame.engine.EngineV1;
 import com.electdead.newgame.gameobjects.units.Unit;
 import com.electdead.newgame.graphics.Animation;
 
 import java.awt.image.BufferedImage;
 
 public class DieAction extends Action {
-    private int delay = 0;
+    private int delayTimer = 0;
+    private int deleteTrigger = 20000 / EngineV1.MS_PER_UPDATE;
     private boolean finished = false;
     private Action lastAction;
     private BufferedImage[] lastSprite;
@@ -21,7 +23,7 @@ public class DieAction extends Action {
 
     @Override
     public void execute() {
-        if (finished && delay++ > 1000) {
+        if (finished && delayTimer++ > deleteTrigger) {
             unit.delete = true;
         }
     }
