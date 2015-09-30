@@ -8,10 +8,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Grid {
-    public static int ROWS = 3;
-    public static int COLS = 3;
-    public static int CELL_SIZE = 100;
-    private static int INDENT_TOP = 100;
+    public static final int ROWS = 6;
+    public static final int COLS = 13;
+    public static final int CELL_SIZE = 100;
+    public static final int INDENT_TOP = 100;
+    public static final int INDENT_LEFT = 0;
     private Cell[][] cells = new Cell[ROWS][COLS];
 
     public Grid() {
@@ -23,9 +24,11 @@ public class Grid {
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLS; col++) {
                 Rectangle2D.Float bounds = new Rectangle2D.Float(
-                        col * CELL_SIZE, row * CELL_SIZE + INDENT_TOP, CELL_SIZE, CELL_SIZE);
+                        col * CELL_SIZE + INDENT_LEFT, row * CELL_SIZE + INDENT_TOP, CELL_SIZE, CELL_SIZE);
                 cells[row][col] = new Cell(this, row, col, bounds);
+                System.out.print("[" + row + " " + col + "] ");
             }
+            System.out.println();
         }
     }
 
@@ -39,10 +42,12 @@ public class Grid {
     }
 
     public void add(Unit unit) {
-        int row = (int) unit.y() / CELL_SIZE;
-        int col = (int) unit.x() / CELL_SIZE;
+        int row = (unit.y() - INDENT_TOP) / CELL_SIZE;
+        int col = unit.x() / CELL_SIZE;
 
-        if (row == ROWS || col == COLS) {
+        if (row >= ROWS || col >= COLS ||
+            row <= -1 || col <= -1) {
+            System.out.println(unit.name + " removed from " + row + "|" + col);
             return;
         }
 
@@ -55,6 +60,11 @@ public class Grid {
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLS; col++) {
                 cells[row][col].update();
+            }
+        }
+        for (int row = 0; row < ROWS; row++) {
+            for (int col = 0; col < COLS; col++) {
+                cells[row][col].relocate();
             }
         }
     }

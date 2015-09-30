@@ -22,6 +22,7 @@ import java.util.Random;
 public class Unit extends GameObject {
     /* Grid cell */
     private Cell cell;
+    public boolean relocate;
 
     /* Common */
     public UnitPhysicsModel physModel;

@@ -4,6 +4,7 @@ import com.electdead.newgame.gameobjects.units.Unit;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -24,7 +25,9 @@ public class Cell {
     }
 
     public void update() {
-        for (Unit unit : units) {
+        Iterator<Unit> it = units.iterator();
+        while (it.hasNext()) {
+            Unit unit = it.next();
             unit.update();
         }
     }
@@ -47,7 +50,7 @@ public class Cell {
     }
 
     public void add(Unit unit) {
-        System.out.println("Add unit at " + row + "|" + col);
+        System.out.println(unit.name + " added at " + row + "|" + col);
         units.add(unit);
     }
 
@@ -61,11 +64,31 @@ public class Cell {
     }
 
     public void move(Unit unit) {
-        int newRow = (int) unit.y() / grid.CELL_SIZE;
-        int newCol = (int) unit.x() / grid.CELL_SIZE;
+        int newRow = (unit.y() - Grid.INDENT_TOP) / Grid.CELL_SIZE;
+        int newCol = unit.x() / Grid.CELL_SIZE;
+
+        if (unit.x() <= 0) {
+            //TODO bad-bad-bad!
+            System.out.println(unit.name + " removed from " + row + "|" + col);
+            unit.delete = true;
+            return;
+        }
 
         if (row != newRow || col != newCol) {
-            
+            System.out.println(unit.name + " need to relocate");
+            unit.relocate = true;
+        }
+    }
+
+    public void relocate() {
+        Iterator<Unit> it = units.iterator();
+        while (it.hasNext()) {
+            Unit unit = it.next();
+            if (unit.relocate) {
+                unit.relocate = false;
+                it.remove();
+                grid.add(unit);
+            }
         }
     }
 }

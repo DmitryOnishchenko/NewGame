@@ -64,7 +64,7 @@ public class DevGameState extends AbstractGameState {
 
 //	    units.add(createDemoUnit("Orc Soldier", 800, 500));
 
-//        units.add(createDemoUnit("Human Soldier", 200, 480));
+//        createDemoUnit("Human Soldier", 50, 250);
 //        units.add(createDemoUnit("Human Soldier", 0, 540));
 //        units.add(createDemoUnit("Human Soldier", 500, 520));
 //	    units.add(createDemoUnit("Human Archer", 400, 520));
@@ -101,11 +101,11 @@ public class DevGameState extends AbstractGameState {
             if (event.getKeyChar() == 'a') {
                 createDemoUnit("Human Soldier", 50, 250);
             } else if (event.getKeyChar() == 's') {
-                units.add(createDemoUnit("Human Archer", -100, random.nextFloat() * 500 + 150));
+                units.add(createDemoUnit("Human Archer", 50, random.nextFloat() * 500 + 150));
             } else if (event.getKeyChar() == 'k') {
-                createDemoUnit("Orc Soldier", 250, 250);
+                createDemoUnit("Orc Soldier", 150, 250);
             } else if (event.getKeyChar() == 'l') {
-                units.add(createDemoUnit("Orc Archer", 1380, random.nextFloat() * 500 + 150));
+                units.add(createDemoUnit("Orc Archer", 1250, random.nextFloat() * 500 + 150));
             } else if (event.getKeyChar() == 'h') {
                 SWARM = !SWARM;
             } else if (event.getKeyChar() == 'j') {
@@ -126,10 +126,10 @@ public class DevGameState extends AbstractGameState {
 //        for (Unit unit : units)
 //            if (!unit.delete) unit.update();
 //
-//        if (SWARM && ++testSpawnTimer > 5) {
-//            SWARM();
-//            testSpawnTimer = 0;
-//        }
+        if (SWARM && ++testSpawnTimer > 5) {
+            SWARM();
+            testSpawnTimer = 0;
+        }
 //
 //        for (Iterator<GameObject> iterator = gameObjects.iterator(); iterator.hasNext();) {
 //            GameObject gameObject = iterator.next();
@@ -172,30 +172,30 @@ public class DevGameState extends AbstractGameState {
     public void SWARM() {
         int width = 500;
         Random r = new Random();
-        Unit humanUnit1 = createDemoUnit("Human Soldier", -100, r.nextFloat() * width + 150);
-        units.add(humanUnit1);
+        Unit humanUnit1 = createDemoUnit("Human Soldier", 50, r.nextFloat() * width + 150);
+//        units.add(humanUnit1);
 
-        Unit orcUnit1 = createDemoUnit("Orc Soldier", 1380, r.nextFloat() * width + 150);
-        units.add(orcUnit1);
+        Unit orcUnit1 = createDemoUnit("Orc Soldier", 1250, r.nextFloat() * width + 150);
+//        units.add(orcUnit1);
 
-        if (++testSpawnTimer2 >= 8) {
-            Unit orcUnit2 = createDemoUnit("Orc Soldier", 1380, r.nextFloat() * width + 150);
-            units.add(orcUnit2);
-        }
-
-        if (++testSpawnTimer2 >= 10) {
-            testSpawnTimer2 = 0;
-            Unit orcUnit2 = createDemoUnit("Orc Soldier", 1380, r.nextFloat() * width + 150);
-            units.add(orcUnit2);
-
-            Unit orcUnit3 = createDemoUnit("Orc Archer", 1380, r.nextFloat() * width + 150);
-            units.add(orcUnit3);
-
-            Unit humanUnit2 = createDemoUnit("Human Archer", -100, r.nextFloat() * width + 150);
-            units.add(humanUnit2);
-
-            Unit humanUnit3 = createDemoUnit("Human Archer", -100, r.nextFloat() * width + 150);
-            units.add(humanUnit3);
-        }
+//        if (++testSpawnTimer2 >= 8) {
+//            Unit orcUnit2 = createDemoUnit("Orc Soldier", 1380, r.nextFloat() * width + 150);
+//            units.add(orcUnit2);
+//        }
+//
+//        if (++testSpawnTimer2 >= 10) {
+//            testSpawnTimer2 = 0;
+//            Unit orcUnit2 = createDemoUnit("Orc Soldier", 1380, r.nextFloat() * width + 150);
+//            units.add(orcUnit2);
+//
+//            Unit orcUnit3 = createDemoUnit("Orc Archer", 1380, r.nextFloat() * width + 150);
+//            units.add(orcUnit3);
+//
+//            Unit humanUnit2 = createDemoUnit("Human Archer", -100, r.nextFloat() * width + 150);
+//            units.add(humanUnit2);
+//
+//            Unit humanUnit3 = createDemoUnit("Human Archer", -100, r.nextFloat() * width + 150);
+//            units.add(humanUnit3);
+//        }
     }
 }
