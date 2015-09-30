@@ -88,13 +88,13 @@ public class DevGameState extends AbstractGameState {
     public void processInput(KeyEvent event) {
         if (event != null && event.getID() == KeyEvent.KEY_PRESSED) {
             if (event.getKeyChar() == 'a') {
-                units.add(createDemoUnit("Human Soldier", -100, random.nextFloat() * 500 + 100));
+                units.add(createDemoUnit("Human Soldier", -100, random.nextFloat() * 500 + 150));
             } else if (event.getKeyChar() == 's') {
-                units.add(createDemoUnit("Human Archer", -100, random.nextFloat() * 500 + 100));
+                units.add(createDemoUnit("Human Archer", -100, random.nextFloat() * 500 + 150));
             } else if (event.getKeyChar() == 'k') {
-                units.add(createDemoUnit("Orc Soldier", 1380, random.nextFloat() * 500 + 100));
+                units.add(createDemoUnit("Orc Soldier", 1380, random.nextFloat() * 500 + 150));
             } else if (event.getKeyChar() == 'l') {
-                units.add(createDemoUnit("Orc Archer", 1380, random.nextFloat() * 500 + 100));
+                units.add(createDemoUnit("Orc Archer", 1380, random.nextFloat() * 500 + 150));
             } else if (event.getKeyChar() == 'h') {
                 SWARM = !SWARM;
             } else if (event.getKeyChar() == 'j') {
@@ -112,7 +112,7 @@ public class DevGameState extends AbstractGameState {
         for (Unit unit : units)
             if (!unit.delete) unit.update();
 
-        if (SWARM && ++testSpawnTimer > 10) {
+        if (SWARM && ++testSpawnTimer > 5) {
             SWARM();
             testSpawnTimer = 0;
         }

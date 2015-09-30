@@ -10,8 +10,8 @@ import java.awt.image.VolatileImage;
 public class EngineV1 extends AbstractGameLoop {
     /* Graphics */
     public static final int MAX_FPS = 120;
-    public static final int MS_PER_UPDATE = 10;
-    public static final int UPDATE_PER_SEC = 1000 / MS_PER_UPDATE;
+    public static final int UPDATES_PER_SEC = 50;
+    public static final int MS_PER_UPDATE = 1000 / UPDATES_PER_SEC;
     public static final boolean useFpsLimit = true;
     private VolatileImage currentFrame;
     private Graphics2D currentG2D;

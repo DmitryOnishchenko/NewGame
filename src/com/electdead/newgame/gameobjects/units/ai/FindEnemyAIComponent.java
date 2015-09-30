@@ -1,12 +1,13 @@
 package com.electdead.newgame.gameobjects.units.ai;
 
+import com.electdead.newgame.engine.EngineV1;
 import com.electdead.newgame.gameobjects.units.Unit;
 import com.electdead.newgame.gamestate.DevGameState;
 import com.electdead.newgame.physics.Vector2F;
 
 public class FindEnemyAIComponent extends AIComponent {
-    private int delay = 0;
-
+    private int delayTimer = 0;
+    private int repeatFindTrigger = 1000 / EngineV1.MS_PER_UPDATE;
     public FindEnemyAIComponent(AIContainer aic, int priority) {
         super(aic, priority);
     }
@@ -15,8 +16,8 @@ public class FindEnemyAIComponent extends AIComponent {
     public void think(Unit unit) {
         if (unit.target == null) {
             findTarget(unit);
-        } else if (delay++ > 100) {
-            delay = 0;
+        } else if (delayTimer++ > repeatFindTrigger) {
+            delayTimer = 0;
             findTarget(unit);
         }
     }

@@ -1,6 +1,7 @@
 package com.electdead.newgame.gameobjects.projectiles;
 
 import com.electdead.newgame.assets.Assets;
+import com.electdead.newgame.engine.EngineV1;
 import com.electdead.newgame.gameobjects.GameObject;
 import com.electdead.newgame.gameobjects.TypeObject;
 import com.electdead.newgame.physics.Vector2F;
@@ -10,7 +11,7 @@ import java.awt.image.BufferedImage;
 
 public class Projectile extends GameObject {
 	public Vector2F moveDir;
-	public float speed = 7;
+	public float speed = 700 / EngineV1.UPDATES_PER_SEC;
 	public BufferedImage sprite = (BufferedImage) Assets.getProperties("projectiles").get("woodenArrow");
 	
 	public Projectile(String name, TypeObject type, float x, float y) {

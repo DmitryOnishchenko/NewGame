@@ -55,7 +55,7 @@ public class UnitPhysicsModel {
 	public void setArmor(int armor) { this.armor = armor; }
 
 	public void setDefaultSpeed(float defaultSpeed) {
-		this.defaultSpeed = defaultSpeed / EngineV1.UPDATE_PER_SEC;
+		this.defaultSpeed = defaultSpeed / EngineV1.UPDATES_PER_SEC;
 	}
 
 	public void setMoveDir(Vector2F moveDir) { this.moveDir = moveDir; }
