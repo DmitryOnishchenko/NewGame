@@ -28,6 +28,8 @@ public class MoveAction extends Action {
         unit.hitBox.y       += shiftY;
         unit.attackBox.y    += shiftY;
         unit.searchCircle.y += shiftY;
+
+        unit.getCell().move(unit);
     }
 
     @Override

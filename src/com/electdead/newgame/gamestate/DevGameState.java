@@ -2,6 +2,7 @@ package com.electdead.newgame.gamestate;
 
 import com.electdead.newgame.assets.Assets;
 import com.electdead.newgame.assets.ImageUtils;
+import com.electdead.newgame.engine.Grid;
 import com.electdead.newgame.gameobjects.GameObject;
 import com.electdead.newgame.gameobjects.TypeObject;
 import com.electdead.newgame.gameobjects.units.Unit;
@@ -20,6 +21,8 @@ import java.io.IOException;
 import java.util.*;
 
 public class DevGameState extends AbstractGameState {
+    private Grid grid;
+
     public static ArrayList<GameObject> gameObjects = new ArrayList<>();
     public static ArrayList<Unit> units = new ArrayList<>();
 //    public static TreeMultiset<GameObject> renderObjects = TreeMultiset.create();
@@ -56,16 +59,19 @@ public class DevGameState extends AbstractGameState {
             }
         }	catch (IOException ex) { ex.printStackTrace(); }
 
+        /* Grid */
+        grid = new Grid();
+
 //	    units.add(createDemoUnit("Orc Soldier", 800, 500));
 
 //        units.add(createDemoUnit("Human Soldier", 200, 480));
 //        units.add(createDemoUnit("Human Soldier", 0, 540));
 //        units.add(createDemoUnit("Human Soldier", 500, 520));
-	    units.add(createDemoUnit("Human Archer", 400, 520));
-	    units.add(createDemoUnit("Human Archer", 380, 500));
+//	    units.add(createDemoUnit("Human Archer", 400, 520));
+//	    units.add(createDemoUnit("Human Archer", 380, 500));
 
 //	    units.add(createDemoUnit("Human Archer", 200, 520));
-	    units.add(createDemoUnit("Orc Archer", 900, 300));
+//	    units.add(createDemoUnit("Orc Archer", 900, 300));
     }
 
     public Unit createDemoUnit(String name, float x, float y) {
@@ -84,6 +90,8 @@ public class DevGameState extends AbstractGameState {
         unit.setPhysicsComponent(pc);
         unit.setGraphicsComponent(gc);
 
+        grid.add(unit);
+
         return unit;
     }
 
@@ -91,11 +99,11 @@ public class DevGameState extends AbstractGameState {
     public void processInput(KeyEvent event) {
         if (event != null && event.getID() == KeyEvent.KEY_PRESSED) {
             if (event.getKeyChar() == 'a') {
-                units.add(createDemoUnit("Human Soldier", -100, random.nextFloat() * 500 + 150));
+                createDemoUnit("Human Soldier", 50, 250);
             } else if (event.getKeyChar() == 's') {
                 units.add(createDemoUnit("Human Archer", -100, random.nextFloat() * 500 + 150));
             } else if (event.getKeyChar() == 'k') {
-                units.add(createDemoUnit("Orc Soldier", 1380, random.nextFloat() * 500 + 150));
+                createDemoUnit("Orc Soldier", 250, 250);
             } else if (event.getKeyChar() == 'l') {
                 units.add(createDemoUnit("Orc Archer", 1380, random.nextFloat() * 500 + 150));
             } else if (event.getKeyChar() == 'h') {
@@ -109,45 +117,49 @@ public class DevGameState extends AbstractGameState {
 
     @Override
     public void update() {
-        for (GameObject obj : gameObjects)
-            if (!obj.delete) obj.update();
+        grid.update();
 
-        for (Unit unit : units)
-            if (!unit.delete) unit.update();
-
-        if (SWARM && ++testSpawnTimer > 5) {
-            SWARM();
-            testSpawnTimer = 0;
-        }
-
-        for (Iterator<GameObject> iterator = gameObjects.iterator(); iterator.hasNext();) {
-            GameObject gameObject = iterator.next();
-            if (gameObject.delete)
-                iterator.remove();
-        }
-
-        for (Iterator<Unit> iterator = units.iterator(); iterator.hasNext();) {
-            Unit unit = iterator.next();
-            if (unit.delete) {
-                iterator.remove();
-            }
-        }
+        grid.checkDelete();
+//        for (GameObject obj : gameObjects)
+//            if (!obj.delete) obj.update();
+//
+//        for (Unit unit : units)
+//            if (!unit.delete) unit.update();
+//
+//        if (SWARM && ++testSpawnTimer > 5) {
+//            SWARM();
+//            testSpawnTimer = 0;
+//        }
+//
+//        for (Iterator<GameObject> iterator = gameObjects.iterator(); iterator.hasNext();) {
+//            GameObject gameObject = iterator.next();
+//            if (gameObject.delete)
+//                iterator.remove();
+//        }
+//
+//        for (Iterator<Unit> iterator = units.iterator(); iterator.hasNext();) {
+//            Unit unit = iterator.next();
+//            if (unit.delete) {
+//                iterator.remove();
+//            }
+//        }
     }
 
     @Override
     public void render(Graphics2D g2, double deltaTime) {
         g2.drawImage(map, 0, 0, null);
+        grid.render(g2, deltaTime);
 
         renderObjects.clear();
-        renderObjects.addAll(gameObjects);
-        renderObjects.addAll(units);
+        renderObjects.addAll(grid.getAllObjects());
+//        renderObjects.addAll(units);
         Collections.sort(renderObjects);
 
         for (GameObject obj : renderObjects)
             if (obj.visible) obj.render(g2, deltaTime);
 
         g2.setPaint(Color.WHITE);
-        g2.drawString("GameObjects: " + gameObjects.size() + " | Units: " + units.size(), 5, 36);
+        g2.drawString("GameObjects: " + gameObjects.size() + " | Units: " + grid.amountOfUnits(), 5, 36);
 
         g2.drawString("To spawn Human Soldier press \"A\"", 5, 72);
         g2.drawString("To spawn Human Archer press \"S\"", 5, 90);
