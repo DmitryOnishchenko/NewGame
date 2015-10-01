@@ -5,27 +5,27 @@ import com.electdead.newgame.gameobjects.units.Unit;
 import com.electdead.newgame.gamestate.DevGameState;
 import com.electdead.newgame.physics.Vector2F;
 
-public class FindEnemyAIComponent extends AIComponent {
+public class SearchEnemyAIComponent extends AIComponent {
     private int delayTimer = 0;
     private int repeatFindTrigger = 1000 / EngineV1.MS_PER_UPDATE;
-    public FindEnemyAIComponent(AIContainer aic, int priority) {
+    public SearchEnemyAIComponent(AIContainer aic, int priority) {
         super(aic, priority);
     }
 
     @Override
     public void think(Unit unit) {
         if (unit.target == null) {
-            findTarget(unit);
+            searchTarget(unit);
         } else if (delayTimer++ > repeatFindTrigger) {
             delayTimer = 0;
-            findTarget(unit);
+            searchTarget(unit);
         }
     }
 
     @Override
     public void update(Unit unit) {}
 
-    private void findTarget(Unit unit) {
+    private void searchTarget(Unit unit) {
         double minLength = Double.MAX_VALUE;
         Vector2F newDir = null;
         Unit target = null;

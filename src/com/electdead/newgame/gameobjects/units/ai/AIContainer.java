@@ -37,7 +37,7 @@ public class AIContainer {
         aiComponents[0] = attackAIComponent;
 		
 		/* Find enemy */
-        aiComponents[1] = new FindEnemyAIComponent(this, 0);
+        aiComponents[1] = new SearchEnemyAIComponent(this, 0);
 		
 		/* Move */
         spritesRight = unit.graphModel.getMoveSpritesRight();
