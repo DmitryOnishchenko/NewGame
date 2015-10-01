@@ -78,17 +78,17 @@ public abstract class GameObject implements Comparable<GameObject> {
     }
 
     public int compareTo(GameObject obj) {
-        float result = zLevel - obj.zLevel;
+        int result = zLevel - obj.zLevel;
         if (result == 0) {
-            result = pos.y - obj.pos.y;
+            result = y() - obj.y();
         }
         if (result == 0) {
-            result = pos.x - obj.pos.x;
+            result = x() - obj.x();
         }
         if (result == 0) {
             result = id - obj.id;
         }
 
-        return (int)result;
+        return result;
     }
 }

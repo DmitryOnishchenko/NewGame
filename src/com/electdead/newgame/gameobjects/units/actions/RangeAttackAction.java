@@ -23,7 +23,7 @@ public class RangeAttackAction extends Action {
 
         if (!wait && attackTimer++ > unit.physModel.getAttackSpeed()) {
             attackTimer = 0;
-            spawnProjectile(unit);
+//            spawnProjectile(unit);
             unit.target.takeDamage(unit.damage);
         }
     }

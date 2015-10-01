@@ -11,7 +11,7 @@ import java.util.List;
 public class Grid {
     private static final int BATTLE_HEIGHT = 500;
     private static final int BATTLE_WIDTH = 1480;
-    public static final int CELL_SIZE = 100;
+    public static final int CELL_SIZE = 70;
     public static final int ROWS = BATTLE_HEIGHT / CELL_SIZE;
     public static final int COLS = BATTLE_WIDTH / CELL_SIZE;
     public static final int INDENT_TOP = 150;
@@ -108,5 +108,18 @@ public class Grid {
         }
     }
 
-//    public List<Cell>
+    public List<Cell> getCellIfIntersectsWith(Shape shape) {
+        List<Cell> list = new LinkedList<>();
+
+        for (int row = 0; row < ROWS; row++) {
+            for (int col = 0; col < COLS; col++) {
+                Cell cell = cells[row][col];
+                if (shape.intersects(cell.getBounds())) {
+                    list.add(cell);
+                }
+            }
+        }
+
+        return list;
+    }
 }

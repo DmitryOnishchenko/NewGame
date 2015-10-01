@@ -21,12 +21,12 @@ import java.io.IOException;
 import java.util.*;
 
 public class DevGameState extends AbstractGameState {
-    private Grid grid;
+    public static Grid grid;
 
     public static ArrayList<GameObject> gameObjects = new ArrayList<>();
     public static ArrayList<Unit> units = new ArrayList<>();
 //    public static TreeMultiset<GameObject> renderObjects = TreeMultiset.create();
-    public static ArrayList<GameObject> renderObjects = new ArrayList<>();
+    public static ArrayList<GameObject> renderObjects = new ArrayList<>(5000);
 
     private BufferedImage floorSprite = (BufferedImage) Assets.getProperties("Battle background").get("floor");
     private static BufferedImage map = new BufferedImage(MainApp.WIDTH, MainApp.HEIGHT, BufferedImage.TYPE_INT_ARGB);
@@ -37,7 +37,7 @@ public class DevGameState extends AbstractGameState {
     public static ArrayList<BufferedImage> bloodSprites = new ArrayList<>();
 
     private int leftSpawnPoint = Grid.INDENT_LEFT;
-    private int rightSpawnPoint = MainApp.WIDTH;
+    private int rightSpawnPoint = MainApp.WIDTH + 50;
 
     // TODO test variables
     private Random random = new Random();
@@ -145,7 +145,7 @@ public class DevGameState extends AbstractGameState {
 //        for (Unit unit : units)
 //            if (!unit.delete) unit.update();
 //
-        if (SWARM && ++testSpawnTimer > 5) {
+        if (SWARM && ++testSpawnTimer > 2) {
             SWARM();
             testSpawnTimer = 0;
         }
@@ -174,8 +174,9 @@ public class DevGameState extends AbstractGameState {
 //        renderObjects.addAll(units);
         Collections.sort(renderObjects);
 
-        for (GameObject obj : renderObjects)
-            if (obj.visible) obj.render(g2, deltaTime);
+        for (GameObject obj : renderObjects) {
+            obj.render(g2, deltaTime);
+        }
 
         g2.setPaint(Color.WHITE);
         g2.drawString("GameObjects: " + gameObjects.size() + " | Units: " + grid.amountOfUnits(), 5, 36);
@@ -192,30 +193,32 @@ public class DevGameState extends AbstractGameState {
             g2.setPaint(Color.RED);
             g2.drawString("To deactivate Debug mode press \"J\" again", 580, 72);
         } else {
-            g2.drawString("To deactivate Debug mode press \"J\" (for debug only!)", 580, 72);
+            g2.drawString("To activate Debug mode press \"J\" (for debug only!)", 580, 72);
         }
     }
 
     private void drawDebugMenu(Graphics2D g2) {
         g2.setPaint(Color.RED);
-        g2.drawRect(290, 5, 620, 44);
+        int rectY = 16;
+        int stringY = 30;
+        g2.drawRect(290, 6, 610, 44);
 
         g2.setPaint(Color.WHITE);
-        g2.drawString("To activate box model: \"1\"", 300, 18);
+        g2.drawString("To activate box model: \"1\"", 300, stringY);
         if (DEBUG_BOX) {
-            g2.drawRect(296, 5, 150, 20);
+            g2.drawRect(296, rectY, 200, 20);
         }
 
         g2.setPaint(Color.YELLOW);
-        g2.drawString("To activate target tracking: \"2\"", 500, 18);
+        g2.drawString("To activate target tracking: \"2\"", 500, stringY);
         if (DEBUG_TARGET) {
-            g2.drawRect(496, 5, 150, 20);
+            g2.drawRect(496, rectY, 200, 20);
         }
 
         g2.setPaint(Color.BLUE);
-        g2.drawString("To activate grid: \"3\"", 700, 18);
+        g2.drawString("To activate grid: \"3\"", 700, stringY);
         if (DEBUG_GRID) {
-            g2.drawRect(696, 5, 150, 20);
+            g2.drawRect(696, rectY, 200, 20);
         }
     }
 
@@ -228,25 +231,25 @@ public class DevGameState extends AbstractGameState {
         Unit orcUnit1 = createDemoUnit("Orc Soldier", rightSpawnPoint, getRandomPointY());
 //        units.add(orcUnit1);
 
-//        if (++testSpawnTimer2 >= 8) {
-//            Unit orcUnit2 = createDemoUnit("Orc Soldier", 1380, r.nextFloat() * width + 150);
+        if (++testSpawnTimer2 >= 8) {
+            Unit orcUnit2 = createDemoUnit("Orc Soldier", rightSpawnPoint, getRandomPointY());
 //            units.add(orcUnit2);
-//        }
+        }
 //
-//        if (++testSpawnTimer2 >= 10) {
-//            testSpawnTimer2 = 0;
-//            Unit orcUnit2 = createDemoUnit("Orc Soldier", 1380, r.nextFloat() * width + 150);
+        if (++testSpawnTimer2 >= 10) {
+            testSpawnTimer2 = 0;
+            Unit orcUnit2 = createDemoUnit("Orc Soldier", rightSpawnPoint, getRandomPointY());
 //            units.add(orcUnit2);
-//
-//            Unit orcUnit3 = createDemoUnit("Orc Archer", 1380, r.nextFloat() * width + 150);
+
+            Unit orcUnit3 = createDemoUnit("Orc Archer", rightSpawnPoint, getRandomPointY());
 //            units.add(orcUnit3);
-//
-//            Unit humanUnit2 = createDemoUnit("Human Archer", -100, r.nextFloat() * width + 150);
+
+            Unit humanUnit2 = createDemoUnit("Human Archer", leftSpawnPoint, getRandomPointY());
 //            units.add(humanUnit2);
-//
-//            Unit humanUnit3 = createDemoUnit("Human Archer", -100, r.nextFloat() * width + 150);
+
+            Unit humanUnit3 = createDemoUnit("Human Archer", leftSpawnPoint, getRandomPointY());
 //            units.add(humanUnit3);
-//        }
+        }
     }
 
     private int getRandomPointY() {

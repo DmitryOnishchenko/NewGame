@@ -90,6 +90,10 @@ public class Unit extends GameObject {
         return currHp > 0;
     }
 
+    public boolean isEnemy(Unit unit) {
+        return physModel.getRace() != unit.physModel.getRace();
+    }
+
     public void takeDamage(int damage) {
         int total = damage - armor;
         if (total <= 0) total = 1;

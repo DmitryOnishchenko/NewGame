@@ -15,6 +15,7 @@ public class Cell {
 
     private Grid grid;
     private LinkedList<Unit> units = new LinkedList<>();
+    //TODO left collection and right collection
     private Rectangle2D.Float bounds = new Rectangle2D.Float();
 
     public Cell(Grid grid, int row, int col, Rectangle2D.Float bounds) {
@@ -24,10 +25,12 @@ public class Cell {
         this.bounds = bounds;
     }
 
+    public Rectangle2D getBounds() {
+        return bounds;
+    }
+
     public void update() {
-        Iterator<Unit> it = units.iterator();
-        while (it.hasNext()) {
-            Unit unit = it.next();
+        for (Unit unit : units) {
             unit.update();
         }
     }
