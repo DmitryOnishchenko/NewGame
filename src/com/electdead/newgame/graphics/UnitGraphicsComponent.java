@@ -31,16 +31,18 @@ public class UnitGraphicsComponent implements GraphicsComponent {
 
     @Override
     public void render(Graphics2D g2, double deltaTime) {
-        if (DevGameState.DEBUG == 1 && unit.isAlive()) {
-            g2.setPaint(Color.WHITE);
-            g2.draw(unit.hitBox);
-            g2.draw(unit.searchCircle);
-            g2.setPaint(Color.RED);
-            g2.draw(unit.attackBox);
-        }
-        if (DevGameState.DEBUG == 2 && unit.target != null) {
-            g2.setPaint(Color.YELLOW);
-            g2.drawLine(unit.x(), unit.y(), unit.target.x(), unit.target.y());
+        if (DevGameState.DEBUG_MODE) {
+            if (unit.isAlive() && DevGameState.DEBUG_BOX) {
+                g2.setPaint(Color.WHITE);
+                g2.draw(unit.hitBox);
+                g2.draw(unit.searchCircle);
+                g2.setPaint(Color.RED);
+                g2.draw(unit.attackBox);
+            }
+            if (unit.target != null && DevGameState.DEBUG_TARGET) {
+                g2.setPaint(Color.YELLOW);
+                g2.drawLine(unit.x(), unit.y(), unit.target.x(), unit.target.y());
+            }
         }
 
         BufferedImage image = unit.action.animation.get();

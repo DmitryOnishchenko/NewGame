@@ -42,7 +42,10 @@ public class DevGameState extends AbstractGameState {
     // TODO test variables
     private Random random = new Random();
     public static boolean SWARM = false;
-    public static int DEBUG = 0;
+    public static boolean DEBUG_MODE = false;
+    public static boolean DEBUG_BOX = false;
+    public static boolean DEBUG_TARGET = false;
+    public static boolean DEBUG_GRID = false;
 
     public DevGameState(GameStateManager gsm) {
         super(gsm);
@@ -113,8 +116,20 @@ public class DevGameState extends AbstractGameState {
             } else if (event.getKeyChar() == 'h') {
                 SWARM = !SWARM;
             } else if (event.getKeyChar() == 'j') {
-                DEBUG++;
-                if (DEBUG == 3) DEBUG = 0;
+                DEBUG_MODE = !DEBUG_MODE;
+                if (!DEBUG_MODE) {
+                    DEBUG_BOX = false;
+                    DEBUG_TARGET = false;
+                    DEBUG_GRID = false;
+                }
+            } else if (DEBUG_MODE) {
+                if (event.getKeyChar() == '1') {
+                    DEBUG_BOX = !DEBUG_BOX;
+                } else if (event.getKeyChar() == '2') {
+                    DEBUG_TARGET = !DEBUG_TARGET;
+                } else if (event.getKeyChar() == '3') {
+                    DEBUG_GRID = !DEBUG_GRID;
+                }
             }
         }
     }
@@ -169,8 +184,39 @@ public class DevGameState extends AbstractGameState {
         g2.drawString("To spawn Human Archer press \"S\"", 5, 90);
         g2.drawString("To spawn Orc Soldier press \"K\"", 1100, 72);
         g2.drawString("To spawn Orc Archer press \"L\"", 1100, 90);
-        g2.drawString("To activate Debug mode press \"J\" (dangerous! units < 40)", 580, 72);
         g2.drawString("To start Demo Mode press \"H\"", 580, 90);
+
+        /* Debug menu */
+        if (DEBUG_MODE) {
+            drawDebugMenu(g2);
+            g2.setPaint(Color.RED);
+            g2.drawString("To deactivate Debug mode press \"J\" again", 580, 72);
+        } else {
+            g2.drawString("To deactivate Debug mode press \"J\" (for debug only!)", 580, 72);
+        }
+    }
+
+    private void drawDebugMenu(Graphics2D g2) {
+        g2.setPaint(Color.RED);
+        g2.drawRect(290, 5, 620, 44);
+
+        g2.setPaint(Color.WHITE);
+        g2.drawString("To activate box model: \"1\"", 300, 18);
+        if (DEBUG_BOX) {
+            g2.drawRect(296, 5, 150, 20);
+        }
+
+        g2.setPaint(Color.YELLOW);
+        g2.drawString("To activate target tracking: \"2\"", 500, 18);
+        if (DEBUG_TARGET) {
+            g2.drawRect(496, 5, 150, 20);
+        }
+
+        g2.setPaint(Color.BLUE);
+        g2.drawString("To activate grid: \"3\"", 700, 18);
+        if (DEBUG_GRID) {
+            g2.drawRect(696, 5, 150, 20);
+        }
     }
 
     public void SWARM() {
