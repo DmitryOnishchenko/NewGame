@@ -35,6 +35,8 @@ public class Cell {
     public void render(Graphics2D g2, double deltaTime) {
         g2.setPaint(Color.BLUE);
         g2.draw(bounds);
+        g2.setPaint(Color.RED);
+        g2.drawString(row + "|" + col, (int)(bounds.getX() + 2),(int)(bounds.getY() + 12));
 
         for (Unit unit : units) {
             unit.render(g2, deltaTime);
@@ -50,7 +52,7 @@ public class Cell {
     }
 
     public void add(Unit unit) {
-        System.out.println(unit.name + " added at " + row + "|" + col);
+//        System.out.println(unit.name + " added at " + row + "|" + col);
         units.add(unit);
     }
 
@@ -64,18 +66,19 @@ public class Cell {
     }
 
     public void move(Unit unit) {
-        int newRow = (unit.y() - Grid.INDENT_TOP) / Grid.CELL_SIZE;
-        int newCol = unit.x() / Grid.CELL_SIZE;
 
-        if (unit.x() <= 0) {
-            //TODO bad-bad-bad!
-            System.out.println(unit.name + " removed from " + row + "|" + col);
+        int newRow = (unit.y() - Grid.INDENT_TOP) / Grid.CELL_SIZE;
+        int newCol = (unit.x() - Grid.INDENT_LEFT) / Grid.CELL_SIZE;
+
+        if (unit.x() < Grid.INDENT_LEFT) {
+            //TODO maybe bad-bad-bad!
+//            System.out.println(unit.name + " removed from " + row + "|" + col);
             unit.delete = true;
             return;
         }
 
         if (row != newRow || col != newCol) {
-            System.out.println(unit.name + " need to relocate");
+//            System.out.println(unit.name + " need to relocate");
             unit.relocate = true;
         }
     }

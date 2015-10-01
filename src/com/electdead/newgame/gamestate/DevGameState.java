@@ -36,6 +36,10 @@ public class DevGameState extends AbstractGameState {
     private int testSpawnTimer2;
     public static ArrayList<BufferedImage> bloodSprites = new ArrayList<>();
 
+    private int leftSpawnPoint = Grid.INDENT_LEFT;
+    private int rightSpawnPoint = MainApp.WIDTH;
+
+    // TODO test variables
     private Random random = new Random();
     public static boolean SWARM = false;
     public static int DEBUG = 0;
@@ -99,13 +103,13 @@ public class DevGameState extends AbstractGameState {
     public void processInput(KeyEvent event) {
         if (event != null && event.getID() == KeyEvent.KEY_PRESSED) {
             if (event.getKeyChar() == 'a') {
-                createDemoUnit("Human Soldier", 50, 250);
+                createDemoUnit("Human Soldier", leftSpawnPoint, getRandomPointY());
             } else if (event.getKeyChar() == 's') {
-                units.add(createDemoUnit("Human Archer", 50, random.nextFloat() * 500 + 150));
+                units.add(createDemoUnit("Human Archer", leftSpawnPoint, getRandomPointY()));
             } else if (event.getKeyChar() == 'k') {
-                createDemoUnit("Orc Soldier", 150, 250);
+                createDemoUnit("Orc Soldier", rightSpawnPoint, getRandomPointY());
             } else if (event.getKeyChar() == 'l') {
-                units.add(createDemoUnit("Orc Archer", 1250, random.nextFloat() * 500 + 150));
+                units.add(createDemoUnit("Orc Archer", rightSpawnPoint, getRandomPointY()));
             } else if (event.getKeyChar() == 'h') {
                 SWARM = !SWARM;
             } else if (event.getKeyChar() == 'j') {
@@ -172,10 +176,10 @@ public class DevGameState extends AbstractGameState {
     public void SWARM() {
         int width = 500;
         Random r = new Random();
-        Unit humanUnit1 = createDemoUnit("Human Soldier", 50, r.nextFloat() * width + 150);
+        Unit humanUnit1 = createDemoUnit("Human Soldier", leftSpawnPoint, getRandomPointY());
 //        units.add(humanUnit1);
 
-        Unit orcUnit1 = createDemoUnit("Orc Soldier", 1250, r.nextFloat() * width + 150);
+        Unit orcUnit1 = createDemoUnit("Orc Soldier", rightSpawnPoint, getRandomPointY());
 //        units.add(orcUnit1);
 
 //        if (++testSpawnTimer2 >= 8) {
@@ -197,5 +201,9 @@ public class DevGameState extends AbstractGameState {
 //            Unit humanUnit3 = createDemoUnit("Human Archer", -100, r.nextFloat() * width + 150);
 //            units.add(humanUnit3);
 //        }
+    }
+
+    private int getRandomPointY() {
+        return (int) (random.nextFloat() * 500 + Grid.INDENT_TOP);
     }
 }

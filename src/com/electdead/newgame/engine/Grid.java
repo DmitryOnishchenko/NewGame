@@ -8,11 +8,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Grid {
-    public static final int ROWS = 6;
-    public static final int COLS = 13;
+    private static final int BATTLE_HEIGHT = 500;
+    private static final int BATTLE_WIDTH = 1480;
     public static final int CELL_SIZE = 100;
-    public static final int INDENT_TOP = 100;
-    public static final int INDENT_LEFT = 0;
+    public static final int ROWS = BATTLE_HEIGHT / CELL_SIZE;
+    public static final int COLS = BATTLE_WIDTH / CELL_SIZE;
+    public static final int INDENT_TOP = 150;
+    public static final int INDENT_LEFT = -60;
     private Cell[][] cells = new Cell[ROWS][COLS];
 
     public Grid() {
@@ -20,20 +22,16 @@ public class Grid {
     }
 
     public void init() {
-        System.out.println("Init grid: create cells");
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLS; col++) {
                 Rectangle2D.Float bounds = new Rectangle2D.Float(
                         col * CELL_SIZE + INDENT_LEFT, row * CELL_SIZE + INDENT_TOP, CELL_SIZE, CELL_SIZE);
                 cells[row][col] = new Cell(this, row, col, bounds);
-                System.out.print("[" + row + " " + col + "] ");
             }
-            System.out.println();
         }
     }
 
     public void clear() {
-        System.out.println("Clear grid: delete cells");
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLS; col++) {
                 cells[row][col].clear();
@@ -43,11 +41,11 @@ public class Grid {
 
     public void add(Unit unit) {
         int row = (unit.y() - INDENT_TOP) / CELL_SIZE;
-        int col = unit.x() / CELL_SIZE;
+        int col = (unit.x() - INDENT_LEFT) / CELL_SIZE;
 
         if (row >= ROWS || col >= COLS ||
             row <= -1 || col <= -1) {
-            System.out.println(unit.name + " removed from " + row + "|" + col);
+//            System.out.println(unit.name + " removed from " + row + "|" + col);
             return;
         }
 
