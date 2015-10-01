@@ -1,5 +1,6 @@
 package com.electdead.newgame.engine;
 
+import com.electdead.newgame.gameobjects.units.Race;
 import com.electdead.newgame.gameobjects.units.Unit;
 
 import java.awt.*;
@@ -14,7 +15,8 @@ public class Cell {
     public final int col;
 
     private Grid grid;
-    private LinkedList<Unit> units = new LinkedList<>();
+    private LinkedList<Unit> leftUnits = new LinkedList<>();
+    private LinkedList<Unit> rightUnits = new LinkedList<>();
     //TODO left collection and right collection
     private Rectangle2D.Float bounds = new Rectangle2D.Float();
 
@@ -30,7 +32,10 @@ public class Cell {
     }
 
     public void update() {
-        for (Unit unit : units) {
+        for (Unit unit : leftUnits) {
+            unit.update();
+        }
+        for (Unit unit : rightUnits) {
             unit.update();
         }
     }
@@ -39,28 +44,47 @@ public class Cell {
         g2.setPaint(Color.BLUE);
         g2.draw(bounds);
         g2.setPaint(Color.RED);
-        g2.drawString(row + "|" + col, (int)(bounds.getX() + 2),(int)(bounds.getY() + 12));
-
-        for (Unit unit : units) {
-            unit.render(g2, deltaTime);
-        }
+        g2.drawString(row + "|" + col, (int) (bounds.getX() + 2), (int) (bounds.getY() + 12));
     }
 
     public void clear() {
-        units.clear();
+        leftUnits.clear();
+        rightUnits.clear();
     }
 
     public List<Unit> getAllObjects() {
-        return units;
+        List<Unit> list = new LinkedList<>();
+        list.addAll(leftUnits);
+        list.addAll(rightUnits);
+
+        return list;
+    }
+
+    public List<Unit> getLeftUnits() {
+        return leftUnits;
+    }
+
+    public List<Unit> getRightUnit() {
+        return rightUnits;
     }
 
     public void add(Unit unit) {
 //        System.out.println(unit.name + " added at " + row + "|" + col);
-        units.add(unit);
+        if (unit.physModel.getRace() == Race.Human) {
+            leftUnits.add(unit);
+        } else {
+            rightUnits.add(unit);
+        }
     }
 
     public void checkDelete() {
-        ListIterator<Unit> it = units.listIterator();
+        ListIterator<Unit> it = leftUnits.listIterator();
+        while (it.hasNext()) {
+            if (it.next().delete) {
+                it.remove();
+            }
+        }
+        it = rightUnits.listIterator();
         while (it.hasNext()) {
             if (it.next().delete) {
                 it.remove();
@@ -87,7 +111,16 @@ public class Cell {
     }
 
     public void relocate() {
-        Iterator<Unit> it = units.iterator();
+        Iterator<Unit> it = leftUnits.iterator();
+        while (it.hasNext()) {
+            Unit unit = it.next();
+            if (unit.relocate) {
+                unit.relocate = false;
+                it.remove();
+                grid.add(unit);
+            }
+        }
+        it = rightUnits.iterator();
         while (it.hasNext()) {
             Unit unit = it.next();
             if (unit.relocate) {

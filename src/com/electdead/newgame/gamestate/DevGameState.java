@@ -53,7 +53,7 @@ public class DevGameState extends AbstractGameState {
 
     @Override
     public void init() {
-        floorG2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+//        floorG2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         for (int i = 0; i < 720 / 40; i++) {
             floorG2.drawImage(floorSprite, 0, i * 40, null);
         }
@@ -167,11 +167,12 @@ public class DevGameState extends AbstractGameState {
     @Override
     public void render(Graphics2D g2, double deltaTime) {
         g2.drawImage(map, 0, 0, null);
-        grid.render(g2, deltaTime);
+        if (DEBUG_GRID) {
+            grid.render(g2, deltaTime);
+        }
 
         renderObjects.clear();
         renderObjects.addAll(grid.getAllObjects());
-//        renderObjects.addAll(units);
         Collections.sort(renderObjects);
 
         for (GameObject obj : renderObjects) {

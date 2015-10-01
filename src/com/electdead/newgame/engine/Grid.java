@@ -1,7 +1,6 @@
 package com.electdead.newgame.engine;
 
 import com.electdead.newgame.gameobjects.units.Unit;
-import com.electdead.newgame.gamestate.DevGameState;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -69,8 +68,6 @@ public class Grid {
     }
 
     public void render(Graphics2D g2, double deltaTime) {
-        if (!DevGameState.DEBUG_GRID) return;
-
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLS; col++) {
                 cells[row][col].render(g2, deltaTime);

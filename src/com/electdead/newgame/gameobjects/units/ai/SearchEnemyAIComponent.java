@@ -2,6 +2,7 @@ package com.electdead.newgame.gameobjects.units.ai;
 
 import com.electdead.newgame.engine.Cell;
 import com.electdead.newgame.engine.EngineV1;
+import com.electdead.newgame.gameobjects.units.Race;
 import com.electdead.newgame.gameobjects.units.Unit;
 import com.electdead.newgame.gamestate.DevGameState;
 import com.electdead.newgame.physics.Vector2F;
@@ -35,8 +36,13 @@ public class SearchEnemyAIComponent extends AIComponent {
         List<Cell> cells = DevGameState.grid.getCellIfIntersectsWith(unit.searchCircle);
 
         for (Cell cell : cells) {
-            for (Unit target : cell.getAllObjects()) {
-                if (target.isAlive() && target.isEnemy(unit) && intersects(unit, target)) {
+            List<Unit> list;
+            if (unit.physModel.getRace() == Race.Human) {
+                list = cell.getRightUnit();
+            } else list = cell.getLeftUnits();
+
+            for (Unit target : list) {
+                if (target.isAlive() && intersects(unit, target)) {
 
                     newDir = target.pos.copy();
                     newDir.sub(unit.pos);
