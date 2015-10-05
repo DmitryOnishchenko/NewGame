@@ -1,6 +1,6 @@
 {
   "name": "Orc Soldier",
-  "type": "Unit",
+  "side": "RIGHT_ARMY",
   "race": "Orc",
   "maxHp": 170,
   "armor": 0,

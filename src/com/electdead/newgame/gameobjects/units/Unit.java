@@ -3,7 +3,7 @@ package com.electdead.newgame.gameobjects.units;
 import com.electdead.newgame.assets.Assets;
 import com.electdead.newgame.engine.Cell;
 import com.electdead.newgame.gameobjects.GameObject;
-import com.electdead.newgame.gameobjects.TypeObject;
+import com.electdead.newgame.gameobjects.Side;
 import com.electdead.newgame.gameobjects.units.actions.Action;
 import com.electdead.newgame.gameobjects.units.actions.DieAction;
 import com.electdead.newgame.gameobjects.units.ai.AIContainer;
@@ -43,8 +43,8 @@ public class Unit extends GameObject {
     public Ellipse2D.Double attackBox;
     public Ellipse2D.Double searchCircle;
 
-    public Unit(String name, TypeObject type, float x, float y) {
-        super(name, type, x, y);
+    public Unit(String name, Side side, float x, float y) {
+        super(name, side, x, y);
         init();
     }
 
@@ -100,6 +100,7 @@ public class Unit extends GameObject {
         currHp -= total;
         if (currHp <= 0) {
             zLevel = 0;
+            target = null;
             aiContainer.locked = true;
             action = new DieAction(this, action);
             action.checkAnimationDir();

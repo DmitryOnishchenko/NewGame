@@ -16,7 +16,7 @@ public abstract class GameObject implements Comparable<GameObject> {
     public String name;
     public Vector2F pos;
     public int zLevel = 1;
-    public TypeObject type;
+    public Side side;
     public boolean visible = true;
     public boolean delete = false;
 
@@ -24,11 +24,11 @@ public abstract class GameObject implements Comparable<GameObject> {
     private PhysicsComponent physicsComponent;
     private GraphicsComponent graphicsComponent;
 
-    public GameObject(String name, TypeObject type, float x, float y) {
+    public GameObject(String name, Side side, float x, float y) {
         this.id = ++ID;
         this.name = name;
         this.pos = new Vector2F(x, y);
-        this.type = type;
+        this.side = side;
     }
 
     public InputComponent getInput() {

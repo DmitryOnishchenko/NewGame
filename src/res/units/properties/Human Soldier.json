@@ -1,6 +1,6 @@
 {
   "name": "Human Soldier",
-  "type": "Unit",
+  "side": "LEFT_ARMY",
   "race": "Human",
   "maxHp": 100,
   "armor": 10,

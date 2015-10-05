@@ -1,6 +1,5 @@
 package com.electdead.newgame.gameobjects.units.actions;
 
-import com.electdead.newgame.gameobjects.TypeObject;
 import com.electdead.newgame.gameobjects.projectiles.Projectile;
 import com.electdead.newgame.gameobjects.units.Unit;
 import com.electdead.newgame.gameobjects.units.ai.AIComponent;
@@ -23,6 +22,7 @@ public class RangeAttackAction extends Action {
 
         if (!wait && attackTimer++ > unit.physModel.getAttackSpeed()) {
             attackTimer = 0;
+            //TODO spawn projectile
 //            spawnProjectile(unit);
             unit.target.takeDamage(unit.damage);
         }
@@ -52,7 +52,7 @@ public class RangeAttackAction extends Action {
     }
 
     public void spawnProjectile(Unit unit) {
-        Projectile arrow = new Projectile("woodenArrow", TypeObject.Projectile, unit.x(), unit.y());
+        Projectile arrow = new Projectile("woodenArrow", unit.side, unit.x(), unit.y());
 
         Vector2F newDir = unit.target.pos.copy();
         newDir.sub(unit.pos);

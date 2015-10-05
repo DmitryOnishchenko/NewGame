@@ -1,6 +1,6 @@
 package com.electdead.newgame.assets;
 
-import com.electdead.newgame.gameobjects.TypeObject;
+import com.electdead.newgame.gameobjects.Side;
 import com.electdead.newgame.gameobjects.units.Race;
 import com.electdead.newgame.graphics.UnitGraphicsModel;
 import com.electdead.newgame.main.MainApp;
@@ -63,7 +63,7 @@ public class Assets {
             JSONObject json = (JSONObject) parser.parse(br);
 
             String name 			= (String) json.get("name");
-            TypeObject type 		= TypeObject.valueOf((String) json.get("type"));
+            Side side 		        = Side.valueOf((String) json.get("side"));
 
             Race race 				= Race.valueOf((String) json.get("race"));
             int maxHp		 		= getInt(json, "maxHp");
@@ -117,7 +117,7 @@ public class Assets {
 
             HashMap<String, Object> props = new HashMap<>();
             props.put(name, name);
-            props.put("type", type);
+            props.put("side", side);
             props.put("physicsModel", physModel);
             props.put("graphicsModel", graphModel);
 

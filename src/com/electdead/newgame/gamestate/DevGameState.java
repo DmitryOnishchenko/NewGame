@@ -4,7 +4,7 @@ import com.electdead.newgame.assets.Assets;
 import com.electdead.newgame.assets.ImageUtils;
 import com.electdead.newgame.engine.Grid;
 import com.electdead.newgame.gameobjects.GameObject;
-import com.electdead.newgame.gameobjects.TypeObject;
+import com.electdead.newgame.gameobjects.Side;
 import com.electdead.newgame.gameobjects.units.Unit;
 import com.electdead.newgame.gameobjects.units.ai.AIContainer;
 import com.electdead.newgame.graphics.GraphicsComponent;
@@ -84,8 +84,8 @@ public class DevGameState extends AbstractGameState {
     public Unit createDemoUnit(String name, float x, float y) {
         HashMap<String, Object> props = Assets.getProperties(name);
 
-        TypeObject type = (TypeObject) props.get("type");
-        Unit unit = new Unit(name, type, x, y);
+        Side side = (Side) props.get("side");
+        Unit unit = new Unit(name, side, x, y);
 
         AIContainer aic = new AIContainer(unit);
 //		unit.actions.add(aic.aiComponents[0]);
