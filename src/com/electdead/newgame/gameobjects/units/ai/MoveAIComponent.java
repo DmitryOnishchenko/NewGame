@@ -12,7 +12,6 @@ public class MoveAIComponent extends AIComponent {
     @Override
     public void think(Unit unit) {
         if (unit.target == null) {
-            aic.setMaxPriorityComponent(this);
             unit.moveDir = unit.physModel.getMoveDir();
         } else {
             Vector2F newDir = unit.target.pos.copy();
@@ -20,6 +19,7 @@ public class MoveAIComponent extends AIComponent {
             newDir.normalize();
             unit.moveDir = newDir;
         }
+        aic.setMaxPriorityComponent(this);
     }
 
     @Override

@@ -10,8 +10,8 @@
   "pricePerHead": 20,
 
   "attackSpeedMs": 1500,
-  "attackRange": 700,
-  "searchRange": 800,
+  "attackRange": 800,
+  "searchRange": 900,
 
   "hitBoxWidth": 15,
   "hitBoxHeight": 15,

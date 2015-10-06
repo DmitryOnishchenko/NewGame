@@ -55,6 +55,7 @@ public class AIContainer {
         locked = false;
     }
 
+    //TODO fix micro move after attack or lost target
     public void update(Unit unit) {
         if (!locked) {
             if (maxPriorityComponent == null) {
