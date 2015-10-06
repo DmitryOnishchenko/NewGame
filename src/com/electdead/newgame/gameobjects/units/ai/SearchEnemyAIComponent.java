@@ -12,7 +12,7 @@ import java.util.List;
 
 public class SearchEnemyAIComponent extends AIComponent {
     private int delayTimer = 0;
-    private int repeatSearchTrigger = 500 / EngineV1.MS_PER_UPDATE;
+    private int repeatSearchTrigger = 1000 / EngineV1.MS_PER_UPDATE;
 
     public SearchEnemyAIComponent(AIContainer aic, int priority) {
         super(aic, priority);

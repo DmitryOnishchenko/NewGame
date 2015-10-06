@@ -75,8 +75,8 @@ public class DevGameState extends AbstractGameState {
 
 //        createDemoUnit("Human Soldier", 50, 250);
 //        units.add(createDemoUnit("Human Soldier", 0, 540));
-        units.add(createDemoUnit("Human Soldier", 500, 250));
-	    units.add(createDemoUnit("Orc Soldier", 850, 310));
+//        units.add(createDemoUnit("Human Soldier", 500, 250));
+//	    units.add(createDemoUnit("Orc Soldier", 850, 310));
 //	    units.add(createDemoUnit("Human Archer", 380, 500));
 
 //	    units.add(createDemoUnit("Human Archer", 200, 520));
@@ -145,31 +145,12 @@ public class DevGameState extends AbstractGameState {
         }
 
         grid.update();
-
         grid.checkDelete();
-//        for (GameObject obj : gameObjects)
-//            if (!obj.delete) obj.update();
-//
-//        for (Unit unit : units)
-//            if (!unit.delete) unit.update();
-//
+
         if (SWARM && ++testSpawnTimer > 2) {
             SWARM();
             testSpawnTimer = 0;
         }
-//
-//        for (Iterator<GameObject> iterator = gameObjects.iterator(); iterator.hasNext();) {
-//            GameObject gameObject = iterator.next();
-//            if (gameObject.delete)
-//                iterator.remove();
-//        }
-//
-//        for (Iterator<Unit> iterator = units.iterator(); iterator.hasNext();) {
-//            Unit unit = iterator.next();
-//            if (unit.delete) {
-//                iterator.remove();
-//            }
-//        }
     }
 
     @Override
@@ -233,23 +214,19 @@ public class DevGameState extends AbstractGameState {
     }
 
     public void SWARM() {
-        Unit humanUnit1 = createDemoUnit("Human Soldier", leftSpawnPoint, getRandomPointY());
-
-        Unit orcUnit1 = createDemoUnit("Orc Soldier", rightSpawnPoint, getRandomPointY());
+        createDemoUnit("Human Soldier", leftSpawnPoint, getRandomPointY());
+        createDemoUnit("Orc Soldier", rightSpawnPoint, getRandomPointY());
 
         if (++testSpawnTimer2 >= 8) {
-            Unit orcUnit2 = createDemoUnit("Orc Soldier", rightSpawnPoint, getRandomPointY());
+            createDemoUnit("Orc Soldier", rightSpawnPoint, getRandomPointY());
         }
-//
+
         if (++testSpawnTimer2 >= 10) {
             testSpawnTimer2 = 0;
-            Unit orcUnit2 = createDemoUnit("Orc Soldier", rightSpawnPoint, getRandomPointY());
-
-//            Unit orcUnit3 = createDemoUnit("Orc Archer", rightSpawnPoint, getRandomPointY());
-
-//            Unit humanUnit2 = createDemoUnit("Human Archer", leftSpawnPoint, getRandomPointY());
-
-//            Unit humanUnit3 = createDemoUnit("Human Archer", leftSpawnPoint, getRandomPointY());
+            createDemoUnit("Orc Soldier", rightSpawnPoint, getRandomPointY());
+            createDemoUnit("Orc Archer", rightSpawnPoint, getRandomPointY());
+            createDemoUnit("Human Archer", leftSpawnPoint, getRandomPointY());
+            createDemoUnit("Human Archer", leftSpawnPoint, getRandomPointY());
         }
     }
 
