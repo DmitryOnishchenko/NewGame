@@ -62,6 +62,7 @@ public class SearchEnemyAIComponent extends AIComponent {
             newDir.normalize();
             unit.moveDir = newDir;
         } else {
+            unit.target = null;
             unit.moveDir = unit.physModel.getMoveDir();
         }
     }

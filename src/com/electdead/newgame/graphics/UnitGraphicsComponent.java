@@ -1,6 +1,7 @@
 package com.electdead.newgame.graphics;
 
 import com.electdead.newgame.assets.Assets;
+import com.electdead.newgame.gameobjects.Side;
 import com.electdead.newgame.gameobjects.units.Unit;
 import com.electdead.newgame.gamestate.DevGameState;
 
@@ -40,7 +41,7 @@ public class UnitGraphicsComponent implements GraphicsComponent {
                 g2.draw(unit.attackBox);
             }
             if (unit.target != null && DevGameState.DEBUG_TARGET) {
-                g2.setPaint(Color.YELLOW);
+                g2.setPaint(unit.side == Side.LEFT_ARMY ? Color.YELLOW : Color.BLUE);
                 g2.drawLine(unit.x(), unit.y(), unit.target.x(), unit.target.y());
             }
         }

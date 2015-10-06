@@ -47,6 +47,8 @@ public class DevGameState extends AbstractGameState {
     public static boolean DEBUG_TARGET = false;
     public static boolean DEBUG_GRID = false;
 
+    public static boolean PAUSE = false;
+
     public DevGameState(GameStateManager gsm) {
         super(gsm);
     }
@@ -115,6 +117,8 @@ public class DevGameState extends AbstractGameState {
                 units.add(createDemoUnit("Orc Archer", rightSpawnPoint, getRandomPointY()));
             } else if (event.getKeyChar() == 'h') {
                 SWARM = !SWARM;
+            } else if (event.getKeyChar() == ' ') {
+                PAUSE = !PAUSE;
             } else if (event.getKeyChar() == 'j') {
                 DEBUG_MODE = !DEBUG_MODE;
                 if (!DEBUG_MODE) {
@@ -136,6 +140,10 @@ public class DevGameState extends AbstractGameState {
 
     @Override
     public void update() {
+        if (PAUSE) {
+            return;
+        }
+
         grid.update();
 
         grid.checkDelete();
@@ -187,6 +195,7 @@ public class DevGameState extends AbstractGameState {
         g2.drawString("To spawn Orc Soldier press \"K\"", 1100, 72);
         g2.drawString("To spawn Orc Archer press \"L\"", 1100, 90);
         g2.drawString("To start Demo Mode press \"H\"", 580, 90);
+        g2.drawString("PAUSE - \"Space\"", 580, 108);
 
         /* Debug menu */
         if (DEBUG_MODE) {
