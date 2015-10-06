@@ -1,5 +1,6 @@
 package com.electdead.newgame.gameobjects;
 
+import com.electdead.newgame.engine.Cell;
 import com.electdead.newgame.graphics.GraphicsComponent;
 import com.electdead.newgame.input.InputComponent;
 import com.electdead.newgame.main.MainApp;
@@ -11,6 +12,10 @@ import java.awt.*;
 
 public abstract class GameObject implements Comparable<GameObject> {
     public static int ID = 0;
+
+    /* Grid cell */
+    private Cell cell;
+    public boolean relocate;
 
     public final int id;
     public String name;
@@ -49,6 +54,14 @@ public abstract class GameObject implements Comparable<GameObject> {
 
     public int y() {
         return (int) pos.y;
+    }
+
+    public Cell getCell() {
+        return cell;
+    }
+
+    public void setCell(Cell cell) {
+        this.cell = cell;
     }
 
     public void update() {

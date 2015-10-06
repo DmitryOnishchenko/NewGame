@@ -1,7 +1,6 @@
 package com.electdead.newgame.gameobjects.units;
 
 import com.electdead.newgame.assets.Assets;
-import com.electdead.newgame.engine.Cell;
 import com.electdead.newgame.gameobjects.GameObject;
 import com.electdead.newgame.gameobjects.Side;
 import com.electdead.newgame.gameobjects.units.actions.Action;
@@ -20,10 +19,6 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class Unit extends GameObject {
-    /* Grid cell */
-    private Cell cell;
-    public boolean relocate;
-
     /* Common */
     public UnitPhysicsModel physModel;
     public UnitGraphicsModel graphModel;
@@ -72,14 +67,6 @@ public class Unit extends GameObject {
         } else {
             attackBox.setFrameFromCenter(pos.x, pos.y, pos.x + physModel.getAttackRange(), pos.y - physModel.getAttackRange());
         }
-    }
-
-    public Cell getCell() {
-        return cell;
-    }
-
-    public void setCell(Cell cell) {
-        this.cell = cell;
     }
 
     public void setAIContainer(AIContainer aic) {

@@ -1,7 +1,7 @@
 package com.electdead.newgame.engine;
 
-import com.electdead.newgame.gameobjects.units.Race;
-import com.electdead.newgame.gameobjects.units.Unit;
+import com.electdead.newgame.gameobjects.GameObject;
+import com.electdead.newgame.gameobjects.Side;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -15,8 +15,8 @@ public class Cell {
     public final int col;
 
     private Grid grid;
-    private LinkedList<Unit> leftUnits = new LinkedList<>();
-    private LinkedList<Unit> rightUnits = new LinkedList<>();
+    private List<GameObject> leftUnits = new LinkedList<>();
+    private List<GameObject> rightUnits = new LinkedList<>();
     //TODO left collection and right collection
     private Rectangle2D.Float bounds = new Rectangle2D.Float();
 
@@ -32,11 +32,11 @@ public class Cell {
     }
 
     public void update() {
-        for (Unit unit : leftUnits) {
-            unit.update();
+        for (GameObject gameObject : leftUnits) {
+            gameObject.update();
         }
-        for (Unit unit : rightUnits) {
-            unit.update();
+        for (GameObject gameObject : rightUnits) {
+            gameObject.update();
         }
     }
 
@@ -52,33 +52,33 @@ public class Cell {
         rightUnits.clear();
     }
 
-    public List<Unit> getAllObjects() {
-        List<Unit> list = new LinkedList<>();
+    public List<GameObject> getAllObjects() {
+        List<GameObject> list = new LinkedList<>();
         list.addAll(leftUnits);
         list.addAll(rightUnits);
 
         return list;
     }
 
-    public List<Unit> getLeftUnits() {
+    public List<GameObject> getLeftUnits() {
         return leftUnits;
     }
 
-    public List<Unit> getRightUnit() {
+    public List<GameObject> getRightUnit() {
         return rightUnits;
     }
 
-    public void add(Unit unit) {
+    public void add(GameObject gameObject) {
 //        System.out.println(unit.name + " added at " + row + "|" + col);
-        if (unit.physModel.getRace() == Race.Human) {
-            leftUnits.add(unit);
+        if (gameObject.side == Side.LEFT_ARMY) {
+            leftUnits.add(gameObject);
         } else {
-            rightUnits.add(unit);
+            rightUnits.add(gameObject);
         }
     }
 
     public void checkDelete() {
-        ListIterator<Unit> it = leftUnits.listIterator();
+        ListIterator<GameObject> it = leftUnits.listIterator();
         while (it.hasNext()) {
             if (it.next().delete) {
                 it.remove();
@@ -92,41 +92,41 @@ public class Cell {
         }
     }
 
-    public void move(Unit unit) {
+    public void move(GameObject gameObject) {
 
-        int newRow = (unit.y() - Grid.INDENT_TOP) / Grid.CELL_SIZE;
-        int newCol = (unit.x() - Grid.INDENT_LEFT) / Grid.CELL_SIZE;
+        int newRow = (gameObject.y() - Grid.INDENT_TOP) / Grid.CELL_SIZE;
+        int newCol = (gameObject.x() - Grid.INDENT_LEFT) / Grid.CELL_SIZE;
 
-        if (unit.x() < Grid.INDENT_LEFT) {
+        if (gameObject.x() < Grid.INDENT_LEFT) {
             //TODO maybe bad-bad-bad!
 //            System.out.println(unit.name + " removed from " + row + "|" + col);
-            unit.delete = true;
+            gameObject.delete = true;
             return;
         }
 
         if (row != newRow || col != newCol) {
 //            System.out.println(unit.name + " need to relocate");
-            unit.relocate = true;
+            gameObject.relocate = true;
         }
     }
 
     public void relocate() {
-        Iterator<Unit> it = leftUnits.iterator();
+        Iterator<GameObject> it = leftUnits.iterator();
         while (it.hasNext()) {
-            Unit unit = it.next();
-            if (unit.relocate) {
-                unit.relocate = false;
+            GameObject gameObject = it.next();
+            if (gameObject.relocate) {
+                gameObject.relocate = false;
                 it.remove();
-                grid.add(unit);
+                grid.add(gameObject);
             }
         }
         it = rightUnits.iterator();
         while (it.hasNext()) {
-            Unit unit = it.next();
-            if (unit.relocate) {
-                unit.relocate = false;
+            GameObject gameObject = it.next();
+            if (gameObject.relocate) {
+                gameObject.relocate = false;
                 it.remove();
-                grid.add(unit);
+                grid.add(gameObject);
             }
         }
     }

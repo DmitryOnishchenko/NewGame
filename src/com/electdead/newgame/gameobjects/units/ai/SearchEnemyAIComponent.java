@@ -2,6 +2,7 @@ package com.electdead.newgame.gameobjects.units.ai;
 
 import com.electdead.newgame.engine.Cell;
 import com.electdead.newgame.engine.EngineV1;
+import com.electdead.newgame.gameobjects.GameObject;
 import com.electdead.newgame.gameobjects.units.Race;
 import com.electdead.newgame.gameobjects.units.Unit;
 import com.electdead.newgame.gamestate.DevGameState;
@@ -11,7 +12,8 @@ import java.util.List;
 
 public class SearchEnemyAIComponent extends AIComponent {
     private int delayTimer = 0;
-    private int repeatFindTrigger = 1000 / EngineV1.MS_PER_UPDATE;
+    private int repeatSearchTrigger = 500 / EngineV1.MS_PER_UPDATE;
+
     public SearchEnemyAIComponent(AIContainer aic, int priority) {
         super(aic, priority);
     }
@@ -20,7 +22,7 @@ public class SearchEnemyAIComponent extends AIComponent {
     public void think(Unit unit) {
         if (unit.target == null) {
             searchTarget(unit);
-        } else if (delayTimer++ > repeatFindTrigger) {
+        } else if (delayTimer++ > repeatSearchTrigger) {
             delayTimer = 0;
             searchTarget(unit);
         }
@@ -36,20 +38,20 @@ public class SearchEnemyAIComponent extends AIComponent {
         List<Cell> cells = DevGameState.grid.getCellIfIntersectsWith(unit.searchCircle);
 
         for (Cell cell : cells) {
-            List<Unit> list;
+            List<GameObject> list;
             if (unit.physModel.getRace() == Race.Human) {
                 list = cell.getRightUnit();
             } else list = cell.getLeftUnits();
 
-            for (Unit target : list) {
-                if (target.isAlive() && intersects(unit, target)) {
+            for (GameObject target : list) {
+                if (((Unit) target).isAlive() && intersects(unit, target)) {
 
                     newDir = target.pos.copy();
                     newDir.sub(unit.pos);
                     double length = newDir.length();
                     if (length < minLength) {
                         minLength = length;
-                        newTarget = target;
+                        newTarget = (Unit) target;
                     }
                 }
             }
@@ -64,7 +66,10 @@ public class SearchEnemyAIComponent extends AIComponent {
         }
     }
 
-    public boolean intersects(Unit unit, Unit enemy) {
+    public boolean intersects(GameObject gameObject, GameObject other) {
+        Unit unit = (Unit) gameObject;
+        Unit enemy = (Unit) other;
+
         double unitSearchRange = unit.physModel.getSearchRange();
         double enemyHitBoxRadius = enemy.hitBox.width / 2;
         double distance = Vector2F.getDistanceOnScreen(unit.pos, enemy.pos);

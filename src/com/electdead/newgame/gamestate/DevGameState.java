@@ -73,8 +73,8 @@ public class DevGameState extends AbstractGameState {
 
 //        createDemoUnit("Human Soldier", 50, 250);
 //        units.add(createDemoUnit("Human Soldier", 0, 540));
-//        units.add(createDemoUnit("Human Soldier", 500, 520));
-//	    units.add(createDemoUnit("Human Archer", 400, 520));
+        units.add(createDemoUnit("Human Soldier", 500, 250));
+	    units.add(createDemoUnit("Orc Soldier", 850, 310));
 //	    units.add(createDemoUnit("Human Archer", 380, 500));
 
 //	    units.add(createDemoUnit("Human Archer", 200, 520));
@@ -224,32 +224,23 @@ public class DevGameState extends AbstractGameState {
     }
 
     public void SWARM() {
-        int width = 500;
-        Random r = new Random();
         Unit humanUnit1 = createDemoUnit("Human Soldier", leftSpawnPoint, getRandomPointY());
-//        units.add(humanUnit1);
 
         Unit orcUnit1 = createDemoUnit("Orc Soldier", rightSpawnPoint, getRandomPointY());
-//        units.add(orcUnit1);
 
         if (++testSpawnTimer2 >= 8) {
             Unit orcUnit2 = createDemoUnit("Orc Soldier", rightSpawnPoint, getRandomPointY());
-//            units.add(orcUnit2);
         }
 //
         if (++testSpawnTimer2 >= 10) {
             testSpawnTimer2 = 0;
             Unit orcUnit2 = createDemoUnit("Orc Soldier", rightSpawnPoint, getRandomPointY());
-//            units.add(orcUnit2);
 
-            Unit orcUnit3 = createDemoUnit("Orc Archer", rightSpawnPoint, getRandomPointY());
-//            units.add(orcUnit3);
+//            Unit orcUnit3 = createDemoUnit("Orc Archer", rightSpawnPoint, getRandomPointY());
 
-            Unit humanUnit2 = createDemoUnit("Human Archer", leftSpawnPoint, getRandomPointY());
-//            units.add(humanUnit2);
+//            Unit humanUnit2 = createDemoUnit("Human Archer", leftSpawnPoint, getRandomPointY());
 
-            Unit humanUnit3 = createDemoUnit("Human Archer", leftSpawnPoint, getRandomPointY());
-//            units.add(humanUnit3);
+//            Unit humanUnit3 = createDemoUnit("Human Archer", leftSpawnPoint, getRandomPointY());
         }
     }
 
