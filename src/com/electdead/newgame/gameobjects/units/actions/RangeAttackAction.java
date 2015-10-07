@@ -21,6 +21,7 @@ public class RangeAttackAction extends Action {
         }
 
         if (!wait && attackTimer++ > unit.physModel.getAttackSpeed()) {
+            checkAnimationDir();
             attackTimer = 0;
             //TODO spawn projectile
 //            spawnProjectile(unit);

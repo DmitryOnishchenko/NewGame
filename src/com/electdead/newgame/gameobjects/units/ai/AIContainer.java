@@ -20,7 +20,10 @@ public class AIContainer {
 
 		/* AI components */
         aiComponents = new AIComponent[3];
-		
+
+		/* Find enemy */
+        aiComponents[0] = new SearchEnemyAIComponent(this, 0);
+
 		/* Attack */
         AIComponent attackAIComponent = new AttackAIComponent(this, 2);
         Action attackAction = null;
@@ -34,11 +37,8 @@ public class AIContainer {
         Animation attackAnimation = new Animation(attackAction, spritesRight, spritesRight, spritesLeft);
         attackAction.setAnimation(attackAnimation);
         attackAIComponent.setAction(attackAction);
-        aiComponents[0] = attackAIComponent;
-		
-		/* Find enemy */
-        aiComponents[1] = new SearchEnemyAIComponent(this, 0);
-		
+        aiComponents[1] = attackAIComponent;
+
 		/* Move */
         spritesRight = unit.graphModel.getMoveSpritesRight();
         spritesLeft = unit.graphModel.getMoveSpritesLeft();
