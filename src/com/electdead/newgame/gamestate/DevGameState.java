@@ -4,6 +4,7 @@ import com.electdead.newgame.assets.Assets;
 import com.electdead.newgame.assets.ImageUtils;
 import com.electdead.newgame.engine.Grid;
 import com.electdead.newgame.gameobjects.GameObject;
+import com.electdead.newgame.gameobjects.GameObjectType;
 import com.electdead.newgame.gameobjects.Side;
 import com.electdead.newgame.gameobjects.units.Unit;
 import com.electdead.newgame.gameobjects.units.ai.AIContainer;
@@ -87,7 +88,7 @@ public class DevGameState extends AbstractGameState {
         HashMap<String, Object> props = Assets.getProperties(name);
 
         Side side = (Side) props.get("side");
-        Unit unit = new Unit(name, side, x, y);
+        Unit unit = new Unit(name, side, GameObjectType.UNIT, x, y);
 
         AIContainer aic = new AIContainer(unit);
 //		unit.actions.add(aic.aiComponents[0]);
@@ -169,7 +170,7 @@ public class DevGameState extends AbstractGameState {
         }
 
         g2.setPaint(Color.WHITE);
-        g2.drawString("GameObjects: " + gameObjects.size() + " | Units: " + grid.amountOfUnits(), 5, 36);
+        g2.drawString("GameObjects: " + grid.getAllObjects().size() + " | Units: " + grid.amountOfUnits(), 5, 36);
 
         g2.drawString("To spawn Human Soldier press \"A\"", 5, 72);
         g2.drawString("To spawn Human Archer press \"S\"", 5, 90);

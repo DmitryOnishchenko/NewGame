@@ -1,6 +1,7 @@
 package com.electdead.newgame.engine;
 
 import com.electdead.newgame.gameobjects.GameObject;
+import com.electdead.newgame.gameobjects.GameObjectType;
 import com.electdead.newgame.gameobjects.Side;
 
 import java.awt.*;
@@ -17,6 +18,7 @@ public class Cell {
     private Grid grid;
     private List<GameObject> leftUnits = new LinkedList<>();
     private List<GameObject> rightUnits = new LinkedList<>();
+    private List<GameObject> projectiles = new LinkedList<>();
     //TODO left collection and right collection
     private Rectangle2D.Float bounds = new Rectangle2D.Float();
 
@@ -38,6 +40,9 @@ public class Cell {
         for (GameObject gameObject : rightUnits) {
             gameObject.update();
         }
+        for (GameObject gameObject : projectiles) {
+            gameObject.update();
+        }
     }
 
     public void render(Graphics2D g2, double deltaTime) {
@@ -53,6 +58,13 @@ public class Cell {
     }
 
     public List<GameObject> getAllObjects() {
+        List<GameObject> list = getAllUnits();
+        list.addAll(projectiles);
+
+        return list;
+    }
+
+    public List<GameObject> getAllUnits() {
         List<GameObject> list = new LinkedList<>();
         list.addAll(leftUnits);
         list.addAll(rightUnits);
@@ -64,17 +76,32 @@ public class Cell {
         return leftUnits;
     }
 
-    public List<GameObject> getRightUnit() {
+    public List<GameObject> getRightUnits() {
         return rightUnits;
     }
 
+    public List<GameObject> getProjectiles() {
+        return projectiles;
+    }
+
     public void add(GameObject gameObject) {
-//        System.out.println(unit.name + " added at " + row + "|" + col);
+        if (gameObject.type == GameObjectType.UNIT) {
+            addUnit(gameObject);
+        } else if (gameObject.type == GameObjectType.PROJECTILE) {
+            addProjectile(gameObject);
+        }
+    }
+
+    private void addUnit(GameObject gameObject) {
         if (gameObject.side == Side.LEFT_ARMY) {
             leftUnits.add(gameObject);
         } else {
             rightUnits.add(gameObject);
         }
+    }
+
+    private void addProjectile(GameObject gameObject) {
+        projectiles.add(gameObject);
     }
 
     public void checkDelete() {
@@ -85,6 +112,12 @@ public class Cell {
             }
         }
         it = rightUnits.listIterator();
+        while (it.hasNext()) {
+            if (it.next().delete) {
+                it.remove();
+            }
+        }
+        it = projectiles.listIterator();
         while (it.hasNext()) {
             if (it.next().delete) {
                 it.remove();
@@ -121,6 +154,15 @@ public class Cell {
             }
         }
         it = rightUnits.iterator();
+        while (it.hasNext()) {
+            GameObject gameObject = it.next();
+            if (gameObject.relocate) {
+                gameObject.relocate = false;
+                it.remove();
+                grid.add(gameObject);
+            }
+        }
+        it = projectiles.iterator();
         while (it.hasNext()) {
             GameObject gameObject = it.next();
             if (gameObject.relocate) {

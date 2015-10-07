@@ -4,7 +4,7 @@
   "race": "Orc",
   "maxHp": 100,
   "armor": 5,
-  "damage": 80,
+  "damage": 100,
   "defaultSpeed": 40,
   "spawnPrice": 80,
   "pricePerHead": 30,

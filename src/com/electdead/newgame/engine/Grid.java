@@ -90,7 +90,7 @@ public class Grid {
         int amount = 0;
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLS; col++) {
-                amount += cells[row][col].getAllObjects().size();
+                amount += cells[row][col].getAllUnits().size();
             }
         }
 

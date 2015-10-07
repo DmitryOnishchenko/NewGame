@@ -2,6 +2,7 @@ package com.electdead.newgame.gameobjects.units;
 
 import com.electdead.newgame.assets.Assets;
 import com.electdead.newgame.gameobjects.GameObject;
+import com.electdead.newgame.gameobjects.GameObjectType;
 import com.electdead.newgame.gameobjects.Side;
 import com.electdead.newgame.gameobjects.units.actions.Action;
 import com.electdead.newgame.gameobjects.units.actions.DieAction;
@@ -38,8 +39,8 @@ public class Unit extends GameObject {
     public Ellipse2D.Double attackBox;
     public Ellipse2D.Double searchCircle;
 
-    public Unit(String name, Side side, float x, float y) {
-        super(name, side, x, y);
+    public Unit(String name, Side side, GameObjectType type, float x, float y) {
+        super(name, side, type, x, y);
         init();
     }
 

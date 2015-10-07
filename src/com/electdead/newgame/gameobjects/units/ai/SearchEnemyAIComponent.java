@@ -40,7 +40,7 @@ public class SearchEnemyAIComponent extends AIComponent {
         for (Cell cell : cells) {
             List<GameObject> list;
             if (unit.physModel.getRace() == Race.Human) {
-                list = cell.getRightUnit();
+                list = cell.getRightUnits();
             } else list = cell.getLeftUnits();
 
             for (GameObject target : list) {
