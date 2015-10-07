@@ -26,7 +26,7 @@ public class DevGameState extends AbstractGameState {
 
     public static ArrayList<GameObject> gameObjects = new ArrayList<>();
     public static ArrayList<Unit> units = new ArrayList<>();
-//    public static TreeMultiset<GameObject> renderObjects = TreeMultiset.create();
+    //    public static TreeMultiset<GameObject> renderObjects = TreeMultiset.create();
     public static ArrayList<GameObject> renderObjects = new ArrayList<>(5000);
 
     private BufferedImage floorSprite = (BufferedImage) Assets.getProperties("Battle background").get("floor");
@@ -78,10 +78,10 @@ public class DevGameState extends AbstractGameState {
 //        units.add(createDemoUnit("Human Soldier", 0, 540));
 //        units.add(createDemoUnit("Human Soldier", 500, 250));
 //	    units.add(createDemoUnit("Orc Soldier", 850, 310));
-	    units.add(createDemoUnit("Human Archer", 380, 500));
+        units.add(createDemoUnit("Human Archer", 380, 500));
 
 //	    units.add(createDemoUnit("Human Archer", 200, 520));
-	    units.add(createDemoUnit("Orc Archer", 900, 300));
+        units.add(createDemoUnit("Orc Archer", 900, 300));
     }
 
     public Unit createDemoUnit(String name, float x, float y) {
@@ -120,6 +120,9 @@ public class DevGameState extends AbstractGameState {
                 SWARM = !SWARM;
             } else if (event.getKeyChar() == ' ') {
                 PAUSE = !PAUSE;
+            } else if (event.getKeyCode() == 10) {
+                grid.clear();
+                SWARM = false;
             } else if (event.getKeyChar() == 'j') {
                 DEBUG_MODE = !DEBUG_MODE;
                 if (!DEBUG_MODE) {
@@ -178,6 +181,7 @@ public class DevGameState extends AbstractGameState {
         g2.drawString("To spawn Orc Archer press \"L\"", 1100, 90);
         g2.drawString("To start Demo Mode press \"H\"", 580, 90);
         g2.drawString("PAUSE - \"Space\"", 580, 108);
+        g2.drawString("New Game - \"Enter\"", 750, 108);
 
         /* Debug menu */
         if (DEBUG_MODE) {
