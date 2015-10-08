@@ -50,24 +50,22 @@ public class Unit extends GameObject {
         graphModel = (UnitGraphicsModel) props.get("graphicsModel");
 
         hitBox = new Ellipse2D.Double();
-        hitBox.setFrameFromCenter(pos.x, pos.y,
-                pos.x + physModel.getHitBoxWidth(), pos.y + physModel.getHitBoxHeight());
+        hitBox.setFrameFromCenter(
+                pos.x, pos.y, pos.x + physModel.getHitBoxWidth(), pos.y + physModel.getHitBoxHeight());
 
         searchCircle = new Ellipse2D.Double();
-        searchCircle.setFrameFromCenter(pos.x, pos.y, pos.x + physModel.getSearchRange(), pos.y + physModel.getSearchRange());
+        searchCircle.setFrameFromCenter(
+                pos.x, pos.y, pos.x + physModel.getSearchRange(), pos.y + physModel.getSearchRange());
+
+        attackBox = new Ellipse2D.Double();
+        attackBox.setFrameFromCenter(
+                pos.x, pos.y, pos.x + physModel.getAttackRange(), pos.y - physModel.getAttackRange());
 
         currHp			= physModel.getMaxHp();
         damage			= physModel.getDamage();
         armor 			= physModel.getArmor();
         currentSpeed	= physModel.getDefaultSpeed();
-        moveDir = physModel.getMoveDir();
-
-        attackBox = new Ellipse2D.Double();
-        if (moveDir.x > 0) {
-            attackBox.setFrameFromCenter(pos.x, pos.y, pos.x + physModel.getAttackRange(), pos.y - physModel.getAttackRange());
-        } else {
-            attackBox.setFrameFromCenter(pos.x, pos.y, pos.x + physModel.getAttackRange(), pos.y - physModel.getAttackRange());
-        }
+        moveDir         = physModel.getMoveDir();
     }
 
     public void setAIContainer(AIContainer aic) {
@@ -76,10 +74,6 @@ public class Unit extends GameObject {
 
     public boolean isAlive() {
         return currHp > 0;
-    }
-
-    public boolean isEnemy(Unit unit) {
-        return physModel.getRace() != unit.physModel.getRace();
     }
 
     public void takeDamage(int damage) {
@@ -134,9 +128,9 @@ public class Unit extends GameObject {
         at.translate(pos.x, pos.y);
         at.rotate(Math.PI / r.nextInt(4));
         at.scale(r.nextDouble() + 0.2, r.nextDouble() + 0.2);
-//		at.translate(-pos.x, -pos.y);
-//		DevGameState.floorG2.drawImage(randomBlood(), x(), (int) (pos.y - hitBox.height / 2), null);
-        for (int i = 0; i < 5; i++)
+
+        for (int i = 0; i < 5; i++) {
             DevGameState.floorG2.drawImage(randomBlood(), at, null);
+        }
     }
 }
