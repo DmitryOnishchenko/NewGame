@@ -45,7 +45,6 @@ public class Grid {
 
         if (row >= ROWS || col >= COLS ||
             row <= -1 || col <= -1) {
-//            System.out.println(unit.name + " removed from " + row + "|" + col);
             return;
         }
 
@@ -70,7 +69,7 @@ public class Grid {
     public void render(Graphics2D g2, double deltaTime) {
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLS; col++) {
-                cells[row][col].render(g2, deltaTime);
+                cells[row][col].renderCell(g2, deltaTime);
             }
         }
     }
