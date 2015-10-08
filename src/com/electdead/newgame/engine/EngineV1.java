@@ -49,6 +49,7 @@ public class EngineV1 extends AbstractGameLoop {
 
     private Graphics2D getGraphics(VolatileImage frame) {
         Graphics2D g2 = (Graphics2D) frame.getGraphics();
+        //TODO Test rendering hints
 		/* Test for text */
 //		g2Next.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		/* Test for shapes */
@@ -96,12 +97,12 @@ public class EngineV1 extends AbstractGameLoop {
 
     @Override
     public void run() {
-        long timer = getCurrentTime();
-        long previous = getCurrentTime();
+        long timer = getTime();
+        long previous = getTime();
         long lag = 0;
 
         while (true) {
-            long current = getCurrentTime();
+            long current = getTime();
             long elapsed = current - previous;
             previous = current;
             lag += elapsed;
@@ -116,7 +117,7 @@ public class EngineV1 extends AbstractGameLoop {
             double deltaTime = 1 - lag / MS_PER_UPDATE;
             render(deltaTime);
 
-            if (getCurrentTime() - timer >= 1000) {
+            if (getTime() - timer >= 1000) {
                 tpsInfo = tps;
                 tps = 0;
                 fpsInfo = fps;
@@ -125,7 +126,7 @@ public class EngineV1 extends AbstractGameLoop {
             }
 
             if (useFpsLimit) {
-                long sleepFor = current + msPerFrame - getCurrentTime();
+                long sleepFor = current + msPerFrame - getTime();
                 try {
                     if (sleepFor > 0) Thread.sleep(sleepFor);
                 } catch (InterruptedException ex) { ex.printStackTrace(); }
@@ -133,7 +134,7 @@ public class EngineV1 extends AbstractGameLoop {
         }
     }
 
-    private long getCurrentTime() {
+    private long getTime() {
         return System.currentTimeMillis();
     }
 }
