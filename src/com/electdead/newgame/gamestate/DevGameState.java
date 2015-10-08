@@ -10,8 +10,6 @@ import com.electdead.newgame.gameobjects.units.ai.AIContainer;
 import com.electdead.newgame.graphics.GraphicsComponent;
 import com.electdead.newgame.graphics.UnitGraphicsComponent;
 import com.electdead.newgame.main.MainApp;
-import com.electdead.newgame.physics.PhysicsComponent;
-import com.electdead.newgame.physics.UnitPhysicsComponent;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -81,11 +79,9 @@ public class DevGameState extends AbstractGameState {
 
         AIContainer aic = new AIContainer(unit);
 
-        PhysicsComponent pc = new UnitPhysicsComponent(unit);
         GraphicsComponent gc = new UnitGraphicsComponent(unit);
 
         unit.setAIContainer(aic);
-        unit.setPhysicsComponent(pc);
         unit.setGraphicsComponent(gc);
 
         grid.add(unit);
