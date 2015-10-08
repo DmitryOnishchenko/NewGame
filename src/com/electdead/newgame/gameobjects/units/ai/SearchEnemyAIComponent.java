@@ -28,8 +28,8 @@ public class SearchEnemyAIComponent extends AIComponent {
         }
     }
 
-    @Override
-    public void update(Unit unit) {}
+//    @Override
+//    public void update(Unit unit) {}
 
     private void searchTarget(Unit unit) {
         double minLength = Double.MAX_VALUE;

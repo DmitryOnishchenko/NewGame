@@ -33,5 +33,5 @@ public abstract class AIComponent implements Comparable<AIComponent> {
 
 	public abstract void think(Unit unit);
 
-	public abstract void update(Unit unit);
+//	public abstract void update(Unit unit);
 }

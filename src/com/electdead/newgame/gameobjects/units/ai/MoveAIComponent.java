@@ -25,8 +25,8 @@ public class MoveAIComponent extends AIComponent {
         aic.setMaxPriorityComponent(this);
     }
 
-    @Override
-    public void update(Unit unit) {
-        unit.moveDir = unit.physModel.getMoveDir();
-    }
+//    @Override
+//    public void update(Unit unit) {
+//        unit.moveDir = unit.physModel.getMoveDir();
+//    }
 }

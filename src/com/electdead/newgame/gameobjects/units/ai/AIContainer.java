@@ -17,14 +17,18 @@ public class AIContainer {
 
     public AIContainer(Unit unit) {
         this.unit = unit;
+        init();
+    }
 
-		/* AI components */
+    //TODO dynamical ai components
+    private void init() {
+        /* AI components */
         aiComponents = new AIComponent[3];
 
-		/* Find enemy */
+		/* Find enemy [0] */
         aiComponents[0] = new SearchEnemyAIComponent(this, 0);
 
-		/* Attack */
+		/* Attack [1] */
         AIComponent attackAIComponent = new AttackAIComponent(this, 2);
         Action attackAction = null;
         if (unit.name.endsWith("Archer")) {
@@ -39,7 +43,7 @@ public class AIContainer {
         attackAIComponent.setAction(attackAction);
         aiComponents[1] = attackAIComponent;
 
-		/* Move */
+		/* Move [2] */
         spritesRight = unit.graphModel.getMoveSpritesRight();
         spritesLeft = unit.graphModel.getMoveSpritesLeft();
         AIComponent moveAIComponent = new MoveAIComponent(this, 4);
@@ -52,10 +56,8 @@ public class AIContainer {
 		/* Set last ai component (lowest priority) */
         maxPriorityComponent = aiComponents[2];
         unit.action = maxPriorityComponent.getAction();
-        locked = false;
     }
 
-    //TODO fix micro move after attack or lost target
     public void update(Unit unit) {
         if (!locked) {
             if (maxPriorityComponent == null) {
