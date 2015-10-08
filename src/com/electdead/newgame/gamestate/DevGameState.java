@@ -29,22 +29,21 @@ public class DevGameState extends AbstractGameState {
     private BufferedImage floorSprite = (BufferedImage) Assets.getProperties("commonAssets").get("floor");
     private static BufferedImage map = new BufferedImage(MainApp.WIDTH, MainApp.HEIGHT, BufferedImage.TYPE_INT_ARGB);
     public static Graphics2D floorG2 = (Graphics2D) map.getGraphics();
-
-    private int testSpawnTimer;
-    private int testSpawnTimer2;
     public static ArrayList<BufferedImage> bloodSprites = new ArrayList<>();
+
+    // TODO test variables
+    private Random random = new Random();
 
     private int leftSpawnPoint = Grid.INDENT_LEFT;
     private int rightSpawnPoint = MainApp.WIDTH + 50;
 
-    // TODO test variables
-    private Random random = new Random();
+    private int testSpawnTimer;
+    private int testSpawnTimer2;
     public static boolean SWARM = false;
     public static boolean DEBUG_MODE = false;
     public static boolean DEBUG_BOX = false;
     public static boolean DEBUG_TARGET = false;
     public static boolean DEBUG_GRID = false;
-
     public static boolean PAUSE = false;
 
     public DevGameState(GameStateManager gsm) {
@@ -94,6 +93,7 @@ public class DevGameState extends AbstractGameState {
         return unit;
     }
 
+    //TODO remake
     @Override
     public void processInput(KeyEvent event) {
         if (event != null && event.getID() == KeyEvent.KEY_PRESSED) {
@@ -207,6 +207,7 @@ public class DevGameState extends AbstractGameState {
         }
     }
 
+    /* Benchmark-Demo test */
     public void SWARM() {
         createDemoUnit("Human Soldier", leftSpawnPoint, getRandomPointY());
         createDemoUnit("Orc Soldier", rightSpawnPoint, getRandomPointY());
