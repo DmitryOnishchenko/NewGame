@@ -25,6 +25,7 @@ public class Projectile extends GameObject {
         this.damage = damage;
     }
 
+    //TODO update projectiles
     @Override
     public void update() {
         float shiftX = speed * moveDir.x;
@@ -48,14 +49,13 @@ public class Projectile extends GameObject {
         checkDelete();
     }
 
+    //TODO render projectiles
     @Override
     public void render(Graphics2D g2, double deltaTime) {
-//		g2.drawImage(sprite, (int) pos.x, (int) pos.y, null);
         g2.setPaint(side == Side.LEFT_ARMY ? Color.CYAN : Color.YELLOW);
         Ellipse2D.Float ell = new Ellipse2D.Float();
         ell.setFrameFromCenter(pos.x, pos.y, pos.x + attackRange, pos.y + attackRange);
         g2.fill(ell);
-//        g2.fillRect(x() - 2, y() - 2, 4, 4);
     }
 
     public boolean intersects(Projectile projectile, Unit enemy) {
