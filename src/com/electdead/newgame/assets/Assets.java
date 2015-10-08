@@ -10,37 +10,25 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Assets {
     private static final HashMap<String, HashMap<String, Object>> assets = new HashMap<>();
-    private static final String UNITS_PROPERTIES = "/res/units/properties/";
-
-    //TODO Test scale
-    public static float SCALE = 0.5f;
-
-    private Assets() {}
+    private static final String UNITS_PROPERTIES_PATH = "/res/units/properties/";
+    private static float SPRITE_SCALE = 0.5f;
 
     static {
-		/* Properties for Battle background */
-        HashMap<String, Object> battleBackgroundProperties = new HashMap<>();
-        BufferedImage background = ImageUtils.loadImage(MainApp.class, "/res/background/battle_panel_background.png");
-        BufferedImage floor = ImageUtils.loadImage(MainApp.class, "/res/background/floor.png");
-        battleBackgroundProperties.put("background", background);
-        battleBackgroundProperties.put("floor", floor);
-        assets.put("Battle background", battleBackgroundProperties);
-		
-		/* Projectiles */
-        HashMap<String, Object> projectiles = new HashMap<>();
-        BufferedImage woodenArrow = ImageUtils.loadImage(MainApp.class, "/res/projectiles/wooden_arrow.png");
-//        woodenArrow = ImageUtils.resizeImage(woodenArrow, SCALE);
-        projectiles.put("woodenArrow", woodenArrow);
-        assets.put("projectiles", projectiles);
-		
+        loadCommonAssets();
+        loadEffectsAssets();
+        loadProjectilesAssets();
+
 		/* Units */
         loadAssetsForUnit("Human Soldier");
         loadAssetsForUnit("Human Archer");
@@ -55,7 +43,7 @@ public class Assets {
     private static void loadAssetsForUnit(String unitName) {
         try {
             /* Load from .json */
-            InputStream in = MainApp.class.getResourceAsStream(UNITS_PROPERTIES + unitName + ".json");
+            InputStream in = MainApp.class.getResourceAsStream(UNITS_PROPERTIES_PATH + unitName + ".json");
             InputStreamReader rin = new InputStreamReader(in);
             BufferedReader br = new BufferedReader(rin);
 
@@ -69,22 +57,22 @@ public class Assets {
             int maxHp		 		= getInt(json, "maxHp");
             int armor 				= getInt(json, "armor");
             int damage 				= getInt(json, "damage");
-            float defaultSpeed		= getFloat(json, "defaultSpeed") * SCALE;
+            float defaultSpeed		= getFloat(json, "defaultSpeed") * SPRITE_SCALE;
             float attackSpeed 		= getFloat(json, "attackSpeedMs");
-            float attackRange 		= getFloat(json, "attackRange") * SCALE;
-            float searchRange 		= getFloat(json, "searchRange") * SCALE;
+            float attackRange 		= getFloat(json, "attackRange") * SPRITE_SCALE;
+            float searchRange 		= getFloat(json, "searchRange") * SPRITE_SCALE;
             int spawnPrice 			= getInt(json, "spawnPrice");
             int pricePerHead 		= getInt(json, "pricePerHead");
 
-            float hitBoxWidth 		= getFloat(json, "hitBoxWidth") * SCALE;
-            float hitBoxHeight 		= getFloat(json, "hitBoxHeight") * SCALE;
+            float hitBoxWidth 		= getFloat(json, "hitBoxWidth") * SPRITE_SCALE;
+            float hitBoxHeight 		= getFloat(json, "hitBoxHeight") * SPRITE_SCALE;
             float velocityX 		= getFloat(json, "velocityX");
             float velocityY 		= getFloat(json, "velocityY");
             Vector2F dir 			= new Vector2F(velocityX, velocityY);
 
-            int widthSprite 		= (int) (getInt(json, "widthSprite") * SCALE);
-            int heightSprite 		= (int) (getInt(json, "heightSprite") * SCALE);
-            int baseLine 			= (int) (getInt(json, "baseLine") * SCALE);
+            int widthSprite 		= (int) (getInt(json, "widthSprite") * SPRITE_SCALE);
+            int heightSprite 		= (int) (getInt(json, "heightSprite") * SPRITE_SCALE);
+            int baseLine 			= (int) (getInt(json, "baseLine") * SPRITE_SCALE);
             int animationSpeedMs 	= getInt(json, "animationSpeedMs");
 
             BufferedImage[] moveSprites = getSprites(json, "move");
@@ -125,6 +113,45 @@ public class Assets {
         } catch (Exception ex) { ex.printStackTrace(); }
     }
 
+    private static void loadCommonAssets() {
+        /* Common assets */
+        HashMap<String, Object> commonAssets = new HashMap<>();
+        /* Background */
+        BufferedImage background = ImageUtils.loadImage(MainApp.class, "/res/background/battle_panel_background.png");
+        commonAssets.put("background", background);
+        /* Floor */
+        BufferedImage floor = ImageUtils.loadImage(MainApp.class, "/res/background/floor.png");
+        commonAssets.put("floor", floor);
+
+        assets.put("commonAssets", commonAssets);
+    }
+
+    private static void loadEffectsAssets() {
+         /* Effects */
+        HashMap<String, Object> effectsAssets = new HashMap<>();
+        /* Blood */
+        ArrayList<BufferedImage> bloodSprites = new ArrayList<>();
+        try {
+            for (int i = 0; i < 8; i++) {
+                BufferedImage img = ImageIO.read(MainApp.class.getResource("/res/blood/blood_" + i + ".png"));
+                img = ImageUtils.resizeImage(img, SPRITE_SCALE);
+                bloodSprites.add(img);
+            }
+        }	catch (IOException ex) { ex.printStackTrace(); }
+        effectsAssets.put("bloodSprites", bloodSprites);
+
+        assets.put("effectsAssets", effectsAssets);
+    }
+
+    private static void loadProjectilesAssets() {
+        /* Projectiles */
+        HashMap<String, Object> projectiles = new HashMap<>();
+        BufferedImage woodenArrow = ImageUtils.loadImage(MainApp.class, "/res/projectiles/wooden_arrow.png");
+        projectiles.put("woodenArrow", woodenArrow);
+
+        assets.put("projectiles", projectiles);
+    }
+
     private static int getInt(JSONObject json, String name) {
         return ((Long) json.get(name)).intValue();
     }
@@ -150,7 +177,7 @@ public class Assets {
         BufferedImage[] sprites = new BufferedImage[total];
         for (int i = start; i < end; i++) {
             sprites[i] = spriteSheet.getTile(i * widthSprite, 0, widthSprite, heightSprite);
-            sprites[i] = ImageUtils.resizeImage(sprites[i], SCALE);
+            sprites[i] = ImageUtils.resizeImage(sprites[i], SPRITE_SCALE);
         }
 
         return sprites;

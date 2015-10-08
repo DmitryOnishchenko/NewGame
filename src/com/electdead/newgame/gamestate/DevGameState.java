@@ -1,7 +1,6 @@
 package com.electdead.newgame.gamestate;
 
 import com.electdead.newgame.assets.Assets;
-import com.electdead.newgame.assets.ImageUtils;
 import com.electdead.newgame.engine.Grid;
 import com.electdead.newgame.gameobjects.GameObject;
 import com.electdead.newgame.gameobjects.GameObjectType;
@@ -14,22 +13,20 @@ import com.electdead.newgame.main.MainApp;
 import com.electdead.newgame.physics.PhysicsComponent;
 import com.electdead.newgame.physics.UnitPhysicsComponent;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Random;
 
 public class DevGameState extends AbstractGameState {
     public static Grid grid;
 
-    public static ArrayList<GameObject> gameObjects = new ArrayList<>();
-    public static ArrayList<Unit> units = new ArrayList<>();
-    //    public static TreeMultiset<GameObject> renderObjects = TreeMultiset.create();
     public static ArrayList<GameObject> renderObjects = new ArrayList<>(5000);
 
-    private BufferedImage floorSprite = (BufferedImage) Assets.getProperties("Battle background").get("floor");
+    private BufferedImage floorSprite = (BufferedImage) Assets.getProperties("commonAssets").get("floor");
     private static BufferedImage map = new BufferedImage(MainApp.WIDTH, MainApp.HEIGHT, BufferedImage.TYPE_INT_ARGB);
     public static Graphics2D floorG2 = (Graphics2D) map.getGraphics();
 
@@ -56,20 +53,13 @@ public class DevGameState extends AbstractGameState {
 
     @Override
     public void init() {
-//        floorG2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        HashMap<String, Object> commonAssets = Assets.getProperties("effectsAssets");
+        bloodSprites = (ArrayList<BufferedImage>) commonAssets.get("bloodSprites");
+
         for (int i = 0; i < 720 / 40; i++) {
             floorG2.drawImage(floorSprite, 0, i * 40, null);
         }
 
-        try {
-            for (int i = 0; i < 8; i++) {
-                BufferedImage img = ImageIO.read(MainApp.class.getResource("/res/blood/blood_" + i + ".png"));
-                img = ImageUtils.resizeImage(img, Assets.SCALE);
-                bloodSprites.add(img);
-            }
-        }	catch (IOException ex) { ex.printStackTrace(); }
-
-        /* Grid */
         grid = new Grid();
 
 //	    units.add(createDemoUnit("Orc Soldier", 800, 500));
@@ -78,10 +68,10 @@ public class DevGameState extends AbstractGameState {
 //        units.add(createDemoUnit("Human Soldier", 0, 540));
 //        units.add(createDemoUnit("Human Soldier", 500, 250));
 //	    units.add(createDemoUnit("Orc Soldier", 850, 310));
-        units.add(createDemoUnit("Human Archer", 380, 500));
+        createDemoUnit("Human Archer", 380, 500);
 
 //	    units.add(createDemoUnit("Human Archer", 200, 520));
-        units.add(createDemoUnit("Orc Archer", 900, 300));
+        createDemoUnit("Orc Archer", 900, 300);
     }
 
     public Unit createDemoUnit(String name, float x, float y) {
@@ -91,7 +81,6 @@ public class DevGameState extends AbstractGameState {
         Unit unit = new Unit(name, side, GameObjectType.UNIT, x, y);
 
         AIContainer aic = new AIContainer(unit);
-//		unit.actions.add(aic.aiComponents[0]);
 
         PhysicsComponent pc = new UnitPhysicsComponent(unit);
         GraphicsComponent gc = new UnitGraphicsComponent(unit);
@@ -111,11 +100,11 @@ public class DevGameState extends AbstractGameState {
             if (event.getKeyChar() == 'a') {
                 createDemoUnit("Human Soldier", leftSpawnPoint, getRandomPointY());
             } else if (event.getKeyChar() == 's') {
-                units.add(createDemoUnit("Human Archer", leftSpawnPoint, getRandomPointY()));
+                createDemoUnit("Human Archer", leftSpawnPoint, getRandomPointY());
             } else if (event.getKeyChar() == 'k') {
                 createDemoUnit("Orc Soldier", rightSpawnPoint, getRandomPointY());
             } else if (event.getKeyChar() == 'l') {
-                units.add(createDemoUnit("Orc Archer", rightSpawnPoint, getRandomPointY()));
+                createDemoUnit("Orc Archer", rightSpawnPoint, getRandomPointY());
             } else if (event.getKeyChar() == 'h') {
                 SWARM = !SWARM;
             } else if (event.getKeyChar() == ' ') {
