@@ -10,7 +10,6 @@ public class GameStateManager {
 	public GameStateManager() {
 		states = new Stack<>();
 		states.push(new DevGameState(this));
-//		states.push(new TestDemoGameState(this, 300));
 	}
 	
 	public void init() {
