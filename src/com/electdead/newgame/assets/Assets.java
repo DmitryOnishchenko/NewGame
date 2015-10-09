@@ -33,6 +33,7 @@ public class Assets {
         loadAssetsForUnit("Human Soldier");
         loadAssetsForUnit("Human Archer");
         loadAssetsForUnit("Orc Soldier");
+        loadAssetsForUnit("Orc Soldier Elite");
         loadAssetsForUnit("Orc Archer");
     }
 
@@ -117,7 +118,8 @@ public class Assets {
         /* Common assets */
         HashMap<String, Object> commonAssets = new HashMap<>();
         /* Background */
-        BufferedImage background = ImageUtils.loadImage(MainApp.class, "/res/background/battle_panel_background.png");
+//        BufferedImage background = ImageUtils.loadImage(MainApp.class, "/res/background/battle_panel_background.png");
+        BufferedImage background = ImageUtils.loadImage(MainApp.class, "/res/background/map_1.png");
         commonAssets.put("background", background);
         /* Floor */
         BufferedImage floor = ImageUtils.loadImage(MainApp.class, "/res/background/floor.png");

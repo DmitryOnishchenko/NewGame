@@ -24,7 +24,7 @@ public class DevGameState extends AbstractGameState {
 
     public static ArrayList<GameObject> renderObjects = new ArrayList<>(5000);
 
-    private BufferedImage floorSprite = (BufferedImage) Assets.getProperties("commonAssets").get("floor");
+    private BufferedImage floorSprite = (BufferedImage) Assets.getProperties("commonAssets").get("background");
     private static BufferedImage map = new BufferedImage(MainApp.WIDTH, MainApp.HEIGHT, BufferedImage.TYPE_INT_ARGB);
     public static Graphics2D floorG2 = (Graphics2D) map.getGraphics();
     public static ArrayList<BufferedImage> bloodSprites = new ArrayList<>();
@@ -53,9 +53,10 @@ public class DevGameState extends AbstractGameState {
         HashMap<String, Object> commonAssets = Assets.getProperties("effectsAssets");
         bloodSprites = (ArrayList<BufferedImage>) commonAssets.get("bloodSprites");
 
-        for (int i = 0; i < 720 / 40; i++) {
-            floorG2.drawImage(floorSprite, 0, i * 40, null);
-        }
+//        for (int i = 0; i < 720 / 40; i++) {
+//            floorG2.drawImage(floorSprite, 0, i * 40, null);
+//        }
+        floorG2.drawImage(floorSprite, 0, 0,null);
 
         grid = new Grid();
 
@@ -99,6 +100,8 @@ public class DevGameState extends AbstractGameState {
                 createDemoUnit("Human Archer", leftSpawnPoint, getRandomPointY());
             } else if (event.getKeyChar() == 'k') {
                 createDemoUnit("Orc Soldier", rightSpawnPoint, getRandomPointY());
+            } else if (event.getKeyChar() == 'i') {
+                createDemoUnit("Orc Soldier Elite", rightSpawnPoint, getRandomPointY());
             } else if (event.getKeyChar() == 'l') {
                 createDemoUnit("Orc Archer", rightSpawnPoint, getRandomPointY());
             } else if (event.getKeyChar() == 'h') {
@@ -160,13 +163,16 @@ public class DevGameState extends AbstractGameState {
         g2.setPaint(Color.WHITE);
         g2.drawString("GameObjects: " + grid.getAllObjects().size() + " | Units: " + grid.amountOfUnits(), 5, 36);
 
-        g2.drawString("To spawn Human Soldier press \"A\"", 5, 72);
-        g2.drawString("To spawn Human Archer press \"S\"", 5, 90);
-        g2.drawString("To spawn Orc Soldier press \"K\"", 1100, 72);
-        g2.drawString("To spawn Orc Archer press \"L\"", 1100, 90);
+        g2.drawString("To spawn Human Soldier press \"A\"", 100, 72);
+        g2.drawString("To spawn Human Archer press \"S\"", 100, 90);
+
         g2.drawString("To start Demo Mode press \"H\"", 580, 90);
         g2.drawString("PAUSE - \"Space\"", 580, 108);
         g2.drawString("New Game - \"Enter\"", 750, 108);
+
+        g2.drawString("To spawn Orc Soldier press \"K\"", 1000, 72);
+        g2.drawString("To spawn Orc Soldier Elite press \"I\"", 1000, 90);
+        g2.drawString("To spawn Orc Archer press \"L\"", 1000, 108);
 
         /* Debug menu */
         if (DEBUG_MODE) {

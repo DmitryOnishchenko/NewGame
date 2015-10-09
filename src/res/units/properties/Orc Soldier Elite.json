@@ -1,0 +1,31 @@
+{
+  "name": "Orc Soldier Elite",
+  "side": "RIGHT_ARMY",
+  "race": "Orc",
+  "maxHp": 300,
+  "armor": 20,
+  "damage": 60,
+  "defaultSpeed": 80,
+  "spawnPrice": 100,
+  "pricePerHead": 40,
+
+  "attackSpeedMs": 2000,
+  "attackRange": 44,
+  "searchRange": 300,
+
+  "hitBoxWidth": 20,
+  "hitBoxHeight": 20,
+  "velocityX": -1,
+  "velocityY": 0,
+
+  "animationSpeedMs": 90,
+  "widthSprite": 128,
+  "heightSprite": 128,
+  "baseLine": 30,
+  "moveSpritesFile": "/res/units/orcs/soldier_elite/orc_soldier_elite_move.png",
+  "moveSpritesIndex": [0, 8],
+  "fightSpritesFile": "/res/units/orcs/soldier_elite/orc_soldier_elite_fight.png",
+  "fightSpritesIndex": [0, 6],
+  "dieSpritesFile": "/res/units/orcs/soldier_elite/orc_soldier_elite_die.png",
+  "dieSpritesIndex": [0, 8]
+}

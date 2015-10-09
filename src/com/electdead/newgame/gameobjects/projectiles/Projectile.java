@@ -54,7 +54,7 @@ public class Projectile extends GameObject {
     public void render(Graphics2D g2, double deltaTime) {
         g2.setPaint(side == Side.LEFT_ARMY ? Color.CYAN : Color.YELLOW);
         Ellipse2D.Float ell = new Ellipse2D.Float();
-        ell.setFrameFromCenter(pos.x, pos.y, pos.x + attackRange, pos.y + attackRange);
+        ell.setFrameFromCenter(pos.x, pos.y, pos.x + attackRange / 2, pos.y + attackRange / 2);
         g2.fill(ell);
     }
 
