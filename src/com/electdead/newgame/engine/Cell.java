@@ -15,9 +15,9 @@ public class Cell {
     private Grid grid;
     private Rectangle2D.Float bounds = new Rectangle2D.Float();
 
-    private List<GameObject> leftUnits = new LinkedList<>();
-    private List<GameObject> rightUnits = new LinkedList<>();
-    private List<GameObject> projectiles = new LinkedList<>();
+    private List<GameObject> leftUnits = new FastRemoveArrayList<>(100);
+    private List<GameObject> rightUnits = new FastRemoveArrayList<>(100);
+    private List<GameObject> projectiles = new FastRemoveArrayList<>(100);
 
     public Cell(Grid grid, int row, int col, Rectangle2D.Float bounds) {
         this.grid = grid;
@@ -130,7 +130,7 @@ public class Cell {
     }
 
     private void deleteObjects(List<GameObject> collection) {
-        ListIterator<GameObject> it = collection.listIterator();
+        Iterator<GameObject> it = collection.iterator();
         while (it.hasNext()) {
             if (it.next().delete) {
                 it.remove();
@@ -148,5 +148,18 @@ public class Cell {
                 grid.add(gameObject);
             }
         }
+    }
+}
+
+class FastRemoveArrayList<E> extends ArrayList<E> {
+    public FastRemoveArrayList(int initialCapacity) {
+        super(initialCapacity);
+    }
+
+    @Override
+    public E remove(int index) {
+        E item = get(size()-1);
+        set(index, item);
+        return super.remove(size()-1);
     }
 }
