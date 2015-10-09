@@ -130,7 +130,7 @@ public class Unit extends GameObject {
         at.scale(r.nextDouble() + 0.2, r.nextDouble() + 0.2);
 
         for (int i = 0; i < 5; i++) {
-            DevGameState.floorG2.drawImage(randomBlood(), at, null);
+            DevGameState.mapG2.drawImage(randomBlood(), at, null);
         }
     }
 }

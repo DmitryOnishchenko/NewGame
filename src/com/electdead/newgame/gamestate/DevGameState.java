@@ -26,7 +26,7 @@ public class DevGameState extends AbstractGameState {
 
     private BufferedImage floorSprite = (BufferedImage) Assets.getProperties("commonAssets").get("background");
     private static BufferedImage map = new BufferedImage(MainApp.WIDTH, MainApp.HEIGHT, BufferedImage.TYPE_INT_ARGB);
-    public static Graphics2D floorG2 = (Graphics2D) map.getGraphics();
+    public static Graphics2D mapG2 = (Graphics2D) map.getGraphics();
     public static ArrayList<BufferedImage> bloodSprites = new ArrayList<>();
 
     // TODO test variables
@@ -54,9 +54,9 @@ public class DevGameState extends AbstractGameState {
         bloodSprites = (ArrayList<BufferedImage>) commonAssets.get("bloodSprites");
 
 //        for (int i = 0; i < 720 / 40; i++) {
-//            floorG2.drawImage(floorSprite, 0, i * 40, null);
+//            mapG2.drawImage(floorSprite, 0, i * 40, null);
 //        }
-        floorG2.drawImage(floorSprite, 0, 0,null);
+        mapG2.drawImage(floorSprite, 0, 0, null);
 
         grid = new Grid();
 
@@ -110,6 +110,7 @@ public class DevGameState extends AbstractGameState {
                 PAUSE = !PAUSE;
             } else if (event.getKeyCode() == 10) {
                 grid.clear();
+                mapG2.drawImage(floorSprite, 0, 0, null);
                 SWARM = false;
             } else if (event.getKeyChar() == 'j') {
                 DEBUG_MODE = !DEBUG_MODE;
@@ -166,8 +167,20 @@ public class DevGameState extends AbstractGameState {
         g2.drawString("To spawn Human Soldier press \"A\"", 100, 72);
         g2.drawString("To spawn Human Archer press \"S\"", 100, 90);
 
-        g2.drawString("To start Demo Mode press \"H\"", 580, 90);
-        g2.drawString("PAUSE - \"Space\"", 580, 108);
+        if (!SWARM) {
+            g2.drawString("To start Demo Mode press \"H\"", 580, 90);
+        } else {
+            g2.setPaint(Color.RED);
+            g2.drawString("To stop Demo Mode press \"H\"", 580, 90);
+        }
+        if (!PAUSE) {
+            g2.setPaint(Color.WHITE);
+            g2.drawString("PAUSE - \"Space\"", 580, 108);
+        } else {
+            g2.setPaint(Color.RED);
+            g2.drawString("UNPAUSE - \"Space\"", 580, 108);
+        }
+        g2.setPaint(Color.WHITE);
         g2.drawString("New Game - \"Enter\"", 750, 108);
 
         g2.drawString("To spawn Orc Soldier press \"K\"", 1000, 72);
@@ -202,7 +215,7 @@ public class DevGameState extends AbstractGameState {
             g2.drawRect(496, rectY, 200, 20);
         }
 
-        g2.setPaint(Color.BLUE);
+        g2.setPaint(Color.GREEN);
         g2.drawString("To activate grid: \"3\"", 700, stringY);
         if (DEBUG_GRID) {
             g2.drawRect(696, rectY, 200, 20);
