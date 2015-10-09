@@ -11,6 +11,10 @@ public abstract class Action {
     public Unit unit;
     public Animation animation;
 
+    //TODO
+    public int actionDelay;
+    public int actionTrigger;
+
     public Action(AIComponent aiComponent, Unit unit, boolean needFullAnimation) {
         this.aiComponent = aiComponent;
         this.unit = unit;

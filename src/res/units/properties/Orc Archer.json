@@ -9,7 +9,7 @@
   "spawnPrice": 80,
   "pricePerHead": 30,
 
-  "attackSpeedMs": 3000,
+  "attackSpeedMs": 5500,
   "attackRange": 920,
   "searchRange": 1040,
 

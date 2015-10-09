@@ -70,6 +70,12 @@ public class AIContainer {
             }
             unit.action = maxPriorityComponent.getAction();
         }
+
+        for (AIComponent ai : aiComponents) {
+            if (ai.action != null) {
+                ai.action.actionDelay++;
+            }
+        }
     }
 
     public void setMaxPriorityComponent(AIComponent ai) {

@@ -13,7 +13,7 @@ public class MainApp {
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
-                JFrame gameWindow = new GameWindow("Test game v0.1", WIDTH, HEIGHT);
+                JFrame gameWindow = new GameWindow("Test game v0.2", WIDTH, HEIGHT);
                 AbstractGameLoop engine = new EngineV1(WIDTH, HEIGHT);
                 gameWindow.add(engine);
                 gameWindow.setVisible(true);
