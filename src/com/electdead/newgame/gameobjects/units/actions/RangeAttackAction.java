@@ -16,17 +16,21 @@ public class RangeAttackAction extends Action {
 
     @Override
     public void execute() {
-        if (unit.target != null && !unit.target.isAlive()) {
+        if (unit.target == null || !unit.target.isAlive()) {
             unit.target = null;
             wait = true;
         }
+
+//        if (unit.target != null && !unit.target.isAlive()) {
+//            unit.target = null;
+//            wait = true;
+//        }
 
         if (!wait && attackTimer++ > unit.physModel.getAttackSpeed()) {
             checkAnimationDir();
             attackTimer = 0;
             //TODO spawn projectile
             spawnProjectile(unit);
-//            unit.target.takeDamage(unit.damage);
         }
     }
 

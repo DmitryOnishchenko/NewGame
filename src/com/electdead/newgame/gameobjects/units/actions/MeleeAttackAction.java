@@ -12,10 +12,15 @@ public class MeleeAttackAction extends Action {
 
     @Override
     public void execute() {
-        if (unit.target != null && !unit.target.isAlive()) {
+        if (unit.target == null || !unit.target.isAlive()) {
             unit.target = null;
             wait = true;
         }
+
+//        if (unit.target != null && !unit.target.isAlive()) {
+//            unit.target = null;
+//            wait = true;
+//        }
 
         if (!wait && attackTimer++ > unit.physModel.getAttackSpeed()) {
             checkAnimationDir();
