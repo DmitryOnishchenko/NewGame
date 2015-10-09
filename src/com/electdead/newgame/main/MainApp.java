@@ -16,6 +16,7 @@ public class MainApp {
                 JFrame gameWindow = new GameWindow("Test game v0.2", WIDTH, HEIGHT);
                 AbstractGameLoop engine = new EngineV1(WIDTH, HEIGHT);
                 gameWindow.add(engine);
+                gameWindow.setUndecorated(true);
                 gameWindow.setVisible(true);
                 engine.start();
             }

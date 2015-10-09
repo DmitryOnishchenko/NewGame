@@ -119,8 +119,10 @@ public class Assets {
         HashMap<String, Object> commonAssets = new HashMap<>();
         /* Background */
 //        BufferedImage background = ImageUtils.loadImage(MainApp.class, "/res/background/battle_panel_background.png");
-        BufferedImage background = ImageUtils.loadImage(MainApp.class, "/res/background/map_1.png");
-        commonAssets.put("background", background);
+        BufferedImage background0 = ImageUtils.loadImage(MainApp.class, "/res/background/map_ideal_0.png");
+        BufferedImage background1 = ImageUtils.loadImage(MainApp.class, "/res/background/map_ideal_1.png");
+        commonAssets.put("background0", background0);
+        commonAssets.put("background1", background1);
         /* Floor */
         BufferedImage floor = ImageUtils.loadImage(MainApp.class, "/res/background/floor.png");
         commonAssets.put("floor", floor);

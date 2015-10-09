@@ -24,7 +24,8 @@ public class DevGameState extends AbstractGameState {
 
     public static ArrayList<GameObject> renderObjects = new ArrayList<>(5000);
 
-    private BufferedImage floorSprite = (BufferedImage) Assets.getProperties("commonAssets").get("background");
+    private BufferedImage floorSprite = (BufferedImage) Assets.getProperties("commonAssets").get("background0");
+    private BufferedImage floorSprite1 = (BufferedImage) Assets.getProperties("commonAssets").get("background1");
     private static BufferedImage map = new BufferedImage(MainApp.WIDTH, MainApp.HEIGHT, BufferedImage.TYPE_INT_ARGB);
     public static Graphics2D mapG2 = (Graphics2D) map.getGraphics();
     public static ArrayList<BufferedImage> bloodSprites = new ArrayList<>();
@@ -106,6 +107,8 @@ public class DevGameState extends AbstractGameState {
                 createDemoUnit("Orc Archer", rightSpawnPoint, getRandomPointY());
             } else if (event.getKeyChar() == 'h') {
                 SWARM = !SWARM;
+            } else if (event.getKeyCode() == 27) {
+                System.exit(0);
             } else if (event.getKeyChar() == ' ') {
                 PAUSE = !PAUSE;
             } else if (event.getKeyCode() == 10) {
@@ -161,12 +164,15 @@ public class DevGameState extends AbstractGameState {
             obj.render(g2, deltaTime);
         }
 
+        g2.drawImage(floorSprite1, 0, 0, null);
+
         g2.setPaint(Color.WHITE);
         g2.drawString("GameObjects: " + grid.getAllObjects().size() + " | Units: " + grid.amountOfUnits(), 5, 36);
 
         g2.drawString("To spawn Human Soldier press \"A\"", 100, 72);
         g2.drawString("To spawn Human Archer press \"S\"", 100, 90);
 
+        g2.drawString("Exit - \"Esc\"", 480, 72);
         if (!SWARM) {
             g2.drawString("To start Demo Mode press \"H\"", 580, 90);
         } else {

@@ -13,7 +13,7 @@ public class Grid {
     public static final int CELL_SIZE = 70;
     public static final int ROWS = BATTLE_HEIGHT / CELL_SIZE;
     public static final int COLS = BATTLE_WIDTH / CELL_SIZE;
-    public static final int INDENT_TOP = 150;
+    public static final int INDENT_TOP = 200;
     public static final int INDENT_LEFT = -60;
     private Cell[][] cells = new Cell[ROWS][COLS];
 
