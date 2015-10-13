@@ -19,42 +19,70 @@ import java.util.List;
 public class Projectile extends GameObject {
     public Vector2F moveDir;
     public int damage;
-    public float speed = 500 / EngineV1.UPDATES_PER_SEC;
     private int attackRange = 2;
     public BufferedImage sprite = (BufferedImage) Assets.getProperties("projectiles").get("woodenArrow");
 
     //TODO test
     private Vector2F tail;
+    public float speed = 500 / EngineV1.UPDATES_PER_SEC;
+    public Vector2F sp;
+    private float acc = 0.1f;
+    private float baseLeftY = -1.9f;
+    public Unit target;
+
+    private boolean finished = false;
+    private int delayTimer = 0;
+    private int deleteTrigger = 4000 / EngineV1.MS_PER_UPDATE;
+
     private int length = 16;
     private Vector2F startPoint;
-    private int maxDistance = 1000;
+    private int maxDistance = 500;
 
-    public Projectile(String name, Side side, GameObjectType type, int damage, float x, float y) {
+    public Projectile(String name, Side side, GameObjectType type, int damage, float x, float y, Unit target) {
         super(name, side, type, x, y);
         this.damage = damage;
         tail = new Vector2F();
-        zLevel = 1;
+        zLevel = 0;
         startPoint = pos.copy();
+
+        //TEST
+        float ySpeed = 0f;
+        float shift = pos.y - target.pos.y;
+        float k = shift / 40.57f;
+        baseLeftY -= k;
+
+        sp = side == Side.LEFT_ARMY ? new Vector2F(speed, baseLeftY) : new Vector2F(-speed, baseLeftY);
     }
 
     //TODO update projectiles
     @Override
     public void update() {
+        if (finished) {
+            if (delayTimer++ > deleteTrigger) {
+                delete = true;
+            }
+            return;
+        }
+
         tail.x = pos.x + moveDir.x * length;
         tail.y = pos.y + moveDir.y * length;
 
-        float shiftX = speed * moveDir.x;
+        //TEST
+        float shiftX = sp.x;
         pos.x += shiftX;
         tail.x += shiftX;
 
-        float shiftY = speed * moveDir.y;
+        float shiftY = sp.y;
         pos.y += shiftY;
         tail.y += shiftY;
+
+        sp.y += acc;
 
         //TODO maxDistance
         double length = Vector2F.getDistanceOnScreen(startPoint, pos);
         if (length > maxDistance) {
-            delete = true;
+//            delete = true;
+            finished = true;
             return;
         }
 
@@ -72,7 +100,8 @@ public class Projectile extends GameObject {
                 Unit enemy = (Unit) obj;
                 if (intersects(this, enemy)) {
                     enemy.takeDamage(damage);
-                    delete = true;
+//                    delete = true;
+                    finished = true;
                     break;
                 }
             }
