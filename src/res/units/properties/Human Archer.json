@@ -4,7 +4,7 @@
   "race": "Human",
   "maxHp": 50,
   "armor": 0,
-  "damage": 40,
+  "damage": 0,
   "defaultSpeed": 70,
   "spawnPrice": 60,
   "pricePerHead": 20,

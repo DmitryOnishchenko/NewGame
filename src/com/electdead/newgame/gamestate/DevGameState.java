@@ -69,8 +69,11 @@ public class DevGameState extends AbstractGameState {
 //	    units.add(createDemoUnit("Orc Soldier", 850, 310));
 //	    units.add(createDemoUnit("Human Archer", 200, 520));
 
-        createDemoUnit("Human Archer", 380, 500);
-        createDemoUnit("Orc Archer", 900, 500);
+//        createDemoUnit("Human Archer", 450, 250);
+//        createDemoUnit("Human Archer", 450, 350);
+//        createDemoUnit("Human Archer", 450, 440);
+        createDemoUnit("Human Archer", 450, 550);
+        createDemoUnit("Orc Archer", 900, 440);
     }
 
     public Unit createDemoUnit(String name, float x, float y) {

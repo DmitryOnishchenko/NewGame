@@ -11,6 +11,7 @@ import com.electdead.newgame.gamestate.DevGameState;
 import com.electdead.newgame.physics.Vector2F;
 
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.List;
 public class Projectile extends GameObject {
     public Vector2F moveDir;
     public int damage;
-    private int attackRange = 2;
+    private int attackRange = 4;
     public BufferedImage sprite = (BufferedImage) Assets.getProperties("projectiles").get("woodenArrow");
 
     //TODO test
@@ -26,7 +27,7 @@ public class Projectile extends GameObject {
     public float speed = 500 / EngineV1.UPDATES_PER_SEC;
     public Vector2F sp;
     private float acc = 0.1f;
-    private float baseLeftY = -1.9f;
+    private float baseAcc = 0.46f;
     public Unit target;
 
     private boolean finished = false;
@@ -45,14 +46,16 @@ public class Projectile extends GameObject {
         startPoint = pos.copy();
 
         //TEST
-        float ySpeed = 0f;
+        this.target = target;
+        double distance = Vector2F.getDistanceOnScreen(pos, target.pos);
+        float speedY = (float) -(distance / 100 * baseAcc);
         float shift = pos.y - target.pos.y;
-        float k = shift / 40.57f;
-        baseLeftY -= k;
+        float k = shift / 36f;
+        speedY -= k;
 
-        sp = side == Side.LEFT_ARMY ? new Vector2F(speed, baseLeftY) : new Vector2F(speed, -2.15f);
+        sp = side == Side.LEFT_ARMY ? new Vector2F(speed, speedY - 0.15f) : new Vector2F(speed, speedY - 0.15f);
         if (side == Side.LEFT_ARMY) {
-            System.out.println(Vector2F.getDistanceOnScreen(pos, target.pos));
+            System.out.println(pos.y + " | " + target.pos.y);
         }
     }
 
@@ -66,8 +69,12 @@ public class Projectile extends GameObject {
             return;
         }
 
-        tail.x = pos.x + moveDir.x * length;
-        tail.y = pos.y + moveDir.y * length;
+//        tail.x = pos.x + moveDir.x * length;
+//        tail.y = pos.y + moveDir.y * length;
+
+        if (side == Side.LEFT_ARMY) {
+            System.out.println();
+        }
 
         //TEST
         float shiftX = sp.x;
@@ -103,6 +110,7 @@ public class Projectile extends GameObject {
                 if (intersects(this, enemy)) {
                     enemy.takeDamage(damage);
 //                    delete = true;
+                    System.out.println(pos.y + " | " + target.pos.y);
                     delete = true;
                     break;
                 }
@@ -115,10 +123,10 @@ public class Projectile extends GameObject {
     //TODO render projectiles
     @Override
     public void render(Graphics2D g2, double deltaTime) {
-//        g2.setPaint(side == Side.LEFT_ARMY ? Color.CYAN : Color.YELLOW);
-//        Ellipse2D.Float ell = new Ellipse2D.Float();
-//        ell.setFrameFromCenter(pos.x, pos.y, pos.x + attackRange, pos.y + attackRange);
-//        g2.fill(ell);
+        g2.setPaint(side == Side.LEFT_ARMY ? Color.CYAN : Color.YELLOW);
+        Ellipse2D.Float ell = new Ellipse2D.Float();
+        ell.setFrameFromCenter(pos.x, pos.y, pos.x + attackRange, pos.y + attackRange);
+        g2.fill(ell);
         g2.setPaint(Color.BLACK);
         g2.drawLine(x(), y(), (int) tail.x, (int) tail.y);
     }
