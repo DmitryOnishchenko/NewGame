@@ -11,7 +11,6 @@ import com.electdead.newgame.gamestate.DevGameState;
 import com.electdead.newgame.physics.Vector2F;
 
 import java.awt.*;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
@@ -41,7 +40,7 @@ public class Projectile extends GameObject {
     public Projectile(String name, Side side, GameObjectType type, int damage, float x, float y, Unit target) {
         super(name, side, type, x, y);
         this.damage = damage;
-        tail = new Vector2F();
+        tail = pos.copy();
         zLevel = 0;
         startPoint = pos.copy();
 
@@ -51,7 +50,10 @@ public class Projectile extends GameObject {
         float k = shift / 40.57f;
         baseLeftY -= k;
 
-        sp = side == Side.LEFT_ARMY ? new Vector2F(speed, baseLeftY) : new Vector2F(-speed, baseLeftY);
+        sp = side == Side.LEFT_ARMY ? new Vector2F(speed, baseLeftY) : new Vector2F(speed, -2.15f);
+        if (side == Side.LEFT_ARMY) {
+            System.out.println(Vector2F.getDistanceOnScreen(pos, target.pos));
+        }
     }
 
     //TODO update projectiles
@@ -101,7 +103,7 @@ public class Projectile extends GameObject {
                 if (intersects(this, enemy)) {
                     enemy.takeDamage(damage);
 //                    delete = true;
-                    finished = true;
+                    delete = true;
                     break;
                 }
             }
@@ -113,10 +115,10 @@ public class Projectile extends GameObject {
     //TODO render projectiles
     @Override
     public void render(Graphics2D g2, double deltaTime) {
-        g2.setPaint(side == Side.LEFT_ARMY ? Color.CYAN : Color.YELLOW);
-        Ellipse2D.Float ell = new Ellipse2D.Float();
-        ell.setFrameFromCenter(pos.x, pos.y, pos.x + attackRange, pos.y + attackRange);
-        g2.fill(ell);
+//        g2.setPaint(side == Side.LEFT_ARMY ? Color.CYAN : Color.YELLOW);
+//        Ellipse2D.Float ell = new Ellipse2D.Float();
+//        ell.setFrameFromCenter(pos.x, pos.y, pos.x + attackRange, pos.y + attackRange);
+//        g2.fill(ell);
         g2.setPaint(Color.BLACK);
         g2.drawLine(x(), y(), (int) tail.x, (int) tail.y);
     }

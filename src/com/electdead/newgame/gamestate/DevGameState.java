@@ -70,7 +70,7 @@ public class DevGameState extends AbstractGameState {
 //	    units.add(createDemoUnit("Human Archer", 200, 520));
 
         createDemoUnit("Human Archer", 380, 500);
-        createDemoUnit("Orc Archer", 900, 540);
+        createDemoUnit("Orc Archer", 900, 500);
     }
 
     public Unit createDemoUnit(String name, float x, float y) {
@@ -230,16 +230,16 @@ public class DevGameState extends AbstractGameState {
 
     /* Benchmark-Demo test */
     public void SWARM() {
-        createDemoUnit("Human Soldier", leftSpawnPoint, getRandomPointY());
-        createDemoUnit("Orc Soldier", rightSpawnPoint, getRandomPointY());
+//        createDemoUnit("Human Soldier", leftSpawnPoint, getRandomPointY());
+//        createDemoUnit("Orc Soldier", rightSpawnPoint, getRandomPointY());
 
         if (++testSpawnTimer2 >= 8) {
-            createDemoUnit("Orc Soldier", rightSpawnPoint, getRandomPointY());
+//            createDemoUnit("Orc Soldier", rightSpawnPoint, getRandomPointY());
         }
 
         if (++testSpawnTimer2 >= 10) {
             testSpawnTimer2 = 0;
-            createDemoUnit("Orc Soldier", rightSpawnPoint, getRandomPointY());
+//            createDemoUnit("Orc Soldier", rightSpawnPoint, getRandomPointY());
             createDemoUnit("Orc Archer", rightSpawnPoint, getRandomPointY());
             createDemoUnit("Human Archer", leftSpawnPoint, getRandomPointY());
             createDemoUnit("Human Archer", leftSpawnPoint, getRandomPointY());
