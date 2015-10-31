@@ -11,7 +11,6 @@ import com.electdead.newgame.gamestate.DevGameState;
 import com.electdead.newgame.physics.Vector2F;
 
 import java.awt.*;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
@@ -53,10 +52,10 @@ public class Projectile extends GameObject {
         float k = shift / 36f;
         speedY -= k;
 
-        sp = side == Side.LEFT_ARMY ? new Vector2F(speed, speedY - 0.15f) : new Vector2F(speed, speedY - 0.15f);
-        if (side == Side.LEFT_ARMY) {
-            System.out.println(pos.y + " | " + target.pos.y);
-        }
+        sp = side == Side.LEFT_ARMY ? new Vector2F(speed, speedY - 0.15f) : new Vector2F(-speed, speedY - 0.15f);
+//        if (side == Side.LEFT_ARMY) {
+//            System.out.println(pos.y + " | " + target.pos.y);
+//        }
     }
 
     //TODO update projectiles
@@ -69,12 +68,12 @@ public class Projectile extends GameObject {
             return;
         }
 
-//        tail.x = pos.x + moveDir.x * length;
-//        tail.y = pos.y + moveDir.y * length;
+        tail.x = pos.x + moveDir.x * length;
+        tail.y = pos.y + moveDir.y * length;
 
-        if (side == Side.LEFT_ARMY) {
-            System.out.println();
-        }
+//        if (side == Side.LEFT_ARMY) {
+//            System.out.println();
+//        }
 
         //TEST
         float shiftX = sp.x;
@@ -110,7 +109,7 @@ public class Projectile extends GameObject {
                 if (intersects(this, enemy)) {
                     enemy.takeDamage(damage);
 //                    delete = true;
-                    System.out.println(pos.y + " | " + target.pos.y);
+//                    System.out.println(pos.y + " | " + target.pos.y);
                     delete = true;
                     break;
                 }
@@ -123,10 +122,10 @@ public class Projectile extends GameObject {
     //TODO render projectiles
     @Override
     public void render(Graphics2D g2, double deltaTime) {
-        g2.setPaint(side == Side.LEFT_ARMY ? Color.CYAN : Color.YELLOW);
-        Ellipse2D.Float ell = new Ellipse2D.Float();
-        ell.setFrameFromCenter(pos.x, pos.y, pos.x + attackRange, pos.y + attackRange);
-        g2.fill(ell);
+//        g2.setPaint(side == Side.LEFT_ARMY ? Color.CYAN : Color.YELLOW);
+//        Ellipse2D.Float ell = new Ellipse2D.Float();
+//        ell.setFrameFromCenter(pos.x, pos.y, pos.x + attackRange, pos.y + attackRange);
+//        g2.fill(ell);
         g2.setPaint(Color.BLACK);
         g2.drawLine(x(), y(), (int) tail.x, (int) tail.y);
     }
