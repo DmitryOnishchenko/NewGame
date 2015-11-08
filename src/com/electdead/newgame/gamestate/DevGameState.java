@@ -72,8 +72,8 @@ public class DevGameState extends AbstractGameState {
 //        createDemoUnit("Human Archer", 450, 250);
 //        createDemoUnit("Human Archer", 450, 350);
 //        createDemoUnit("Human Archer", 450, 440);
-        createDemoUnit("Human Archer", 450, 550);
-        createDemoUnit("Orc Archer", 900, 440);
+//        createDemoUnit("Human Archer", 450, 550);
+//        createDemoUnit("Orc Archer", 900, 440);
     }
 
     public Unit createDemoUnit(String name, float x, float y) {
@@ -233,16 +233,16 @@ public class DevGameState extends AbstractGameState {
 
     /* Benchmark-Demo test */
     public void SWARM() {
-//        createDemoUnit("Human Soldier", leftSpawnPoint, getRandomPointY());
-//        createDemoUnit("Orc Soldier", rightSpawnPoint, getRandomPointY());
+        createDemoUnit("Human Soldier", leftSpawnPoint, getRandomPointY());
+        createDemoUnit("Orc Soldier", rightSpawnPoint, getRandomPointY());
 
         if (++testSpawnTimer2 >= 8) {
-//            createDemoUnit("Orc Soldier", rightSpawnPoint, getRandomPointY());
+            createDemoUnit("Orc Soldier", rightSpawnPoint, getRandomPointY());
         }
 
         if (++testSpawnTimer2 >= 10) {
             testSpawnTimer2 = 0;
-//            createDemoUnit("Orc Soldier", rightSpawnPoint, getRandomPointY());
+            createDemoUnit("Orc Soldier", rightSpawnPoint, getRandomPointY());
             createDemoUnit("Orc Archer", rightSpawnPoint, getRandomPointY());
             createDemoUnit("Human Archer", leftSpawnPoint, getRandomPointY());
             createDemoUnit("Human Archer", leftSpawnPoint, getRandomPointY());
