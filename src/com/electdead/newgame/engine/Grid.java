@@ -1,10 +1,10 @@
 package com.electdead.newgame.engine;
 
-import com.electdead.newgame.gameobjects.GameObject;
+import com.electdead.newgame.gameobject.GameObjectOld;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Grid {
@@ -16,6 +16,8 @@ public class Grid {
     public static final int INDENT_TOP = 200;
     public static final int INDENT_LEFT = -60;
     private Cell[][] cells = new Cell[ROWS][COLS];
+
+    private List<GameObjectOld> allObjects = new ArrayList<>(5000);
 
     public Grid() {
         init();
@@ -39,7 +41,7 @@ public class Grid {
         }
     }
 
-    public void add(GameObject gameObject) {
+    public void add(GameObjectOld gameObject) {
         int row = (gameObject.y() - INDENT_TOP) / CELL_SIZE;
         int col = (gameObject.x() - INDENT_LEFT) / CELL_SIZE;
 
@@ -74,22 +76,22 @@ public class Grid {
         }
     }
 
-    public List<GameObject> getAllObjects() {
-        List<GameObject> list = new LinkedList<>();
+    public List<GameObjectOld> getAllObjects() {
+        allObjects.clear();
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLS; col++) {
-                list.addAll(cells[row][col].getAllObjects());
+                allObjects.addAll(cells[row][col].getAllObjects());
             }
         }
 
-        return list;
+        return allObjects;
     }
 
-    public int amountOfUnits() {
+    public int size() {
         int amount = 0;
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLS; col++) {
-                amount += cells[row][col].getAllUnits().size();
+                amount += cells[row][col].sizeUnits();
             }
         }
 
@@ -105,7 +107,7 @@ public class Grid {
     }
 
     public List<Cell> getCellIfIntersectsWith(Shape shape) {
-        List<Cell> list = new LinkedList<>();
+        List<Cell> list = new ArrayList<>(20);
 
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLS; col++) {

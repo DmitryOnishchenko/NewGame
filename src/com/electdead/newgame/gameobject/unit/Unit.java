@@ -1,12 +1,12 @@
-package com.electdead.newgame.gameobjects.units;
+package com.electdead.newgame.gameobject.unit;
 
 import com.electdead.newgame.assets.Assets;
-import com.electdead.newgame.gameobjects.GameObject;
-import com.electdead.newgame.gameobjects.GameObjectType;
-import com.electdead.newgame.gameobjects.Side;
-import com.electdead.newgame.gameobjects.units.actions.Action;
-import com.electdead.newgame.gameobjects.units.actions.DieAction;
-import com.electdead.newgame.gameobjects.units.ai.AIContainer;
+import com.electdead.newgame.gameobject.GameObjectOld;
+import com.electdead.newgame.gameobject.GameObjectType;
+import com.electdead.newgame.gameobject.Side;
+import com.electdead.newgame.gameobject.unit.actions.Action;
+import com.electdead.newgame.gameobject.unit.actions.DieAction;
+import com.electdead.newgame.gameobject.unit.ai.AIContainer;
 import com.electdead.newgame.gamestate.DevGameState;
 import com.electdead.newgame.graphics.UnitGraphicsModel;
 import com.electdead.newgame.main.MainApp;
@@ -19,7 +19,7 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Random;
 
-public class Unit extends GameObject {
+public class Unit extends GameObjectOld {
     /* Common */
     public UnitPhysicsModel physModel;
     public UnitGraphicsModel graphModel;
@@ -122,6 +122,11 @@ public class Unit extends GameObject {
         checkDelete();
     }
 
+//    @Override
+//    public void updatePhysics() {
+//
+//    }
+
     private void drawBlood() {
         Random r = new Random();
         AffineTransform at = new AffineTransform();
@@ -132,5 +137,15 @@ public class Unit extends GameObject {
         for (int i = 0; i < 5; i++) {
             DevGameState.mapG2.drawImage(randomBlood(), at, null);
         }
+    }
+
+    @Override
+    public void updateAi() {
+        aiContainer.update(this);
+    }
+
+    @Override
+    public void updateAction() {
+        action.execute();
     }
 }

@@ -7,11 +7,11 @@ import com.electdead.newgame.input.EngineInputHandler;
 
 import java.awt.*;
 import java.awt.image.VolatileImage;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @SuppressWarnings("serial")
-public class EngineV1 extends AbstractGameLoop {
+public class EngineV2 extends AbstractGameLoop {
     /* Graphics */
     public static final int MAX_FPS = 120;
     public static final int UPDATES_PER_SEC = 50;
@@ -25,15 +25,16 @@ public class EngineV1 extends AbstractGameLoop {
     private static EngineInputHandler inputHandler;
 
     /* Threads */
+    private static Updater inputUpdater;
     private static Updater aiUpdater;
     private static Updater actionUpdater;
     private static Updater physicsUpdater;
     private static Updater graphicsUpdater;
 
     /* GameObjects */
-    private volatile static List<GameObject> list = new ArrayList<>();
+    public static volatile List<GameObject> gameObjects = Collections.emptyList();
 
-    public EngineV1(int width, int height) {
+    public EngineV2(int width, int height) {
         super(width, height, MAX_FPS);
         init();
     }
@@ -51,18 +52,21 @@ public class EngineV1 extends AbstractGameLoop {
         currentG2D = getGraphics(currentFrame);
 
         /* UpdateMethods init */
+        UpdateMethod inputUpdateMethod      = new InputUpdateMethod();
         UpdateMethod aiUpdateMethod         = new AiUpdateMethod();
         UpdateMethod actionUpdateMethod     = new ActionUpdateMethod();
         UpdateMethod physicsUpdateMethod    = new PhysicsUpdateMethod();
         UpdateMethod graphicsUpdateMethod   = new GraphicsUpdateMethod();
 
         /* Threads init */
-        aiUpdater       = new Updater("AiUpdater", aiUpdateMethod, true);
+        inputUpdater    = new Updater("InputUpdater", inputUpdateMethod, true);
+        aiUpdater       = new Updater("AiUpdater", aiUpdateMethod, false);
         actionUpdater   = new Updater("ActionUpdater", actionUpdateMethod, false);
         physicsUpdater  = new Updater("PhysicsUpdater", physicsUpdateMethod, false);
         graphicsUpdater = new Updater("GraphicsUpdater", graphicsUpdateMethod, false);
 
         /* Updaters queue */
+        inputUpdater.setNextUpdater(aiUpdater);
         aiUpdater.setNextUpdater(actionUpdater);
         actionUpdater.setNextUpdater(physicsUpdater);
         physicsUpdater.setNextUpdater(graphicsUpdater);
@@ -70,6 +74,7 @@ public class EngineV1 extends AbstractGameLoop {
 //        graphicsUpdater.setNextUpdater(aiUpdater);
 
         /* Start threads */
+        inputUpdater.start();
         aiUpdater.start();
         actionUpdater.start();
         physicsUpdater.start();
@@ -152,9 +157,9 @@ public class EngineV1 extends AbstractGameLoop {
 
                     while (lag >= MS_PER_UPDATE) {
                         update();
-                        lag -= MS_PER_UPDATE;
                         //TODO wait for last updater
-                        while (!aiUpdater.isDone()) {
+                        while (!graphicsUpdater.isDone()) {
+                            Thread.yield();
                             try {
                                 // wait
                                 Thread.sleep(1);
@@ -162,6 +167,7 @@ public class EngineV1 extends AbstractGameLoop {
                                 e.printStackTrace();
                             }
                         }
+                        lag -= MS_PER_UPDATE;
                     }
 
                     double deltaTime = 1 - lag / MS_PER_UPDATE;
@@ -177,8 +183,11 @@ public class EngineV1 extends AbstractGameLoop {
 
                     if (useFpsLimit) {
                         long sleepFor = current + msPerFrame - getTime();
+//                        System.out.println("Sleep for:\t " + sleepFor + " ms");
                         try {
-                            if (sleepFor > 0) Thread.sleep(sleepFor);
+                            if (sleepFor > 0) {
+                                Thread.sleep(sleepFor);
+                            }
                         } catch (InterruptedException ex) { ex.printStackTrace(); }
                     }
                 }
@@ -191,6 +200,10 @@ public class EngineV1 extends AbstractGameLoop {
     }
 
     public static void startProcess(int needToProcess) {
-        aiUpdater.startProcess(needToProcess);
+        inputUpdater.startProcess(needToProcess);
+    }
+
+    public static void loopEnded() {
+        inputUpdater.setDone(false);
     }
 }

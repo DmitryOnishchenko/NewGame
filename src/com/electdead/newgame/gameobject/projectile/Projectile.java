@@ -1,12 +1,12 @@
-package com.electdead.newgame.gameobjects.projectiles;
+package com.electdead.newgame.gameobject.projectile;
 
 import com.electdead.newgame.assets.Assets;
 import com.electdead.newgame.engine.Cell;
 import com.electdead.newgame.engine.EngineV1;
-import com.electdead.newgame.gameobjects.GameObject;
-import com.electdead.newgame.gameobjects.GameObjectType;
-import com.electdead.newgame.gameobjects.Side;
-import com.electdead.newgame.gameobjects.units.Unit;
+import com.electdead.newgame.gameobject.GameObjectOld;
+import com.electdead.newgame.gameobject.GameObjectType;
+import com.electdead.newgame.gameobject.Side;
+import com.electdead.newgame.gameobject.unit.Unit;
 import com.electdead.newgame.gamestate.DevGameState;
 import com.electdead.newgame.physics.Vector2F;
 
@@ -15,11 +15,11 @@ import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
-public class Projectile extends GameObject {
+public class Projectile extends GameObjectOld {
     public Vector2F moveDir;
     public int damage;
     private int attackRange = 4;
-    public BufferedImage sprite = (BufferedImage) Assets.getProperties("projectiles").get("woodenArrow");
+    public BufferedImage sprite = (BufferedImage) Assets.getProperties("projectile").get("woodenArrow");
 
     //TODO test
     private Vector2F tail;
@@ -58,7 +58,7 @@ public class Projectile extends GameObject {
 //        }
     }
 
-    //TODO update projectiles
+    //TODO update projectile
     @Override
     public void update() {
         if (finished) {
@@ -99,12 +99,12 @@ public class Projectile extends GameObject {
         List<Cell> cells = DevGameState.grid.getCellIfIntersectsWith(new Line2D.Float(pos.x, pos.y, tail.x, tail.y));
 
         for (Cell cell : cells) {
-            List<GameObject> list;
+            List<GameObjectOld> list;
             if (side == Side.LEFT_ARMY) {
                 list = cell.getRightUnits();
             } else list = cell.getLeftUnits();
 
-            for (GameObject obj : list) {
+            for (GameObjectOld obj : list) {
                 Unit enemy = (Unit) obj;
                 if (intersects(this, enemy)) {
                     enemy.takeDamage(damage);
@@ -119,7 +119,12 @@ public class Projectile extends GameObject {
         checkDelete();
     }
 
-    //TODO render projectiles
+//    @Override
+//    public void updatePhysics() {
+//
+//    }
+
+    //TODO render projectile
     @Override
     public void render(Graphics2D g2, double deltaTime) {
 //        g2.setPaint(side == Side.LEFT_ARMY ? Color.CYAN : Color.YELLOW);

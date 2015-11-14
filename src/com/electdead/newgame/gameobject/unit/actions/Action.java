@@ -1,7 +1,7 @@
-package com.electdead.newgame.gameobjects.units.actions;
+package com.electdead.newgame.gameobject.unit.actions;
 
-import com.electdead.newgame.gameobjects.units.Unit;
-import com.electdead.newgame.gameobjects.units.ai.AIComponent;
+import com.electdead.newgame.gameobject.unit.Unit;
+import com.electdead.newgame.gameobject.unit.ai.AIComponent;
 import com.electdead.newgame.graphics.Animation;
 
 public abstract class Action {

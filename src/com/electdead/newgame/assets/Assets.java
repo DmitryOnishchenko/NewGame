@@ -1,7 +1,7 @@
 package com.electdead.newgame.assets;
 
-import com.electdead.newgame.gameobjects.Side;
-import com.electdead.newgame.gameobjects.units.Race;
+import com.electdead.newgame.gameobject.Side;
+import com.electdead.newgame.gameobject.unit.Race;
 import com.electdead.newgame.graphics.UnitGraphicsModel;
 import com.electdead.newgame.main.MainApp;
 import com.electdead.newgame.physics.UnitPhysicsModel;
@@ -153,7 +153,7 @@ public class Assets {
         BufferedImage woodenArrow = ImageUtils.loadImage(MainApp.class, "/res/projectiles/wooden_arrow.png");
         projectiles.put("woodenArrow", woodenArrow);
 
-        assets.put("projectiles", projectiles);
+        assets.put("projectile", projectiles);
     }
 
     private static int getInt(JSONObject json, String name) {

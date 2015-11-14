@@ -1,7 +1,7 @@
 package com.electdead.newgame.main;
 
 import com.electdead.newgame.engine.AbstractGameLoop;
-import com.electdead.newgame.engine.EngineV1;
+import com.electdead.newgame.engine.EngineV2;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +14,7 @@ public class MainApp {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 JFrame gameWindow = new GameWindow("Test game v0.2", WIDTH, HEIGHT);
-                AbstractGameLoop engine = new EngineV1(WIDTH, HEIGHT);
+                AbstractGameLoop engine = new EngineV2(WIDTH, HEIGHT);
                 gameWindow.add(engine);
                 gameWindow.setUndecorated(true);
                 gameWindow.setVisible(true);

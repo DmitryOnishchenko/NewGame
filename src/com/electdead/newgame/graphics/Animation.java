@@ -1,6 +1,6 @@
 package com.electdead.newgame.graphics;
 
-import com.electdead.newgame.gameobjects.units.actions.Action;
+import com.electdead.newgame.gameobject.unit.actions.Action;
 
 import java.awt.image.BufferedImage;
 

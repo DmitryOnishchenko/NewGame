@@ -1,6 +1,9 @@
-package com.electdead.newgame.gameobjects;
+package com.electdead.newgame.gameobject;
 
 import com.electdead.newgame.engine.Cell;
+import com.electdead.newgame.gameobject.unit.Unit;
+import com.electdead.newgame.gameobject.unit.actions.Action;
+import com.electdead.newgame.gameobject.unit.ai.AIContainer;
 import com.electdead.newgame.graphics.GraphicsComponent;
 import com.electdead.newgame.input.InputComponent;
 import com.electdead.newgame.main.MainApp;
@@ -10,7 +13,7 @@ import com.google.common.base.Joiner;
 
 import java.awt.*;
 
-public abstract class GameObject implements Comparable<GameObject> {
+public class GameObjectOld implements Comparable<GameObjectOld> {
     public static int ID = 0;
 
     /* Grid cell */
@@ -30,7 +33,10 @@ public abstract class GameObject implements Comparable<GameObject> {
     private PhysicsComponent physicsComponent;
     private GraphicsComponent graphicsComponent;
 
-    public GameObject(String name, Side side, GameObjectType type, float x, float y) {
+    public AIContainer aiContainer;
+    public Action action;
+
+    public GameObjectOld(String name, Side side, GameObjectType type, float x, float y) {
         this.id = ++ID;
         this.name = name;
         this.pos = new Vector2F(x, y);
@@ -75,6 +81,28 @@ public abstract class GameObject implements Comparable<GameObject> {
             graphicsComponent.update();
     }
 
+    public void setAiContainer(AIContainer aiContainer) {
+        this.aiContainer = aiContainer;
+    }
+
+    //TODO Ai update thread
+    public void updateAi() {
+        if (this instanceof Unit && aiContainer != null) aiContainer.update((Unit) this);
+    }
+
+    //TODO Action execute thread
+    public void updateAction() {
+        if (action != null) action.execute();
+    }
+
+    //TODO Physics update thread
+//    public void updatePhysics();
+
+    //TODO Graphics update thread
+    public void updateGraphics() {
+        if (graphicsComponent != null) graphicsComponent.update();
+    }
+
     public void render(Graphics2D g2, double deltaTime) {
         if (graphicsComponent != null)
             graphicsComponent.render(g2, deltaTime);
@@ -89,10 +117,10 @@ public abstract class GameObject implements Comparable<GameObject> {
     }
 
     public String toString() {
-        return Joiner.on("").join("GameObject[x: ", pos.x, ", y:", pos.y, "]");
+        return Joiner.on("").join("GameObjectOld[x: ", pos.x, ", y:", pos.y, "]");
     }
 
-    public int compareTo(GameObject obj) {
+    public int compareTo(GameObjectOld obj) {
         int result = zLevel - obj.zLevel;
         if (result == 0) {
             result = y() - obj.y();
@@ -105,5 +133,11 @@ public abstract class GameObject implements Comparable<GameObject> {
         }
 
         return result;
+    }
+
+    public void updateInput() {
+        if (inputComponent != null) {
+            inputComponent.update();
+        }
     }
 }

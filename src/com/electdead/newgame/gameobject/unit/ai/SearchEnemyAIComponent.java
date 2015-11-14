@@ -1,10 +1,10 @@
-package com.electdead.newgame.gameobjects.units.ai;
+package com.electdead.newgame.gameobject.unit.ai;
 
 import com.electdead.newgame.engine.Cell;
 import com.electdead.newgame.engine.EngineV1;
-import com.electdead.newgame.gameobjects.GameObject;
-import com.electdead.newgame.gameobjects.units.Race;
-import com.electdead.newgame.gameobjects.units.Unit;
+import com.electdead.newgame.gameobject.GameObjectOld;
+import com.electdead.newgame.gameobject.unit.Race;
+import com.electdead.newgame.gameobject.unit.Unit;
 import com.electdead.newgame.gamestate.DevGameState;
 import com.electdead.newgame.physics.Vector2F;
 
@@ -38,12 +38,12 @@ public class SearchEnemyAIComponent extends AIComponent {
         List<Cell> cells = DevGameState.grid.getCellIfIntersectsWith(unit.searchCircle);
 
         for (Cell cell : cells) {
-            List<GameObject> list;
+            List<GameObjectOld> list;
             if (unit.physModel.getRace() == Race.Human) {
                 list = cell.getRightUnits();
             } else list = cell.getLeftUnits();
 
-            for (GameObject target : list) {
+            for (GameObjectOld target : list) {
                 if (((Unit) target).isAlive() && intersects(unit, target)) {
 
                     newDir = target.pos.copy();
@@ -67,7 +67,7 @@ public class SearchEnemyAIComponent extends AIComponent {
         }
     }
 
-    public boolean intersects(GameObject gameObject, GameObject other) {
+    public boolean intersects(GameObjectOld gameObject, GameObjectOld other) {
         Unit unit = (Unit) gameObject;
         Unit enemy = (Unit) other;
 

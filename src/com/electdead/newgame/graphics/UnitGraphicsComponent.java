@@ -1,8 +1,8 @@
 package com.electdead.newgame.graphics;
 
 import com.electdead.newgame.assets.Assets;
-import com.electdead.newgame.gameobjects.Side;
-import com.electdead.newgame.gameobjects.units.Unit;
+import com.electdead.newgame.gameobject.Side;
+import com.electdead.newgame.gameobject.unit.Unit;
 import com.electdead.newgame.gamestate.DevGameState;
 
 import java.awt.*;

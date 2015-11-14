@@ -4,7 +4,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class EngineInputHandler extends KeyAdapter {
-	private KeyEvent keyEvent;
+	private volatile KeyEvent keyEvent;
 	
 	public EngineInputHandler() {}
 	

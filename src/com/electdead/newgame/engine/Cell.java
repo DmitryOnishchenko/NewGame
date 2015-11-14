@@ -1,8 +1,8 @@
 package com.electdead.newgame.engine;
 
-import com.electdead.newgame.gameobjects.GameObject;
-import com.electdead.newgame.gameobjects.GameObjectType;
-import com.electdead.newgame.gameobjects.Side;
+import com.electdead.newgame.gameobject.GameObjectOld;
+import com.electdead.newgame.gameobject.GameObjectType;
+import com.electdead.newgame.gameobject.Side;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -15,9 +15,11 @@ public class Cell {
     private Grid grid;
     private Rectangle2D.Float bounds = new Rectangle2D.Float();
 
-    private List<GameObject> leftUnits = new FastRemoveArrayList<>(100);
-    private List<GameObject> rightUnits = new FastRemoveArrayList<>(100);
-    private List<GameObject> projectiles = new FastRemoveArrayList<>(100);
+    private List<GameObjectOld> leftUnits = new FastRemoveArrayList<>(100);
+    private List<GameObjectOld> rightUnits = new FastRemoveArrayList<>(100);
+    private List<GameObjectOld> projectiles = new FastRemoveArrayList<>(100);
+
+    private List<GameObjectOld> list = new FastRemoveArrayList<>(1000);
 
     public Cell(Grid grid, int row, int col, Rectangle2D.Float bounds) {
         this.grid = grid;
@@ -49,34 +51,34 @@ public class Cell {
         projectiles.clear();
     }
 
-    public List<GameObject> getAllObjects() {
-        List<GameObject> list = getAllUnits();
+    public List<GameObjectOld> getAllObjects() {
+        List<GameObjectOld> list = getAllUnits();
         list.addAll(projectiles);
 
         return list;
     }
 
-    public List<GameObject> getAllUnits() {
-        List<GameObject> list = new LinkedList<>();
+    public List<GameObjectOld> getAllUnits() {
+        list.clear();
         list.addAll(leftUnits);
         list.addAll(rightUnits);
 
         return list;
     }
 
-    public List<GameObject> getLeftUnits() {
+    public List<GameObjectOld> getLeftUnits() {
         return leftUnits;
     }
 
-    public List<GameObject> getRightUnits() {
+    public List<GameObjectOld> getRightUnits() {
         return rightUnits;
     }
 
-    public List<GameObject> getProjectiles() {
+    public List<GameObjectOld> getProjectiles() {
         return projectiles;
     }
 
-    public void add(GameObject gameObject) {
+    public void add(GameObjectOld gameObject) {
         if (gameObject.type == GameObjectType.UNIT) {
             addUnit(gameObject);
         } else if (gameObject.type == GameObjectType.PROJECTILE) {
@@ -84,7 +86,7 @@ public class Cell {
         }
     }
 
-    private void addUnit(GameObject gameObject) {
+    private void addUnit(GameObjectOld gameObject) {
         if (gameObject.side == Side.LEFT_ARMY) {
             leftUnits.add(gameObject);
         } else {
@@ -92,7 +94,7 @@ public class Cell {
         }
     }
 
-    private void addProjectile(GameObject gameObject) {
+    private void addProjectile(GameObjectOld gameObject) {
         projectiles.add(gameObject);
     }
 
@@ -102,7 +104,7 @@ public class Cell {
         deleteObjects(projectiles);
     }
 
-    public void move(GameObject gameObject) {
+    public void move(GameObjectOld gameObject) {
         int newRow = (gameObject.y() - Grid.INDENT_TOP) / Grid.CELL_SIZE;
         int newCol = (gameObject.x() - Grid.INDENT_LEFT) / Grid.CELL_SIZE;
 
@@ -123,14 +125,14 @@ public class Cell {
         relocateObjects(projectiles);
     }
 
-    private void updateObjects(Collection<GameObject> collection) {
-        for (GameObject gameObject : collection) {
+    private void updateObjects(Collection<GameObjectOld> collection) {
+        for (GameObjectOld gameObject : collection) {
             gameObject.update();
         }
     }
 
-    private void deleteObjects(List<GameObject> collection) {
-        Iterator<GameObject> it = collection.iterator();
+    private void deleteObjects(List<GameObjectOld> collection) {
+        Iterator<GameObjectOld> it = collection.iterator();
         while (it.hasNext()) {
             if (it.next().delete) {
                 it.remove();
@@ -138,16 +140,20 @@ public class Cell {
         }
     }
 
-    private void relocateObjects(Collection<GameObject> collection) {
-        Iterator<GameObject> it = collection.iterator();
+    private void relocateObjects(Collection<GameObjectOld> collection) {
+        Iterator<GameObjectOld> it = collection.iterator();
         while (it.hasNext()) {
-            GameObject gameObject = it.next();
+            GameObjectOld gameObject = it.next();
             if (gameObject.relocate) {
                 gameObject.relocate = false;
                 it.remove();
                 grid.add(gameObject);
             }
         }
+    }
+
+    public int sizeUnits() {
+        return leftUnits.size() + rightUnits.size();
     }
 }
 

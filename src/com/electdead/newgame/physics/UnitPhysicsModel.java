@@ -1,7 +1,7 @@
 package com.electdead.newgame.physics;
 
 import com.electdead.newgame.engine.EngineV1;
-import com.electdead.newgame.gameobjects.units.Race;
+import com.electdead.newgame.gameobject.unit.Race;
 
 public class UnitPhysicsModel {
 	private Race race;

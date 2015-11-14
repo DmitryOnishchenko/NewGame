@@ -1,7 +1,7 @@
-package com.electdead.newgame.gameobjects.units.actions;
+package com.electdead.newgame.gameobject.unit.actions;
 
 import com.electdead.newgame.engine.EngineV1;
-import com.electdead.newgame.gameobjects.units.Unit;
+import com.electdead.newgame.gameobject.unit.Unit;
 import com.electdead.newgame.graphics.Animation;
 
 import java.awt.image.BufferedImage;

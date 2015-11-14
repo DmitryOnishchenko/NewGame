@@ -1,10 +1,10 @@
-package com.electdead.newgame.gameobjects.units.ai;
+package com.electdead.newgame.gameobject.unit.ai;
 
-import com.electdead.newgame.gameobjects.units.Unit;
-import com.electdead.newgame.gameobjects.units.actions.Action;
-import com.electdead.newgame.gameobjects.units.actions.MeleeAttackAction;
-import com.electdead.newgame.gameobjects.units.actions.MoveAction;
-import com.electdead.newgame.gameobjects.units.actions.RangeAttackAction;
+import com.electdead.newgame.gameobject.unit.Unit;
+import com.electdead.newgame.gameobject.unit.actions.Action;
+import com.electdead.newgame.gameobject.unit.actions.MeleeAttackAction;
+import com.electdead.newgame.gameobject.unit.actions.MoveAction;
+import com.electdead.newgame.gameobject.unit.actions.RangeAttackAction;
 import com.electdead.newgame.graphics.Animation;
 
 import java.awt.image.BufferedImage;
