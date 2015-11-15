@@ -1,7 +1,7 @@
 package com.electdead.newgame.gamestate;
 
 import com.electdead.newgame.engine.EngineV2;
-import com.electdead.newgame.gameobject.GameObject;
+import com.electdead.newgame.gameobjectV2.GameObject;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -18,10 +18,10 @@ public class MultiTestState extends AbstractGameState {
 
     @Override
     public void init() {
-        for (int i = 0; i < 40_000; i++) {
-            TestGameObject test = new TestGameObject();
-            gameObjects.add(test);
-        }
+//        for (int i = 0; i < 20_000; i++) {
+//            TestGameObject test = new TestGameObject();
+//            gameObjects.add(test);
+//        }
 
         setUp();
     }
@@ -36,7 +36,10 @@ public class MultiTestState extends AbstractGameState {
 
     @Override
     public void processInput(KeyEvent event) {
-
+        if (event != null) {
+            gameObjects.add(new TestGameObject());
+            EngineV2.inputHandled();
+        }
     }
 
     @Override

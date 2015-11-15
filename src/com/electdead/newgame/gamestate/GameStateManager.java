@@ -9,8 +9,9 @@ public class GameStateManager {
 
     public GameStateManager() {
         states = new Stack<>();
-        states.push(new DevGameState(this));
-        states.push(new MultiTestState(this));
+//        states.push(new DevGameState(this));
+//        states.push(new MultiTestState(this));
+        states.push(new BattleState(this));
     }
 
     public void init() {
@@ -25,7 +26,7 @@ public class GameStateManager {
         states.peek().update();
     }
 
-    public void render(Graphics2D g2, double deltaTime) {
-        states.peek().render(g2, deltaTime);
+    public void render(Graphics2D graphics, double deltaTime) {
+        states.peek().render(graphics, deltaTime);
     }
 }

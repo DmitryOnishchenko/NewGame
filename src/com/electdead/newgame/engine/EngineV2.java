@@ -1,11 +1,12 @@
 package com.electdead.newgame.engine;
 
 import com.electdead.newgame.engine.thread.*;
-import com.electdead.newgame.gameobject.GameObject;
+import com.electdead.newgame.gameobjectV2.GameObject;
 import com.electdead.newgame.gamestate.GameStateManager;
 import com.electdead.newgame.input.EngineInputHandler;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.image.VolatileImage;
 import java.util.Collections;
 import java.util.List;
@@ -17,8 +18,8 @@ public class EngineV2 extends AbstractGameLoop {
     public static final int UPDATES_PER_SEC = 50;
     public static final int MS_PER_UPDATE = 1000 / UPDATES_PER_SEC;
     public static final boolean useFpsLimit = true;
-    private VolatileImage currentFrame;
-    private Graphics2D currentG2D;
+    private VolatileImage frame;
+    private Graphics2D frameGraphics;
 
     /* Managers */
     private GameStateManager gsm;
@@ -47,9 +48,9 @@ public class EngineV2 extends AbstractGameLoop {
         gsm.init();
 
         setDoubleBuffered(true);
-        currentFrame = initFrame();
-        currentFrame.setAccelerationPriority(1);
-        currentG2D = getGraphics(currentFrame);
+        frame = initFrame();
+        frame.setAccelerationPriority(1);
+        frameGraphics = getGraphics(frame);
 
         /* UpdateMethods init */
         UpdateMethod inputUpdateMethod      = new InputUpdateMethod();
@@ -84,14 +85,14 @@ public class EngineV2 extends AbstractGameLoop {
     private VolatileImage initFrame() {
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsConfiguration gc = ge.getDefaultScreenDevice().getDefaultConfiguration();
-        VolatileImage frame = gc.createCompatibleVolatileImage(width, height);
-        frame.validate(gc);
+        VolatileImage volatileImage = gc.createCompatibleVolatileImage(width, height);
+        volatileImage.validate(gc);
 
-        return frame;
+        return volatileImage;
     }
 
-    private Graphics2D getGraphics(VolatileImage frame) {
-        Graphics2D g2 = (Graphics2D) frame.getGraphics();
+    private Graphics2D getGraphics(VolatileImage volatileImage) {
+        Graphics2D g2 = (Graphics2D) volatileImage.getGraphics();
         //TODO Test rendering hints
 		/* Test for text */
 //		g2Next.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
@@ -107,7 +108,10 @@ public class EngineV2 extends AbstractGameLoop {
 
     @Override
     public void processInput() {
-        gsm.processInput(inputHandler.getKeyEvent());
+        KeyEvent keyEvent = inputHandler.getKeyEvent();
+        if (keyEvent != null) {
+            gsm.processInput(keyEvent);
+        }
         inputHandler.clear();
     }
 
@@ -120,21 +124,23 @@ public class EngineV2 extends AbstractGameLoop {
     @Override
     public void render(double deltaTime) {
 		/* Clear frame */
-        currentG2D.clearRect(0, 0, width, height);
+//        frameGraphics.clearRect(0, 0, width, height);
+        frameGraphics.setPaint(Color.BLACK);
+        frameGraphics.fillRect(0, 0, width, height);
 
 		/* Render state */
-        gsm.render(currentG2D, deltaTime);
+        gsm.render(frameGraphics, deltaTime);
 
 		/* FPS/TPS info */
         if (showInfo) {
             fps++;
-            currentG2D.setPaint(Color.WHITE);
-            currentG2D.drawString("FPS: " + fpsInfo + " | TPS: " + tpsInfo, 5, 18);
+            frameGraphics.setPaint(Color.WHITE);
+            frameGraphics.drawString("FPS: " + fpsInfo + " | TPS: " + tpsInfo, 5, 18);
         }
 
 		/* Draw frame */
         Graphics graphics = getGraphics();
-        graphics.drawImage(currentFrame, 0, 0, null);
+        graphics.drawImage(frame, 0, 0, null);
         graphics.dispose();
     }
 
@@ -158,7 +164,7 @@ public class EngineV2 extends AbstractGameLoop {
                     while (lag >= MS_PER_UPDATE) {
                         update();
                         //TODO wait for last updater
-                        while (!graphicsUpdater.isDone()) {
+                        while (gameObjects.size() != 0 && !graphicsUpdater.isDone()) {
                             Thread.yield();
                             try {
                                 // wait
@@ -205,5 +211,9 @@ public class EngineV2 extends AbstractGameLoop {
 
     public static void loopEnded() {
         inputUpdater.setDone(false);
+    }
+
+    public static void inputHandled() {
+        inputHandler.clear();
     }
 }

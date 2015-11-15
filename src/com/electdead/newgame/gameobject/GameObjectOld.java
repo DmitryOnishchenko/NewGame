@@ -1,9 +1,8 @@
 package com.electdead.newgame.gameobject;
 
 import com.electdead.newgame.engine.Cell;
-import com.electdead.newgame.gameobject.unit.Unit;
 import com.electdead.newgame.gameobject.unit.actions.Action;
-import com.electdead.newgame.gameobject.unit.ai.AIContainer;
+import com.electdead.newgame.gameobject.unit.ai.AIContainerOld;
 import com.electdead.newgame.graphics.GraphicsComponent;
 import com.electdead.newgame.input.InputComponent;
 import com.electdead.newgame.main.MainApp;
@@ -33,7 +32,7 @@ public class GameObjectOld implements Comparable<GameObjectOld> {
     private PhysicsComponent physicsComponent;
     private GraphicsComponent graphicsComponent;
 
-    public AIContainer aiContainer;
+    public AIContainerOld aiContainer;
     public Action action;
 
     public GameObjectOld(String name, Side side, GameObjectType type, float x, float y) {
@@ -81,13 +80,13 @@ public class GameObjectOld implements Comparable<GameObjectOld> {
             graphicsComponent.update();
     }
 
-    public void setAiContainer(AIContainer aiContainer) {
+    public void setAiContainer(AIContainerOld aiContainer) {
         this.aiContainer = aiContainer;
     }
 
     //TODO Ai update thread
     public void updateAi() {
-        if (this instanceof Unit && aiContainer != null) aiContainer.update((Unit) this);
+//        if (this instanceof UnitOld && aiContainer != null) aiContainer.update((UnitOld) this);
     }
 
     //TODO Action execute thread

@@ -1,10 +1,10 @@
 package com.electdead.newgame.gameobject.unit.actions;
 
-import com.electdead.newgame.gameobject.unit.Unit;
-import com.electdead.newgame.gameobject.unit.ai.AIComponent;
+import com.electdead.newgame.gameobject.unit.UnitOld;
+import com.electdead.newgame.gameobject.unit.ai.AIComponentOld;
 
 public class MeleeAttackAction extends Action {
-    public MeleeAttackAction(AIComponent aiComponent, Unit unit, boolean needFullAnimation) {
+    public MeleeAttackAction(AIComponentOld aiComponent, UnitOld unit, boolean needFullAnimation) {
         super(aiComponent, unit, needFullAnimation);
         actionTrigger = (int) (unit.physModel.getAttackSpeed());
         actionDelay = actionTrigger;

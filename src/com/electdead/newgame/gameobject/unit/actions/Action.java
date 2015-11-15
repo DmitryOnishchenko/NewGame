@@ -1,27 +1,27 @@
 package com.electdead.newgame.gameobject.unit.actions;
 
-import com.electdead.newgame.gameobject.unit.Unit;
-import com.electdead.newgame.gameobject.unit.ai.AIComponent;
-import com.electdead.newgame.graphics.Animation;
+import com.electdead.newgame.gameobject.unit.UnitOld;
+import com.electdead.newgame.gameobject.unit.ai.AIComponentOld;
+import com.electdead.newgame.graphics.AnimationOld;
 
 public abstract class Action {
     public boolean needFullAnimation;
     public boolean wait;
-    public AIComponent aiComponent;
-    public Unit unit;
-    public Animation animation;
+    public AIComponentOld aiComponent;
+    public UnitOld unit;
+    public AnimationOld animation;
 
     //TODO
     public int actionDelay;
     public int actionTrigger;
 
-    public Action(AIComponent aiComponent, Unit unit, boolean needFullAnimation) {
+    public Action(AIComponentOld aiComponent, UnitOld gameObject, boolean needFullAnimation) {
         this.aiComponent = aiComponent;
-        this.unit = unit;
+        this.unit = gameObject;
         this.needFullAnimation = needFullAnimation;
     }
 
-    public void setAnimation(Animation animation) {
+    public void setAnimation(AnimationOld animation) {
         this.animation = animation;
     }
 

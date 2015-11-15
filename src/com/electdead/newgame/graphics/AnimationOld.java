@@ -4,7 +4,7 @@ import com.electdead.newgame.gameobject.unit.actions.Action;
 
 import java.awt.image.BufferedImage;
 
-public class Animation {
+public class AnimationOld {
     public Action action;
     private int currentSprite = 0;
     private int animationTimer;
@@ -13,8 +13,8 @@ public class Animation {
     private BufferedImage[] spritesLeft;
     public int previousDirX;
 
-    public Animation(Action action, BufferedImage[] sprites,
-                     BufferedImage[] spritesRight, BufferedImage[] spritesLeft) {
+    public AnimationOld(Action action, BufferedImage[] sprites,
+                        BufferedImage[] spritesRight, BufferedImage[] spritesLeft) {
         this.action = action;
         this.sprites = sprites;
         this.spritesRight = spritesRight;

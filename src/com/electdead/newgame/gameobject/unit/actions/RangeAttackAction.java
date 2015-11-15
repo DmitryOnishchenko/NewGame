@@ -2,13 +2,12 @@ package com.electdead.newgame.gameobject.unit.actions;
 
 import com.electdead.newgame.gameobject.GameObjectType;
 import com.electdead.newgame.gameobject.projectile.Projectile;
-import com.electdead.newgame.gameobject.unit.Unit;
-import com.electdead.newgame.gameobject.unit.ai.AIComponent;
-import com.electdead.newgame.gamestate.DevGameState;
+import com.electdead.newgame.gameobject.unit.UnitOld;
+import com.electdead.newgame.gameobject.unit.ai.AIComponentOld;
 import com.electdead.newgame.physics.Vector2F;
 
 public class RangeAttackAction extends Action {
-    public RangeAttackAction(AIComponent aiComponent, Unit unit, boolean needFullAnimation) {
+    public RangeAttackAction(AIComponentOld aiComponent, UnitOld unit, boolean needFullAnimation) {
         super(aiComponent, unit, needFullAnimation);
         actionTrigger = (int) (unit.physModel.getAttackSpeed());
         actionDelay = actionTrigger;
@@ -53,7 +52,7 @@ public class RangeAttackAction extends Action {
         aiComponent.aic.unlock();
     }
 
-    public void spawnProjectile(Unit unit) {
+    public void spawnProjectile(UnitOld unit) {
 //        Projectile arrow = new Projectile("woodenArrow", unit.side, unit.x(), unit.y());
         Projectile arrow = new Projectile("woodenArrow", unit.side, GameObjectType.PROJECTILE,
                 unit.damage, unit.x(), unit.y(), unit.target);
@@ -63,6 +62,6 @@ public class RangeAttackAction extends Action {
         newDir.normalize();
         arrow.moveDir = newDir;
 
-        DevGameState.grid.add(arrow);
+//        DevGameState.grid.add(arrow);
     }
 }

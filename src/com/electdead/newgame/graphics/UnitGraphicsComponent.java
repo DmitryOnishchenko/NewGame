@@ -2,52 +2,55 @@ package com.electdead.newgame.graphics;
 
 import com.electdead.newgame.assets.Assets;
 import com.electdead.newgame.gameobject.Side;
-import com.electdead.newgame.gameobject.unit.Unit;
+import com.electdead.newgame.gameobjectV2.BasicGameObject;
 import com.electdead.newgame.gamestate.DevGameState;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class UnitGraphicsComponent implements GraphicsComponent {
-    private Unit unit;
+    private BasicGameObject gameObject;
     private UnitGraphicsModel model;
 
-    public UnitGraphicsComponent(Unit obj) {
-        this.unit = obj;
+    public UnitGraphicsComponent(BasicGameObject obj) {
+        this.gameObject = obj;
         this.model = (UnitGraphicsModel) Assets.getProperties(obj.name).get("graphicsModel");
     }
 
     @Override
     public void update() {
-        unit.action.animation.next();
+        gameObject.action.animation.next();
     }
 
     private int spriteX() {
-        return (int) (unit.pos.x - model.getWidthSprite() / 2);
+        return (int) (gameObject.currentState.pos.x - model.getWidthSprite() / 2);
     }
 
     private int spriteY() {
-        return (int) (unit.pos.y - model.getHeightSprite() + model.getBaseLine());
+        return (int) (gameObject.currentState.pos.y - model.getHeightSprite() + model.getBaseLine());
     }
 
     @Override
     public void render(Graphics2D g2, double deltaTime) {
-        if (DevGameState.DEBUG_MODE) {
-            if (unit.isAlive() && DevGameState.DEBUG_BOX) {
-                g2.setPaint(Color.WHITE);
-                g2.draw(unit.hitBox);
-                g2.draw(unit.searchCircle);
-                g2.setPaint(Color.RED);
-                g2.draw(unit.attackBox);
+        // Render if visible
+        if (gameObject.visible) {
+            if (DevGameState.DEBUG_MODE) {
+                if (gameObject.currentState.isAlive() && DevGameState.DEBUG_BOX) {
+                    g2.setPaint(Color.WHITE);
+                    g2.draw(gameObject.hitBox);
+                    g2.draw(gameObject.searchCircle);
+                    g2.setPaint(Color.RED);
+                    g2.draw(gameObject.attackBox);
+                }
+                if (gameObject.target != null && DevGameState.DEBUG_TARGET) {
+                    g2.setPaint(gameObject.side == Side.LEFT_ARMY ? Color.YELLOW : Color.BLUE);
+                    g2.drawLine(gameObject.x(), gameObject.y(), gameObject.target.x(), gameObject.target.y());
+                }
             }
-            if (unit.target != null && DevGameState.DEBUG_TARGET) {
-                g2.setPaint(unit.side == Side.LEFT_ARMY ? Color.YELLOW : Color.BLUE);
-                g2.drawLine(unit.x(), unit.y(), unit.target.x(), unit.target.y());
-            }
-        }
 
-        BufferedImage image = unit.action.animation.get();
-        g2.drawImage(image, spriteX(), spriteY(), null);
+            BufferedImage image = gameObject.action.animation.get();
+            g2.drawImage(image, spriteX(), spriteY(), null);
+        }
     }
 
 }

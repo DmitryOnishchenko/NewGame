@@ -1,21 +1,20 @@
 package com.electdead.newgame.gameobject.unit.ai;
 
-import com.electdead.newgame.gameobject.unit.Unit;
+import com.electdead.newgame.gameobject.unit.UnitOld;
 import com.electdead.newgame.gameobject.unit.actions.Action;
 import com.electdead.newgame.gameobject.unit.actions.MeleeAttackAction;
 import com.electdead.newgame.gameobject.unit.actions.MoveAction;
-import com.electdead.newgame.gameobject.unit.actions.RangeAttackAction;
-import com.electdead.newgame.graphics.Animation;
+import com.electdead.newgame.graphics.AnimationOld;
 
 import java.awt.image.BufferedImage;
 
-public class AIContainer {
+public class AIContainerOld {
     public boolean locked;
-    public Unit unit;
-    public AIComponent maxPriorityComponent;
-    public AIComponent[] aiComponents;
+    public UnitOld unit;
+    public AIComponentOld maxPriorityComponent;
+    public AIComponentOld[] aiComponents;
 
-    public AIContainer(Unit unit) {
+    public AIContainerOld(UnitOld unit) {
         this.unit = unit;
         init();
     }
@@ -23,22 +22,22 @@ public class AIContainer {
     //TODO dynamical ai components
     private void init() {
         /* AI components */
-        aiComponents = new AIComponent[3];
+        aiComponents = new AIComponentOld[3];
 
 		/* Find enemy [0] */
-        aiComponents[0] = new SearchEnemyAIComponent(this, 0);
+        aiComponents[0] = new SearchEnemyAIComponentOld(this, 0);
 
 		/* Attack [1] */
-        AIComponent attackAIComponent = new AttackAIComponent(this, 2);
+        AIComponentOld attackAIComponent = new AttackAIComponentOld(this, 2);
         Action attackAction = null;
         if (unit.name.endsWith("Archer")) {
-            attackAction = new RangeAttackAction(attackAIComponent, unit, true);
+//            attackAction = new RangeAttackAction(attackAIComponent, unit, true);
         } else {
             attackAction = new MeleeAttackAction(attackAIComponent, unit, true);
         }
         BufferedImage[] spritesRight = unit.graphModel.getFightSpritesRight();
         BufferedImage[] spritesLeft = unit.graphModel.getFightSpritesLeft();
-        Animation attackAnimation = new Animation(attackAction, spritesRight, spritesRight, spritesLeft);
+        AnimationOld attackAnimation = new AnimationOld(attackAction, spritesRight, spritesRight, spritesLeft);
         attackAction.setAnimation(attackAnimation);
         attackAIComponent.setAction(attackAction);
         aiComponents[1] = attackAIComponent;
@@ -46,9 +45,9 @@ public class AIContainer {
 		/* Move [2] */
         spritesRight = unit.graphModel.getMoveSpritesRight();
         spritesLeft = unit.graphModel.getMoveSpritesLeft();
-        AIComponent moveAIComponent = new MoveAIComponent(this, 4);
+        AIComponentOld moveAIComponent = new MoveAIComponentOld(this, 4);
         Action moveAction = new MoveAction(moveAIComponent, unit, false);
-        Animation moveAnimation = new Animation(moveAction, spritesRight, spritesRight, spritesLeft);
+        AnimationOld moveAnimation = new AnimationOld(moveAction, spritesRight, spritesRight, spritesLeft);
         moveAction.setAnimation(moveAnimation);
         moveAIComponent.setAction(moveAction);
         aiComponents[2] = moveAIComponent;
@@ -58,12 +57,12 @@ public class AIContainer {
         unit.action = maxPriorityComponent.getAction();
     }
 
-    public void update(Unit unit) {
+    public void update() {
         if (!locked) {
             if (maxPriorityComponent == null) {
                 maxPriorityComponent = aiComponents[2];
             }
-            for (AIComponent ai : aiComponents) {
+            for (AIComponentOld ai : aiComponents) {
                 if (ai.priority <= maxPriorityComponent.priority) {
                     ai.think(unit);
                 }
@@ -71,14 +70,14 @@ public class AIContainer {
             unit.action = maxPriorityComponent.getAction();
         }
 
-        for (AIComponent ai : aiComponents) {
+        for (AIComponentOld ai : aiComponents) {
             if (ai.action != null) {
                 ai.action.actionDelay++;
             }
         }
     }
 
-    public void setMaxPriorityComponent(AIComponent ai) {
+    public void setMaxPriorityComponent(AIComponentOld ai) {
         if (ai.priority <= maxPriorityComponent.priority) {
             maxPriorityComponent = ai;
             locked = maxPriorityComponent.getAction().needFullAnimation;

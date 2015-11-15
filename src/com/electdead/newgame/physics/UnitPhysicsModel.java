@@ -1,6 +1,6 @@
 package com.electdead.newgame.physics;
 
-import com.electdead.newgame.engine.EngineV1;
+import com.electdead.newgame.engine.EngineV1Old;
 import com.electdead.newgame.gameobject.unit.Race;
 
 public class UnitPhysicsModel {
@@ -55,7 +55,7 @@ public class UnitPhysicsModel {
 	public void setArmor(int armor) { this.armor = armor; }
 
 	public void setDefaultSpeed(float defaultSpeed) {
-		this.defaultSpeed = defaultSpeed / EngineV1.UPDATES_PER_SEC;
+		this.defaultSpeed = defaultSpeed / EngineV1Old.UPDATES_PER_SEC;
 	}
 
 	public void setMoveDir(Vector2F moveDir) { this.moveDir = moveDir; }
@@ -63,7 +63,7 @@ public class UnitPhysicsModel {
 	public void setDamage(int damage) { this.damage = damage; }
 
 	public void setAttackSpeed(float attackSpeed) { 
-		this.attackSpeed = attackSpeed / EngineV1.MS_PER_UPDATE;
+		this.attackSpeed = attackSpeed / EngineV1Old.MS_PER_UPDATE;
 	}
 
 	public void setAttackRange(float attackRange) { this.attackRange = attackRange; }

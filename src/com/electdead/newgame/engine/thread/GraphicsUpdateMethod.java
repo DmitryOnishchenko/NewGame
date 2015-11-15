@@ -1,7 +1,7 @@
 package com.electdead.newgame.engine.thread;
 
 import com.electdead.newgame.engine.EngineV2;
-import com.electdead.newgame.gameobject.GameObject;
+import com.electdead.newgame.gameobjectV2.GameObject;
 
 import java.util.List;
 

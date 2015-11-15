@@ -1,25 +1,24 @@
 package com.electdead.newgame.gameobject.unit.ai;
 
 import com.electdead.newgame.engine.Cell;
-import com.electdead.newgame.engine.EngineV1;
+import com.electdead.newgame.engine.EngineV1Old;
 import com.electdead.newgame.gameobject.GameObjectOld;
-import com.electdead.newgame.gameobject.unit.Race;
-import com.electdead.newgame.gameobject.unit.Unit;
+import com.electdead.newgame.gameobject.unit.UnitOld;
 import com.electdead.newgame.gamestate.DevGameState;
 import com.electdead.newgame.physics.Vector2F;
 
 import java.util.List;
 
-public class SearchEnemyAIComponent extends AIComponent {
+public class SearchEnemyAIComponentOld extends AIComponentOld {
     private int delayTimer = 0;
-    private int repeatSearchTrigger = 1000 / EngineV1.MS_PER_UPDATE;
+    private int repeatSearchTrigger = 1000 / EngineV1Old.MS_PER_UPDATE;
 
-    public SearchEnemyAIComponent(AIContainer aic, int priority) {
+    public SearchEnemyAIComponentOld(AIContainerOld aic, int priority) {
         super(aic, priority);
     }
 
     @Override
-    public void think(Unit unit) {
+    public void think(UnitOld unit) {
         if (unit.target == null) {
             searchTarget(unit);
         } else if (delayTimer++ > repeatSearchTrigger) {
@@ -29,33 +28,33 @@ public class SearchEnemyAIComponent extends AIComponent {
     }
 
 //    @Override
-//    public void update(Unit unit) {}
+//    public void update(UnitOld unit) {}
 
-    private void searchTarget(Unit unit) {
+    private void searchTarget(UnitOld unit) {
         double minLength = Double.MAX_VALUE;
         Vector2F newDir = null;
-        Unit newTarget = null;
+        UnitOld newTarget = null;
         List<Cell> cells = DevGameState.grid.getCellIfIntersectsWith(unit.searchCircle);
 
-        for (Cell cell : cells) {
-            List<GameObjectOld> list;
-            if (unit.physModel.getRace() == Race.Human) {
-                list = cell.getRightUnits();
-            } else list = cell.getLeftUnits();
-
-            for (GameObjectOld target : list) {
-                if (((Unit) target).isAlive() && intersects(unit, target)) {
-
-                    newDir = target.pos.copy();
-                    newDir.sub(unit.pos);
-                    double length = newDir.length();
-                    if (length < minLength) {
-                        minLength = length;
-                        newTarget = (Unit) target;
-                    }
-                }
-            }
-        }
+//        for (Cell cell : cells) {
+//            List<GameObjectOld> list;
+//            if (unit.physModel.getRace() == Race.Human) {
+//                list = cell.getRightUnits();
+//            } else list = cell.getLeftUnits();
+//
+//            for (GameObjectOld target : list) {
+//                if (((UnitOld) target).isAlive() && intersects(unit, target)) {
+//
+//                    newDir = target.pos.copy();
+//                    newDir.sub(unit.pos);
+//                    double length = newDir.length();
+//                    if (length < minLength) {
+//                        minLength = length;
+//                        newTarget = (UnitOld) target;
+//                    }
+//                }
+//            }
+//        }
 
         if (newTarget != null) {
             unit.target = newTarget;
@@ -68,8 +67,8 @@ public class SearchEnemyAIComponent extends AIComponent {
     }
 
     public boolean intersects(GameObjectOld gameObject, GameObjectOld other) {
-        Unit unit = (Unit) gameObject;
-        Unit enemy = (Unit) other;
+        UnitOld unit = (UnitOld) gameObject;
+        UnitOld enemy = (UnitOld) other;
 
         double unitSearchRange = unit.physModel.getSearchRange();
         double enemyHitBoxRadius = enemy.hitBox.width / 2;

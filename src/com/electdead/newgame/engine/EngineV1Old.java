@@ -1,7 +1,7 @@
 package com.electdead.newgame.engine;
 
 import com.electdead.newgame.engine.thread.*;
-import com.electdead.newgame.gameobject.GameObject;
+import com.electdead.newgame.gameobjectV2.GameObject;
 import com.electdead.newgame.gamestate.GameStateManager;
 import com.electdead.newgame.input.EngineInputHandler;
 
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("serial")
-public class EngineV1 extends AbstractGameLoop {
+public class EngineV1Old extends AbstractGameLoop {
     /* Graphics */
     public static final int MAX_FPS = 120;
     public static final int UPDATES_PER_SEC = 50;
@@ -33,7 +33,7 @@ public class EngineV1 extends AbstractGameLoop {
     /* GameObjects */
     private volatile static List<GameObject> list = new ArrayList<>();
 
-    public EngineV1(int width, int height) {
+    public EngineV1Old(int width, int height) {
         super(width, height, MAX_FPS);
         init();
     }

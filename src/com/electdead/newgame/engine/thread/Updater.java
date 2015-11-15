@@ -36,6 +36,7 @@ public class Updater extends Thread {
             this.toProcess = totalWork;
         }
         this.totalWork = totalWork;
+        this.done = false;
         if (nextUpdater != null) {
             nextUpdater.startProcess(totalWork);
         }

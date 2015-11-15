@@ -1,6 +1,6 @@
 package com.electdead.newgame.gamestate;
 
-import com.electdead.newgame.gameobject.GameObject;
+import com.electdead.newgame.gameobjectV2.GameObject;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -15,13 +15,18 @@ public class TestGameObject implements GameObject {
     private int speed;
 
     public TestGameObject() {
-        Random r = new Random();
-        x = r.nextInt() % 1200 + 20;
-        y = r.nextInt() % 500 + 20;
+        Random r = new Random(System.currentTimeMillis());
+        x = r.nextInt() % 800 + 20;
+        y = r.nextInt() % 300 + 20;
         speed = r.nextInt() % 10 + 2;
         width = r.nextInt() % 200 + 50;
         height = r.nextInt() % 200 + 50;
         color = new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255), r.nextInt(255));
+    }
+
+    @Override
+    public void init() {
+
     }
 
     @Override
@@ -56,5 +61,10 @@ public class TestGameObject implements GameObject {
     public void render(Graphics2D graphics, double deltaTime) {
         graphics.setPaint(color);
         graphics.fillRect(x, y, width, height);
+    }
+
+    @Override
+    public void switchState() {
+
     }
 }

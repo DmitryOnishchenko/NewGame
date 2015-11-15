@@ -6,7 +6,7 @@ import com.electdead.newgame.gameobject.GameObjectType;
 import com.electdead.newgame.gameobject.Side;
 import com.electdead.newgame.gameobject.unit.actions.Action;
 import com.electdead.newgame.gameobject.unit.actions.DieAction;
-import com.electdead.newgame.gameobject.unit.ai.AIContainer;
+import com.electdead.newgame.gameobject.unit.ai.AIContainerOld;
 import com.electdead.newgame.gamestate.DevGameState;
 import com.electdead.newgame.graphics.UnitGraphicsModel;
 import com.electdead.newgame.main.MainApp;
@@ -19,12 +19,12 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Random;
 
-public class Unit extends GameObjectOld {
+public class UnitOld extends GameObjectOld {
     /* Common */
     public UnitPhysicsModel physModel;
     public UnitGraphicsModel graphModel;
 
-    public AIContainer aiContainer;
+    public AIContainerOld aiContainer;
     public Action action;
 
     /* Main */
@@ -35,11 +35,11 @@ public class Unit extends GameObjectOld {
     public Vector2F moveDir;
 
     public Ellipse2D.Double hitBox;
-    public Unit target;
+    public UnitOld target;
     public Ellipse2D.Double attackBox;
     public Ellipse2D.Double searchCircle;
 
-    public Unit(String name, Side side, GameObjectType type, float x, float y) {
+    public UnitOld(String name, Side side, GameObjectType type, float x, float y) {
         super(name, side, type, x, y);
         init();
     }
@@ -68,7 +68,7 @@ public class Unit extends GameObjectOld {
         moveDir         = physModel.getMoveDir();
     }
 
-    public void setAIContainer(AIContainer aic) {
+    public void setAIContainer(AIContainerOld aic) {
         this.aiContainer = aic;
     }
 
@@ -84,7 +84,7 @@ public class Unit extends GameObjectOld {
             zLevel = 0;
             target = null;
             aiContainer.locked = true;
-            action = new DieAction(this, action);
+            action = new DieAction(null, action);
             action.checkAnimationDir();
             drawBlood();
         }
@@ -116,7 +116,7 @@ public class Unit extends GameObjectOld {
 
     @Override
     public void update() {
-        aiContainer.update(this);
+        aiContainer.update();
         action.execute();
         super.update();
         checkDelete();
@@ -135,13 +135,13 @@ public class Unit extends GameObjectOld {
         at.scale(r.nextDouble() + 0.2, r.nextDouble() + 0.2);
 
         for (int i = 0; i < 5; i++) {
-            DevGameState.mapG2.drawImage(randomBlood(), at, null);
+            DevGameState.floorGraphics.drawImage(randomBlood(), at, null);
         }
     }
 
     @Override
     public void updateAi() {
-        aiContainer.update(this);
+        aiContainer.update();
     }
 
     @Override

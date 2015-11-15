@@ -1,16 +1,16 @@
 package com.electdead.newgame.gameobject.unit.ai;
 
-import com.electdead.newgame.gameobject.unit.Unit;
+import com.electdead.newgame.gameobject.unit.UnitOld;
 import com.electdead.newgame.physics.Vector2F;
 
-public class AttackAIComponent extends AIComponent {
+public class AttackAIComponentOld extends AIComponentOld {
 
-    public AttackAIComponent(AIContainer aic, int priority) {
+    public AttackAIComponentOld(AIContainerOld aic, int priority) {
         super(aic, priority);
     }
 
     @Override
-    public void think(Unit unit) {
+    public void think(UnitOld unit) {
         if (unit.target != null) {
             if (intersects(unit, unit.target)) {
                 aic.setMaxPriorityComponent(this);
@@ -21,9 +21,9 @@ public class AttackAIComponent extends AIComponent {
     }
 
 //    @Override
-//    public void update(Unit unit) {}
+//    public void update(UnitOld unit) {}
 
-    public boolean intersects(Unit unit, Unit enemy) {
+    public boolean intersects(UnitOld unit, UnitOld enemy) {
         if (!enemy.isAlive()) {
             return false;
         }

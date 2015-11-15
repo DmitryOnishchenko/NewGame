@@ -1,6 +1,6 @@
 package com.electdead.newgame.engine;
 
-import com.electdead.newgame.gameobject.GameObjectOld;
+import com.electdead.newgame.gameobjectV2.BasicGameObject;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -17,7 +17,7 @@ public class Grid {
     public static final int INDENT_LEFT = -60;
     private Cell[][] cells = new Cell[ROWS][COLS];
 
-    private List<GameObjectOld> allObjects = new ArrayList<>(5000);
+    private List<BasicGameObject> allObjects = new ArrayList<>(5000);
 
     public Grid() {
         init();
@@ -41,7 +41,7 @@ public class Grid {
         }
     }
 
-    public void add(GameObjectOld gameObject) {
+    public void add(BasicGameObject gameObject) {
         int row = (gameObject.y() - INDENT_TOP) / CELL_SIZE;
         int col = (gameObject.x() - INDENT_LEFT) / CELL_SIZE;
 
@@ -52,7 +52,7 @@ public class Grid {
 
         Cell cell = cells[row][col];
         cell.add(gameObject);
-        gameObject.setCell(cell);
+        gameObject.cell = cell;
     }
 
     public void update() {
@@ -76,7 +76,7 @@ public class Grid {
         }
     }
 
-    public List<GameObjectOld> getAllObjects() {
+    public List<BasicGameObject> getAllObjects() {
         allObjects.clear();
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLS; col++) {

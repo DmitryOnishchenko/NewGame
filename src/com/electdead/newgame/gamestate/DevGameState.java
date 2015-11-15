@@ -6,10 +6,8 @@ import com.electdead.newgame.engine.Grid;
 import com.electdead.newgame.gameobject.GameObjectOld;
 import com.electdead.newgame.gameobject.GameObjectType;
 import com.electdead.newgame.gameobject.Side;
-import com.electdead.newgame.gameobject.unit.Unit;
-import com.electdead.newgame.gameobject.unit.ai.AIContainer;
-import com.electdead.newgame.graphics.GraphicsComponent;
-import com.electdead.newgame.graphics.UnitGraphicsComponent;
+import com.electdead.newgame.gameobject.unit.UnitOld;
+import com.electdead.newgame.gameobject.unit.ai.AIContainerOld;
 import com.electdead.newgame.main.MainApp;
 
 import java.awt.*;
@@ -25,10 +23,11 @@ public class DevGameState extends AbstractGameState {
 
     public static ArrayList<GameObjectOld> renderObjects = new ArrayList<>(5000);
 
-    private BufferedImage floorSprite = (BufferedImage) Assets.getProperties("commonAssets").get("background0");
-    private BufferedImage floorSprite1 = (BufferedImage) Assets.getProperties("commonAssets").get("background1");
-    private static BufferedImage map = new BufferedImage(MainApp.WIDTH, MainApp.HEIGHT, BufferedImage.TYPE_INT_ARGB);
-    public static Graphics2D mapG2 = (Graphics2D) map.getGraphics();
+    private BufferedImage floorSprite0Level = (BufferedImage) Assets.getProperties("commonAssets").get("background0");
+    private BufferedImage floorSprite1Level = (BufferedImage) Assets.getProperties("commonAssets").get("background1");
+    private static BufferedImage floorImage = new BufferedImage(MainApp.WIDTH, MainApp.HEIGHT, BufferedImage.TYPE_INT_ARGB);
+    public static Graphics2D floorGraphics = (Graphics2D) floorImage.getGraphics();
+
     public static ArrayList<BufferedImage> bloodSprites = new ArrayList<>();
 
     // TODO test variables
@@ -52,13 +51,11 @@ public class DevGameState extends AbstractGameState {
 
     @Override
     public void init() {
+        /* Blood */
         HashMap<String, Object> commonAssets = Assets.getProperties("effectsAssets");
         bloodSprites = (ArrayList<BufferedImage>) commonAssets.get("bloodSprites");
 
-//        for (int i = 0; i < 720 / 40; i++) {
-//            mapG2.drawImage(floorSprite, 0, i * 40, null);
-//        }
-        mapG2.drawImage(floorSprite, 0, 0, null);
+        floorGraphics.drawImage(floorSprite0Level, 0, 0, null);
 
         grid = new Grid();
 
@@ -69,20 +66,20 @@ public class DevGameState extends AbstractGameState {
         HashMap<String, Object> props = Assets.getProperties(name);
 
         Side side = (Side) props.get("side");
-        Unit unit = new Unit(name, side, GameObjectType.UNIT, x, y);
+        UnitOld unit = new UnitOld(name, side, GameObjectType.UNIT, x, y);
 
-        AIContainer aic = new AIContainer(unit);
+        AIContainerOld aic = new AIContainerOld(unit);
 
-        GraphicsComponent gc = new UnitGraphicsComponent(unit);
+//        GraphicsComponent gc = new UnitGraphicsComponent(unit);
 
         unit.setAIContainer(aic);
-        unit.setGraphicsComponent(gc);
+//        unit.setGraphicsComponent(gc);
 
-        grid.add(unit);
+//        grid.add(unit);
 
 //        GameObjectOld unit = new GameObjectOld(name, side, GameObjectType.UNIT, x, y);
-//        AIContainer aic = new AIContainer((Unit) unit);
-//        GraphicsComponent gc = new UnitGraphicsComponent((Unit) unit);
+//        AIContainerOld aic = new AIContainerOld((UnitOld) unit);
+//        GraphicsComponent gc = new UnitGraphicsComponent((UnitOld) unit);
 //
 //        unit.setAiContainer(aic);
 //        unit.setGraphicsComponent(gc);
@@ -112,7 +109,7 @@ public class DevGameState extends AbstractGameState {
                 PAUSE = !PAUSE;
             } else if (event.getKeyCode() == 10) {
                 grid.clear();
-                mapG2.drawImage(floorSprite, 0, 0, null);
+                floorGraphics.drawImage(floorSprite0Level, 0, 0, null);
                 SWARM = false;
             } else if (event.getKeyChar() == 'j') {
                 DEBUG_MODE = !DEBUG_MODE;
@@ -167,20 +164,20 @@ public class DevGameState extends AbstractGameState {
 
     @Override
     public void render(Graphics2D g2, double deltaTime) {
-        g2.drawImage(map, 0, 0, null);
+        g2.drawImage(floorImage, 0, 0, null);
         if (DEBUG_GRID) {
             grid.render(g2, deltaTime);
         }
 
         renderObjects.clear();
-        renderObjects.addAll(grid.getAllObjects());
+//        renderObjects.addAll(grid.getAllObjects());
         Collections.sort(renderObjects);
 
         for (GameObjectOld obj : renderObjects) {
             obj.render(g2, deltaTime);
         }
 
-        g2.drawImage(floorSprite1, 0, 0, null);
+        g2.drawImage(floorSprite1Level, 0, 0, null);
 
         g2.setPaint(Color.WHITE);
         g2.drawString("GameObjects: " + grid.getAllObjects().size() + " | Units: " + grid.size(), 5, 36);

@@ -1,14 +1,14 @@
 package com.electdead.newgame.gameobject.unit.ai;
 
-import com.electdead.newgame.gameobject.unit.Unit;
+import com.electdead.newgame.gameobject.unit.UnitOld;
 import com.electdead.newgame.gameobject.unit.actions.Action;
 
-public abstract class AIComponent implements Comparable<AIComponent> {
-	public AIContainer aic;
+public abstract class AIComponentOld implements Comparable<AIComponentOld> {
+	public AIContainerOld aic;
 	public final int priority;
 	public Action action;
 
-	public AIComponent(AIContainer aic, int priority) {
+	public AIComponentOld(AIContainerOld aic, int priority) {
 		this.aic = aic;
 		this.priority = priority;
 	}
@@ -18,7 +18,7 @@ public abstract class AIComponent implements Comparable<AIComponent> {
 	}
 
 	@Override
-	public int compareTo(AIComponent other) {
+	public int compareTo(AIComponentOld other) {
 		return priority - other.priority;
 	}
 
@@ -31,7 +31,7 @@ public abstract class AIComponent implements Comparable<AIComponent> {
 		return getClass().getSimpleName();
 	}
 
-	public abstract void think(Unit unit);
+	public abstract void think(UnitOld unit);
 
-//	public abstract void update(Unit unit);
+//	public abstract void update(UnitOld unit);
 }

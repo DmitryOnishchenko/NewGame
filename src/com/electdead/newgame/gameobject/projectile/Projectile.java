@@ -2,11 +2,11 @@ package com.electdead.newgame.gameobject.projectile;
 
 import com.electdead.newgame.assets.Assets;
 import com.electdead.newgame.engine.Cell;
-import com.electdead.newgame.engine.EngineV1;
+import com.electdead.newgame.engine.EngineV1Old;
 import com.electdead.newgame.gameobject.GameObjectOld;
 import com.electdead.newgame.gameobject.GameObjectType;
 import com.electdead.newgame.gameobject.Side;
-import com.electdead.newgame.gameobject.unit.Unit;
+import com.electdead.newgame.gameobject.unit.UnitOld;
 import com.electdead.newgame.gamestate.DevGameState;
 import com.electdead.newgame.physics.Vector2F;
 
@@ -23,21 +23,21 @@ public class Projectile extends GameObjectOld {
 
     //TODO test
     private Vector2F tail;
-    public float speed = 500 / EngineV1.UPDATES_PER_SEC;
+    public float speed = 500 / EngineV1Old.UPDATES_PER_SEC;
     public Vector2F sp;
     private float acc = 0.1f;
     private float baseAcc = 0.46f;
-    public Unit target;
+    public UnitOld target;
 
     private boolean finished = false;
     private int delayTimer = 0;
-    private int deleteTrigger = 4000 / EngineV1.MS_PER_UPDATE;
+    private int deleteTrigger = 4000 / EngineV1Old.MS_PER_UPDATE;
 
     private int length = 16;
     private Vector2F startPoint;
     private int maxDistance = 500;
 
-    public Projectile(String name, Side side, GameObjectType type, int damage, float x, float y, Unit target) {
+    public Projectile(String name, Side side, GameObjectType type, int damage, float x, float y, UnitOld target) {
         super(name, side, type, x, y);
         this.damage = damage;
         tail = pos.copy();
@@ -98,23 +98,23 @@ public class Projectile extends GameObjectOld {
 
         List<Cell> cells = DevGameState.grid.getCellIfIntersectsWith(new Line2D.Float(pos.x, pos.y, tail.x, tail.y));
 
-        for (Cell cell : cells) {
-            List<GameObjectOld> list;
-            if (side == Side.LEFT_ARMY) {
-                list = cell.getRightUnits();
-            } else list = cell.getLeftUnits();
-
-            for (GameObjectOld obj : list) {
-                Unit enemy = (Unit) obj;
-                if (intersects(this, enemy)) {
-                    enemy.takeDamage(damage);
+//        for (Cell cell : cells) {
+//            List<GameObjectOld> list;
+//            if (side == Side.LEFT_ARMY) {
+//                list = cell.getRightUnits();
+//            } else list = cell.getLeftUnits();
+//
+//            for (GameObjectOld obj : list) {
+//                UnitOld enemy = (UnitOld) obj;
+//                if (intersects(this, enemy)) {
+//                    enemy.takeDamage(damage);
+////                    delete = true;
+////                    System.out.println(pos.y + " | " + target.pos.y);
 //                    delete = true;
-//                    System.out.println(pos.y + " | " + target.pos.y);
-                    delete = true;
-                    break;
-                }
-            }
-        }
+//                    break;
+//                }
+//            }
+//        }
 
         checkDelete();
     }
@@ -135,7 +135,7 @@ public class Projectile extends GameObjectOld {
         g2.drawLine(x(), y(), (int) tail.x, (int) tail.y);
     }
 
-    public boolean intersects(Projectile projectile, Unit enemy) {
+    public boolean intersects(Projectile projectile, UnitOld enemy) {
         if (!enemy.isAlive()) {
             return false;
         }

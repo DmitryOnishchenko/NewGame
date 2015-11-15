@@ -1,19 +1,19 @@
 package com.electdead.newgame.gameobject.unit.ai;
 
-import com.electdead.newgame.engine.EngineV1;
-import com.electdead.newgame.gameobject.unit.Unit;
+import com.electdead.newgame.engine.EngineV1Old;
+import com.electdead.newgame.gameobject.unit.UnitOld;
 import com.electdead.newgame.physics.Vector2F;
 
-public class MoveAIComponent extends AIComponent {
+public class MoveAIComponentOld extends AIComponentOld {
     private int delayTimer = 0;
-    private int moveDirCorrectionTrigger = 250 / EngineV1.MS_PER_UPDATE;
+    private int moveDirCorrectionTrigger = 250 / EngineV1Old.MS_PER_UPDATE;
 
-    public MoveAIComponent(AIContainer aic, int priority) {
+    public MoveAIComponentOld(AIContainerOld aic, int priority) {
         super(aic, priority);
     }
 
     @Override
-    public void think(Unit unit) {
+    public void think(UnitOld unit) {
         if (unit.target == null) {
             unit.moveDir = unit.physModel.getMoveDir();
         } else if (delayTimer++ > moveDirCorrectionTrigger) {
@@ -26,7 +26,7 @@ public class MoveAIComponent extends AIComponent {
     }
 
 //    @Override
-//    public void update(Unit unit) {
-//        unit.moveDir = unit.physModel.getMoveDir();
+//    public void update(UnitOld unit) {
+//        unit.moveDir = unit.pModel.getMoveDir();
 //    }
 }

@@ -1,7 +1,7 @@
 package com.electdead.newgame.graphics;
 
 import com.electdead.newgame.assets.ImageUtils;
-import com.electdead.newgame.engine.EngineV1;
+import com.electdead.newgame.engine.EngineV1Old;
 
 import java.awt.image.BufferedImage;
 
@@ -48,7 +48,7 @@ public class UnitGraphicsModel {
     public void setBaseLine(int baseLine) { this.baseLine = baseLine; }
 
     public void setAnimationSpeed(int animationSpeedMs) {
-        this.animationSpeed = animationSpeedMs / EngineV1.MS_PER_UPDATE;
+        this.animationSpeed = animationSpeedMs / EngineV1Old.MS_PER_UPDATE;
     }
 
     public void setMoveSpritesRight(BufferedImage[] moveSpritesRight) {
