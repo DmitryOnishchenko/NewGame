@@ -2,7 +2,7 @@ package com.electdead.newgame.gamestate;
 
 import com.electdead.newgame.assets.Assets;
 import com.electdead.newgame.engine.EngineV2;
-import com.electdead.newgame.engine.Grid;
+import com.electdead.newgame.engine.GridOld;
 import com.electdead.newgame.gameobject.GameObjectOld;
 import com.electdead.newgame.gameobject.GameObjectType;
 import com.electdead.newgame.gameobject.Side;
@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class DevGameState extends AbstractGameState {
-    public static Grid grid;
+    public static GridOld grid;
 
     public static ArrayList<GameObjectOld> renderObjects = new ArrayList<>(5000);
 
@@ -33,7 +33,7 @@ public class DevGameState extends AbstractGameState {
     // TODO test variables
     private Random random = new Random();
 
-    private int leftSpawnPoint = Grid.INDENT_LEFT;
+    private int leftSpawnPoint = GridOld.INDENT_LEFT;
     private int rightSpawnPoint = MainApp.WIDTH + 50;
 
     private int testSpawnTimer;
@@ -57,7 +57,7 @@ public class DevGameState extends AbstractGameState {
 
         floorGraphics.drawImage(floorSprite0Level, 0, 0, null);
 
-        grid = new Grid();
+        grid = new GridOld();
 
         createDemoUnit("Human Soldier", 200, 400);
     }
@@ -70,19 +70,19 @@ public class DevGameState extends AbstractGameState {
 
         AIContainerOld aic = new AIContainerOld(unit);
 
-//        GraphicsComponent gc = new UnitGraphicsComponent(unit);
+//        GraphicsComponent gc = new UnitGraphicsComponent(object);
 
         unit.setAIContainer(aic);
-//        unit.setGraphicsComponent(gc);
+//        object.setGraphicsComponent(gc);
 
-//        grid.add(unit);
+//        grid.add(object);
 
-//        GameObjectOld unit = new GameObjectOld(name, side, GameObjectType.UNIT, x, y);
-//        AIContainerOld aic = new AIContainerOld((UnitOld) unit);
-//        GraphicsComponent gc = new UnitGraphicsComponent((UnitOld) unit);
+//        GameObjectOld object = new GameObjectOld(name, side, GameObjectType.UNIT, x, y);
+//        AIContainerOld container = new AIContainerOld((UnitOld) object);
+//        GraphicsComponent gc = new UnitGraphicsComponent((UnitOld) object);
 //
-//        unit.setAiContainer(aic);
-//        unit.setGraphicsComponent(gc);
+//        object.setAiContainer(container);
+//        object.setGraphicsComponent(gc);
 
         return unit;
     }
@@ -260,6 +260,6 @@ public class DevGameState extends AbstractGameState {
     }
 
     private int getRandomPointY() {
-        return (int) (random.nextFloat() * 500 + Grid.INDENT_TOP);
+        return (int) (random.nextFloat() * 500 + GridOld.INDENT_TOP);
     }
 }

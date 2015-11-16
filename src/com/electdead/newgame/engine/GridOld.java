@@ -7,7 +7,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Grid {
+public class GridOld {
     private static final int BATTLE_HEIGHT = 500;
     private static final int BATTLE_WIDTH = 1480;
     public static final int CELL_SIZE = 70;
@@ -15,11 +15,11 @@ public class Grid {
     public static final int COLS = BATTLE_WIDTH / CELL_SIZE;
     public static final int INDENT_TOP = 200;
     public static final int INDENT_LEFT = -60;
-    private Cell[][] cells = new Cell[ROWS][COLS];
+    private CellOld[][] cells = new CellOld[ROWS][COLS];
 
     private List<BasicGameObject> allObjects = new ArrayList<>(5000);
 
-    public Grid() {
+    public GridOld() {
         init();
     }
 
@@ -28,7 +28,7 @@ public class Grid {
             for (int col = 0; col < COLS; col++) {
                 Rectangle2D.Float bounds = new Rectangle2D.Float(
                         col * CELL_SIZE + INDENT_LEFT, row * CELL_SIZE + INDENT_TOP, CELL_SIZE, CELL_SIZE);
-                cells[row][col] = new Cell(this, row, col, bounds);
+                cells[row][col] = new CellOld(this, row, col, bounds);
             }
         }
     }
@@ -50,9 +50,9 @@ public class Grid {
             return;
         }
 
-        Cell cell = cells[row][col];
-        gameObject.cell = cell;
+        CellOld cell = cells[row][col];
         cell.add(gameObject);
+//        object.cell = cell;
     }
 
     public void update() {
@@ -61,9 +61,6 @@ public class Grid {
                 cells[row][col].update();
             }
         }
-    }
-
-    public void relocate() {
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLS; col++) {
                 cells[row][col].relocate();
@@ -109,12 +106,12 @@ public class Grid {
         }
     }
 
-    public List<Cell> getCellIfIntersectsWith(Shape shape) {
-        List<Cell> list = new ArrayList<>(20);
+    public List<CellOld> getCellIfIntersectsWith(Shape shape) {
+        List<CellOld> list = new ArrayList<>(20);
 
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLS; col++) {
-                Cell cell = cells[row][col];
+                CellOld cell = cells[row][col];
                 if (shape.intersects(cell.getBounds())) {
                     list.add(cell);
                 }

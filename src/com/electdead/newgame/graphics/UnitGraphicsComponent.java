@@ -3,7 +3,7 @@ package com.electdead.newgame.graphics;
 import com.electdead.newgame.assets.Assets;
 import com.electdead.newgame.gameobject.Side;
 import com.electdead.newgame.gameobjectV2.BasicGameObject;
-import com.electdead.newgame.gamestate.DevGameState;
+import com.electdead.newgame.gamestate.BattleStateSettings;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -19,7 +19,7 @@ public class UnitGraphicsComponent implements GraphicsComponent {
 
     @Override
     public void update() {
-        gameObject.action.animation.next();
+        if (gameObject.action != null) gameObject.action.animation.next();
     }
 
     private int spriteX() {
@@ -34,15 +34,15 @@ public class UnitGraphicsComponent implements GraphicsComponent {
     public void render(Graphics2D g2, double deltaTime) {
         // Render if visible
         if (gameObject.visible) {
-            if (DevGameState.DEBUG_MODE) {
-                if (gameObject.currentState.isAlive() && DevGameState.DEBUG_BOX) {
+            if (BattleStateSettings.DEBUG_MODE) {
+                if (gameObject.currentState.isAlive() && BattleStateSettings.DEBUG_BOX) {
                     g2.setPaint(Color.WHITE);
                     g2.draw(gameObject.hitBox);
                     g2.draw(gameObject.searchCircle);
                     g2.setPaint(Color.RED);
                     g2.draw(gameObject.attackBox);
                 }
-                if (gameObject.target != null && DevGameState.DEBUG_TARGET) {
+                if (gameObject.target != null && BattleStateSettings.DEBUG_TARGET) {
                     g2.setPaint(gameObject.side == Side.LEFT_ARMY ? Color.YELLOW : Color.BLUE);
                     g2.drawLine(gameObject.x(), gameObject.y(), gameObject.target.x(), gameObject.target.y());
                 }

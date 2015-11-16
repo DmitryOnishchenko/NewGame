@@ -3,34 +3,41 @@ package com.electdead.newgame.gameobjectV2.ai;
 import com.electdead.newgame.gameobjectV2.BasicGameObject;
 import com.electdead.newgame.physics.Vector2F;
 
-public class AttackAIComponent extends AIComponent {
+public class AttackAiComponent extends AiComponent {
 
-    public AttackAIComponent(AIContainer aic, int priority) {
+    public AttackAiComponent(AiContainer aic, int priority) {
         super(aic, priority);
     }
 
     @Override
-    public void think() {
-        if (aic.gameObject.target != null) {
-            if (intersects(aic.gameObject, aic.gameObject.target)) {
-                aic.setMaxPriorityComponent(this);
-                aic.gameObject.currentState.moveDir = new Vector2F();
-                action.checkAnimationDir();
-            }
+    public boolean think() {
+        if (object.target != null && canAttack(object)) {
+            container.object.currentState.moveDir = new Vector2F();
+            action.checkAnimationDir();
+
+            return true;
         }
+
+        return false;
     }
 
-//    @Override
-//    public void update(UnitOld unit) {}
+    /**
+     * Checks if object can attack its target
+     * @param object object with target
+     * @return <b>true</b> - if target isAlive and distance < (attackRange + targetHitBoxRadius),
+     * otherwise <b>false</b>
+     */
+    private boolean canAttack(BasicGameObject object) {
+        BasicGameObject target = object.target;
 
-    public boolean intersects(BasicGameObject gameObject, BasicGameObject enemy) {
-        if (!enemy.currentState.isAlive()) {
+        if (!target.currentState.isAlive()) {
             return false;
         }
-        double unitAttackRange = gameObject.pModel.getAttackRange();
-        double enemyHitBoxRadius = enemy.hitBox.width / 2;
-        double distance = Vector2F.getDistanceOnScreen(gameObject.currentState.pos, enemy.currentState.pos);
 
-        return distance < (unitAttackRange + enemyHitBoxRadius);
+        double attackRange = object.pModel.getAttackRange();
+        double targetHitBoxRadius = target.hitBox.width / 2;
+        double distance = Vector2F.getDistanceOnScreen(object.currentState.pos, target.currentState.pos);
+
+        return distance < (attackRange + targetHitBoxRadius);
     }
 }

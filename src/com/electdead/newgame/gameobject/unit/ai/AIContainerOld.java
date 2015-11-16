@@ -31,7 +31,7 @@ public class AIContainerOld {
         AIComponentOld attackAIComponent = new AttackAIComponentOld(this, 2);
         Action attackAction = null;
         if (unit.name.endsWith("Archer")) {
-//            attackAction = new RangeAttackAction(attackAIComponent, unit, true);
+//            attackAction = new RangeAttackAction(attackAIComponent, object, true);
         } else {
             attackAction = new MeleeAttackAction(attackAIComponent, unit, true);
         }

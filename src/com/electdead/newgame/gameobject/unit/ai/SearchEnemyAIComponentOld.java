@@ -1,6 +1,6 @@
 package com.electdead.newgame.gameobject.unit.ai;
 
-import com.electdead.newgame.engine.Cell;
+import com.electdead.newgame.engine.CellOld;
 import com.electdead.newgame.engine.EngineV1Old;
 import com.electdead.newgame.gameobject.GameObjectOld;
 import com.electdead.newgame.gameobject.unit.UnitOld;
@@ -28,25 +28,25 @@ public class SearchEnemyAIComponentOld extends AIComponentOld {
     }
 
 //    @Override
-//    public void update(UnitOld unit) {}
+//    public void update(UnitOld object) {}
 
     private void searchTarget(UnitOld unit) {
         double minLength = Double.MAX_VALUE;
         Vector2F newDir = null;
         UnitOld newTarget = null;
-        List<Cell> cells = DevGameState.grid.getCellIfIntersectsWith(unit.searchCircle);
+        List<CellOld> cells = DevGameState.grid.getCellIfIntersectsWith(unit.searchCircle);
 
-//        for (Cell cell : cells) {
+//        for (CellOld cell : cells) {
 //            List<GameObjectOld> list;
-//            if (unit.physModel.getRace() == Race.Human) {
+//            if (object.physModel.getRace() == Race.Human) {
 //                list = cell.getRightUnits();
 //            } else list = cell.getLeftUnits();
 //
 //            for (GameObjectOld target : list) {
-//                if (((UnitOld) target).isAlive() && intersects(unit, target)) {
+//                if (((UnitOld) target).isAlive() && intersects(object, target)) {
 //
 //                    newDir = target.pos.copy();
-//                    newDir.sub(unit.pos);
+//                    newDir.sub(object.pos);
 //                    double length = newDir.length();
 //                    if (length < minLength) {
 //                        minLength = length;

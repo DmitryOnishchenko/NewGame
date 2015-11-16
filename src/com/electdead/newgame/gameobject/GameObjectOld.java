@@ -1,6 +1,6 @@
 package com.electdead.newgame.gameobject;
 
-import com.electdead.newgame.engine.Cell;
+import com.electdead.newgame.engine.CellOld;
 import com.electdead.newgame.gameobject.unit.actions.Action;
 import com.electdead.newgame.gameobject.unit.ai.AIContainerOld;
 import com.electdead.newgame.graphics.GraphicsComponent;
@@ -15,8 +15,8 @@ import java.awt.*;
 public class GameObjectOld implements Comparable<GameObjectOld> {
     public static int ID = 0;
 
-    /* Grid cell */
-    private Cell cell;
+    /* GridOld cell */
+    private CellOld cell;
     public boolean relocate;
 
     public final int id;
@@ -63,11 +63,11 @@ public class GameObjectOld implements Comparable<GameObjectOld> {
         return (int) pos.y;
     }
 
-    public Cell getCell() {
+    public CellOld getCell() {
         return cell;
     }
 
-    public void setCell(Cell cell) {
+    public void setCell(CellOld cell) {
         this.cell = cell;
     }
 

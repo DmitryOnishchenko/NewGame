@@ -4,8 +4,6 @@ import com.electdead.newgame.assets.Assets;
 import com.electdead.newgame.engine.EngineV2;
 import com.electdead.newgame.engine.FastRemoveArrayList;
 import com.electdead.newgame.engine.Grid;
-import com.electdead.newgame.gameobject.GameObjectType;
-import com.electdead.newgame.gameobject.Side;
 import com.electdead.newgame.gameobjectV2.BasicGameObject;
 import com.electdead.newgame.gameobjectV2.GameObject;
 import com.electdead.newgame.input.BattleStateInputHandler;
@@ -14,21 +12,19 @@ import com.electdead.newgame.main.MainApp;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
 
 public class BattleState extends AbstractGameState {
-    /* Grid */
-    private Grid grid;
+    /* GridOld */
+    public static Grid grid;
+
+    /* Game objects */
+    private List<GameObject> gameObjects    = new FastRemoveArrayList<>(5000);
+    private List<GameObject> renderObjects  = new FastRemoveArrayList<>(5000);
 
     /* Input handler */
     private BattleStateInputHandler inputHandler = new BattleStateInputHandler(this);
-
-    /* Game objects */
-    private List<BasicGameObject> gameObjects    = new FastRemoveArrayList<>(5000);
-    private List<BasicGameObject> renderObjects  = new FastRemoveArrayList<>(5000);
 
     /* Background graphics */ //TODO refactor
     private BufferedImage backgroundLevelZero
@@ -58,6 +54,15 @@ public class BattleState extends AbstractGameState {
         bloodSprites = (ArrayList<BufferedImage>) commonAssets.get("bloodSprites");
 
         backgroundGraphics.drawImage(backgroundLevelZero, 0, 0, null);
+
+        EngineV2.gameObjects = gameObjects;
+
+        /* Test */
+//        createDemoUnit("Human Soldier", 200, 500);
+//        createDemoUnit("Orc Soldier", 400, 500);
+        for (int i = 0; i < 1_500; i++) {
+            demoMode();
+        }
     }
 
     @Override
@@ -71,13 +76,26 @@ public class BattleState extends AbstractGameState {
             return;
         }
 
-        int needToProcess = grid.size();
+        // delete objects
+        Iterator<GameObject> iter = gameObjects.iterator();
+        while (iter.hasNext()) {
+            GameObject object = iter.next();
+            if (object.delete) {
+                iter.remove();
+            }
+        }
+
+        grid.checkDelete();
+//        grid.relocate();
+
+        int needToProcess = gameObjects.size();
         if (needToProcess != 0) {
             EngineV2.startProcess(needToProcess);
         }
 
         if (BattleStateSettings.DEMO_MODE) {
             //TODO run demo
+            demoMode();
         }
     }
 
@@ -85,6 +103,11 @@ public class BattleState extends AbstractGameState {
     public void render(Graphics2D g2, double deltaTime) {
         /* Background graphics: Level Zero */
         g2.drawImage(backgroundImage, 0, 0, null);
+
+        /* Grid graphics */
+        if (BattleStateSettings.DEBUG_GRID) {
+            grid.render(g2, deltaTime);
+        }
 
         //TODO render objects
         renderObjects.clear();
@@ -165,20 +188,42 @@ public class BattleState extends AbstractGameState {
         }
     }
 
-    public BasicGameObject createDemoUnit(String name, float x, float y) {
-        HashMap<String, Object> props = Assets.getProperties(name);
+    public void createDemoUnit(String name, float x, float y) {
+        BasicGameObject gameObject = new BasicGameObject(name, x, y);
 
-        Side side = (Side) props.get("side");
-        BasicGameObject gameObject = new BasicGameObject(name, x, y, side, GameObjectType.UNIT);
-
+        gameObjects.add(gameObject);
         grid.add(gameObject);
-
-        return gameObject;
     }
 
     public void startNewGame() {
+        gameObjects.clear();
         grid.clear();
+        renderObjects.clear();
+
         backgroundGraphics.drawImage(backgroundLevelZero, 0, 0, null);
         BattleStateSettings.DEMO_MODE = false;
+    }
+
+    /* Benchmark-Demo test */
+    public void demoMode() {
+        createDemoUnit("Human Soldier", BattleStateSettings.leftSpawnPoint, getRandomPointY());
+//        createDemoUnit("Orc Soldier", BattleStateSettings.rightSpawnPoint, getRandomPointY());
+//
+//        if (++BattleStateSettings.testSpawnTimer2 >= 8) {
+//            createDemoUnit("Orc Soldier", BattleStateSettings.rightSpawnPoint, getRandomPointY());
+//        }
+//
+//        if (++BattleStateSettings.testSpawnTimer2 >= 10) {
+//            BattleStateSettings.testSpawnTimer2 = 0;
+//            createDemoUnit("Orc Soldier", BattleStateSettings.rightSpawnPoint, getRandomPointY());
+//            createDemoUnit("Orc Archer", BattleStateSettings.rightSpawnPoint, getRandomPointY());
+//            createDemoUnit("Human Archer", BattleStateSettings.leftSpawnPoint, getRandomPointY());
+//            createDemoUnit("Human Archer", BattleStateSettings.leftSpawnPoint, getRandomPointY());
+//        }
+    }
+
+    private Random random = new Random();
+    public int getRandomPointY() {
+        return (int) (random.nextFloat() * 490 + Grid.INDENT_TOP);
     }
 }

@@ -21,7 +21,7 @@ public class AttackAIComponentOld extends AIComponentOld {
     }
 
 //    @Override
-//    public void update(UnitOld unit) {}
+//    public void update(UnitOld object) {}
 
     public boolean intersects(UnitOld unit, UnitOld enemy) {
         if (!enemy.isAlive()) {

@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.Random;
 
-public class TestGameObject implements GameObject {
+public class TestGameObject extends GameObject<TestGameObject> {
     private int x;
     private int y;
     private int width;
@@ -66,5 +66,10 @@ public class TestGameObject implements GameObject {
     @Override
     public void switchState() {
 
+    }
+
+    @Override
+    public int compareTo(TestGameObject o) {
+        return 0;
     }
 }

@@ -149,6 +149,9 @@ public class EngineV2 extends AbstractGameLoop {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                int showInfo = 50;
+                int delay = 0;
+
                 long timer = getTime();
                 long previous = getTime();
                 long lag = 0;
@@ -161,23 +164,37 @@ public class EngineV2 extends AbstractGameLoop {
 
                     processInput();
 
+                    //test
+                    long start = getTime();
                     while (lag >= MS_PER_UPDATE) {
                         update();
                         //TODO wait for last updater
                         while (gameObjects.size() != 0 && !graphicsUpdater.isDone()) {
                             Thread.yield();
-                            try {
-                                // wait
-                                Thread.sleep(1);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
+//                            try {
+//                                // wait
+//                                Thread.sleep(1);
+//                            } catch (InterruptedException e) {
+//                                e.printStackTrace();
+//                            }
                         }
                         lag -= MS_PER_UPDATE;
                     }
 
+                    long end = getTime() - start;
+                    if (delay++ >= showInfo) {
+                        System.out.print("Update for: " + end);
+                    }
+
+                    start = getTime();
                     double deltaTime = 1 - lag / MS_PER_UPDATE;
                     render(deltaTime);
+
+                    end = getTime() - start;
+                    if (delay++ >= showInfo) {
+                        delay = 0;
+                        System.out.println("   Render for: " + end);
+                    }
 
                     if (getTime() - timer >= 1000) {
                         tpsInfo = tps;
@@ -189,7 +206,6 @@ public class EngineV2 extends AbstractGameLoop {
 
                     if (useFpsLimit) {
                         long sleepFor = current + msPerFrame - getTime();
-//                        System.out.println("Sleep for:\t " + sleepFor + " ms");
                         try {
                             if (sleepFor > 0) {
                                 Thread.sleep(sleepFor);

@@ -1,34 +1,23 @@
 package com.electdead.newgame.gameobjectV2.ai;
 
-import com.electdead.newgame.gameobject.unit.actions.Action;
+import com.electdead.newgame.gameobjectV2.BasicGameObject;
+import com.electdead.newgame.gameobjectV2.action.Action;
 
-public abstract class AIComponent implements Comparable<AIComponent> {
-	public AIContainer aic;
-	public final int priority;
-	public Action action;
+public abstract class AiComponent {
+    public int priority;
+    public AiContainer container;
+    public BasicGameObject object;
+    public Action action;
 
-	public AIComponent(AIContainer aic, int priority) {
-		this.aic = aic;
-		this.priority = priority;
-	}
-	
-	public void setAction(Action action) {
-		this.action = action;
-	}
+    public AiComponent(AiContainer container, int priority) {
+        this.container = container;
+        this.object = container.object;
+        this.priority = priority;
+    }
 
-	@Override
-	public int compareTo(AIComponent other) {
-		return priority - other.priority;
-	}
+    public abstract boolean think();
 
-	public Action getAction() {
-		return action;
-	}
-
-	@Override
-	public String toString() {
-		return getClass().getSimpleName();
-	}
-
-	public abstract void think();
+    public void setLock(boolean lock) {
+        container.setLock(lock);
+    }
 }

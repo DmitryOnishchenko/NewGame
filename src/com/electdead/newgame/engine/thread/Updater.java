@@ -52,13 +52,15 @@ public class Updater extends Thread {
                     while (done || toProcess == 0) {
                         yield();
 //                        System.out.println(name + ":: sleep for");
-                        sleep(sleepFor);
+//                        sleep(sleepFor);
+                        sleep(0, 50_000);
                     }
                 } else {
                     while (toProcess == 0) {
                         yield();
 //                        System.out.println(name + ":: sleep for");
-                        sleep(sleepFor);
+//                        sleep(sleepFor);
+                        sleep(0, 50_000);
                     }
                 }
 
@@ -92,7 +94,9 @@ public class Updater extends Thread {
     public void report(int lastProcessed) {
         this.lastProcessed = lastProcessed;
         if (nextUpdater != null) {
-            nextUpdater.toProcess = lastProcessed;
+//            if (lastProcessed % 500 == 0 || lastProcessed == toProcess) {
+                nextUpdater.toProcess = lastProcessed;
+//            }
         } else {
             EngineV2.loopEnded();
         }

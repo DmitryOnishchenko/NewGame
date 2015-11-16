@@ -1,6 +1,5 @@
 package com.electdead.newgame.input;
 
-import com.electdead.newgame.engine.Grid;
 import com.electdead.newgame.gamestate.BattleState;
 import com.electdead.newgame.gamestate.BattleStateSettings;
 
@@ -20,15 +19,20 @@ public class BattleStateInputHandler {
         if (event != null && event.getID() == KeyEvent.KEY_PRESSED) {
             // Spawn events
             if (event.getKeyChar() == 'a') {
-                battleState.createDemoUnit("Human Soldier", BattleStateSettings.leftSpawnPoint, getRandomPointY());
+                battleState.createDemoUnit(
+                        "Human Soldier", BattleStateSettings.leftSpawnPoint, battleState.getRandomPointY());
             } else if (event.getKeyChar() == 's') {
-                battleState.createDemoUnit("Human Archer", BattleStateSettings.leftSpawnPoint, getRandomPointY());
+                battleState.createDemoUnit(
+                        "Human Archer", BattleStateSettings.leftSpawnPoint, battleState.getRandomPointY());
             } else if (event.getKeyChar() == 'k') {
-                battleState.createDemoUnit("Orc Soldier", BattleStateSettings.rightSpawnPoint, getRandomPointY());
+                battleState.createDemoUnit(
+                        "Orc Soldier", BattleStateSettings.rightSpawnPoint, battleState.getRandomPointY());
             } else if (event.getKeyChar() == 'i') {
-                battleState.createDemoUnit("Orc Soldier Elite", BattleStateSettings.rightSpawnPoint, getRandomPointY());
+                battleState.createDemoUnit(
+                        "Orc Soldier Elite", BattleStateSettings.rightSpawnPoint, battleState.getRandomPointY());
             } else if (event.getKeyChar() == 'l') {
-                battleState.createDemoUnit("Orc Archer", BattleStateSettings.rightSpawnPoint, getRandomPointY());
+                battleState.createDemoUnit(
+                        "Orc Archer", BattleStateSettings.rightSpawnPoint, battleState.getRandomPointY());
             } else if (event.getKeyChar() == 'h') {
                 BattleStateSettings.DEMO_MODE = !BattleStateSettings.DEMO_MODE;
             }
@@ -62,9 +66,5 @@ public class BattleStateInputHandler {
                 }
             }
         }
-    }
-
-    private int getRandomPointY() {
-        return (int) (random.nextFloat() * 500 + Grid.INDENT_TOP);
     }
 }

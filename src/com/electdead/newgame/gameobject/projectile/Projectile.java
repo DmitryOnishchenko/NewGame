@@ -1,7 +1,7 @@
 package com.electdead.newgame.gameobject.projectile;
 
 import com.electdead.newgame.assets.Assets;
-import com.electdead.newgame.engine.Cell;
+import com.electdead.newgame.engine.CellOld;
 import com.electdead.newgame.engine.EngineV1Old;
 import com.electdead.newgame.gameobject.GameObjectOld;
 import com.electdead.newgame.gameobject.GameObjectType;
@@ -96,9 +96,9 @@ public class Projectile extends GameObjectOld {
 
         getCell().move(this);
 
-        List<Cell> cells = DevGameState.grid.getCellIfIntersectsWith(new Line2D.Float(pos.x, pos.y, tail.x, tail.y));
+        List<CellOld> cells = DevGameState.grid.getCellIfIntersectsWith(new Line2D.Float(pos.x, pos.y, tail.x, tail.y));
 
-//        for (Cell cell : cells) {
+//        for (CellOld cell : cells) {
 //            List<GameObjectOld> list;
 //            if (side == Side.LEFT_ARMY) {
 //                list = cell.getRightUnits();

@@ -1,22 +1,22 @@
-package com.electdead.newgame.gameobject.unit.actions;
+package com.electdead.newgame.gameobjectV2.action;
 
 import com.electdead.newgame.gameobject.GameObjectType;
 import com.electdead.newgame.gameobject.projectile.Projectile;
 import com.electdead.newgame.gameobject.unit.UnitOld;
-import com.electdead.newgame.gameobject.unit.ai.AIComponentOld;
+import com.electdead.newgame.gameobjectV2.ai.AiComponent;
 import com.electdead.newgame.physics.Vector2F;
 
 public class RangeAttackAction extends Action {
-    public RangeAttackAction(AIComponentOld aiComponent, UnitOld unit, boolean needFullAnimation) {
-        super(aiComponent, unit, needFullAnimation);
-        actionTrigger = (int) (unit.physModel.getAttackSpeed());
+    public RangeAttackAction(AiComponent aiComponent, boolean needFullAnimation) {
+        super(aiComponent, needFullAnimation);
+        actionTrigger = (int) (object.pModel.getAttackSpeed());
         actionDelay = actionTrigger;
     }
 
     @Override
     public void execute() {
-        if (unit.target == null || !unit.target.isAlive()) {
-            unit.target = null;
+        if (object.target == null || !object.target.currentState.isAlive()) {
+            object.target = null;
             wait = true;
         }
 
@@ -25,7 +25,7 @@ public class RangeAttackAction extends Action {
 
             checkAnimationDir();
             //TODO spawn projectile
-            spawnProjectile(unit);
+//            spawnProjectile(object);
         }
     }
 
@@ -39,17 +39,17 @@ public class RangeAttackAction extends Action {
     }
 
     private boolean targetOnEast() {
-        return unit.x() < unit.target.x();
+        return object.x() < object.target.x();
     }
 
     private boolean targetOnWest() {
-        return unit.x() > unit.target.x();
+        return object.x() > object.target.x();
     }
 
     @Override
     public void animationFinished() {
         wait = false;
-        aiComponent.aic.unlock();
+        aiComponent.container.locked = false;
     }
 
     public void spawnProjectile(UnitOld unit) {

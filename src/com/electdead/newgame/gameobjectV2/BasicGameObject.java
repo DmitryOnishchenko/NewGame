@@ -4,8 +4,9 @@ import com.electdead.newgame.assets.Assets;
 import com.electdead.newgame.engine.Cell;
 import com.electdead.newgame.gameobject.GameObjectType;
 import com.electdead.newgame.gameobject.Side;
-import com.electdead.newgame.gameobject.unit.actions.Action;
-import com.electdead.newgame.gameobjectV2.ai.AIContainer;
+import com.electdead.newgame.gameobjectV2.action.Action;
+import com.electdead.newgame.gameobjectV2.action.DieAction;
+import com.electdead.newgame.gameobjectV2.ai.AiContainer;
 import com.electdead.newgame.graphics.GraphicsComponent;
 import com.electdead.newgame.graphics.UnitGraphicsComponent;
 import com.electdead.newgame.graphics.UnitGraphicsModel;
@@ -19,15 +20,15 @@ import java.awt.event.KeyEvent;
 import java.awt.geom.Ellipse2D;
 import java.util.HashMap;
 
-public class BasicGameObject implements GameObject, Comparable<BasicGameObject> {
+public class BasicGameObject extends GameObject<BasicGameObject> {
     public static int ID = 1;
 
     /* Common fields */
     public final int id = ID++;
-    public Cell cell;
+    public volatile Cell cell;
     public final String name;
-    public final Side side;
-    public final GameObjectType type;
+    public Side side;
+    public GameObjectType type;
     public int zLevel = 1;
 
     /* Physics and Graphics models */
@@ -44,7 +45,7 @@ public class BasicGameObject implements GameObject, Comparable<BasicGameObject> 
 
     /* Flags */
     public boolean visible = true;
-    public boolean delete = false;
+//    public boolean delete = false;
     public boolean relocate = false;
 
     /* Double buffering */
@@ -54,20 +55,17 @@ public class BasicGameObject implements GameObject, Comparable<BasicGameObject> 
 
     /* Updaters */
     public InputComponent inputComponent;
-    public AIContainer aiContainer;
+    public AiContainer aiContainer;
     public Action action;
     public PhysicsComponent physicsComponent;
     public GraphicsComponent graphicsComponent;
 
-    public BasicGameObject(String name, float x, float y, Side side, GameObjectType type) {
+    public BasicGameObject(String name, float x, float y) {
         this.name               = name;
         this.currentState.pos   = new Vector2F(x, y);
         this.nextState.pos      = this.currentState.pos.copy();
-        this.side               = side;
-        this.type               = type;
 
-        aiContainer = new AIContainer(this);
-        graphicsComponent = new UnitGraphicsComponent(this);
+        init();
     }
 
     @Override
@@ -75,6 +73,15 @@ public class BasicGameObject implements GameObject, Comparable<BasicGameObject> 
         HashMap<String, Object> props = Assets.getProperties(name);
         pModel = (UnitPhysicsModel) props.get("physicsModel");
         gModel = (UnitGraphicsModel) props.get("graphicsModel");
+
+        currentState.currHp			= pModel.getMaxHp();
+        currentState.damage			= pModel.getDamage();
+        currentState.armor 			= pModel.getArmor();
+        currentState.currentSpeed	= pModel.getDefaultSpeed();
+        currentState.moveDir        = pModel.getMoveDir();
+
+        side = (Side) props.get("side");
+        type = GameObjectType.UNIT;
 
         float posX = currentState.pos.x;
         float posY = currentState.pos.y;
@@ -88,11 +95,9 @@ public class BasicGameObject implements GameObject, Comparable<BasicGameObject> 
         attackBox = new Ellipse2D.Double();
         attackBox.setFrameFromCenter(posX, posY, posX + pModel.getAttackRange(), posY - pModel.getAttackRange());
 
-        currentState.currHp			= pModel.getMaxHp();
-        currentState.damage			= pModel.getDamage();
-        currentState.armor 			= pModel.getArmor();
-        currentState.currentSpeed	= pModel.getDefaultSpeed();
-        currentState.moveDir        = pModel.getMoveDir();
+        // Components
+        aiContainer         = new AiContainer(this);
+        graphicsComponent   = new UnitGraphicsComponent(this);
     }
 
     @Override
@@ -122,7 +127,7 @@ public class BasicGameObject implements GameObject, Comparable<BasicGameObject> 
 
     @Override
     public void render(Graphics2D graphics, double deltaTime) {
-        if (graphicsComponent != null) graphicsComponent.render(graphics, deltaTime);
+        if (graphicsComponent != null && action != null) graphicsComponent.render(graphics, deltaTime);
     }
 
     @Override
@@ -154,5 +159,24 @@ public class BasicGameObject implements GameObject, Comparable<BasicGameObject> 
 
     public int y() {
         return (int) currentState.pos.y;
+    }
+
+    public void takeDamage(int damage) {
+        int total = damage - currentState.armor;
+        if (total <= 0) total = 1;
+        currentState.currHp -= total;
+        if (currentState.currHp <= 0) {
+            zLevel = 0;
+            target = null;
+            aiContainer.locked = true;
+            action = new DieAction(this, action);
+            action.checkAnimationDir();
+//            drawBlood();
+        }
+    }
+
+    @Override
+    public String toString() {
+        return name + ": " + currentState.currHp + "/" + pModel.getMaxHp();
     }
 }

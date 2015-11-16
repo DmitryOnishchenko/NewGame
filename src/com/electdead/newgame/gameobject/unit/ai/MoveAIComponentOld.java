@@ -26,7 +26,7 @@ public class MoveAIComponentOld extends AIComponentOld {
     }
 
 //    @Override
-//    public void update(UnitOld unit) {
-//        unit.moveDir = unit.pModel.getMoveDir();
+//    public void update(UnitOld object) {
+//        object.moveDir = object.pModel.getMoveDir();
 //    }
 }

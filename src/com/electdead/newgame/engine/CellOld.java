@@ -1,19 +1,19 @@
 package com.electdead.newgame.engine;
 
+import com.electdead.newgame.gameobject.GameObjectOld;
 import com.electdead.newgame.gameobject.GameObjectType;
 import com.electdead.newgame.gameobject.Side;
 import com.electdead.newgame.gameobjectV2.BasicGameObject;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
-import java.util.Collection;
-import java.util.Iterator;
+import java.util.*;
 import java.util.List;
 
-public class Cell {
+public class CellOld {
     private final int row;
     private final int col;
-    private Grid grid;
+    private GridOld grid;
     private Rectangle2D.Float bounds = new Rectangle2D.Float();
 
     private List<BasicGameObject> leftUnits = new FastRemoveArrayList<>(100);
@@ -22,7 +22,7 @@ public class Cell {
 
     private List<BasicGameObject> list = new FastRemoveArrayList<>(1000);
 
-    public Cell(Grid grid, int row, int col, Rectangle2D.Float bounds) {
+    public CellOld(GridOld grid, int row, int col, Rectangle2D.Float bounds) {
         this.grid = grid;
         this.row = row;
         this.col = col;
@@ -105,11 +105,11 @@ public class Cell {
         deleteObjects(projectiles);
     }
 
-    public void move(BasicGameObject gameObject) {
-        int newRow = (gameObject.y() - Grid.INDENT_TOP) / Grid.CELL_SIZE;
-        int newCol = (gameObject.x() - Grid.INDENT_LEFT) / Grid.CELL_SIZE;
+    public void move(GameObjectOld gameObject) {
+        int newRow = (gameObject.y() - GridOld.INDENT_TOP) / GridOld.CELL_SIZE;
+        int newCol = (gameObject.x() - GridOld.INDENT_LEFT) / GridOld.CELL_SIZE;
 
-        if (gameObject.x() < Grid.INDENT_LEFT) {
+        if (gameObject.x() < GridOld.INDENT_LEFT) {
             //TODO remake
             gameObject.delete = true;
             return;
@@ -135,13 +135,8 @@ public class Cell {
     private void deleteObjects(List<BasicGameObject> collection) {
         Iterator<BasicGameObject> it = collection.iterator();
         while (it.hasNext()) {
-            BasicGameObject gameObject = it.next();
-            if (gameObject.delete) {
+            if (it.next().delete) {
                 it.remove();
-            } else if (gameObject.relocate) {
-                gameObject.relocate = false;
-                it.remove();
-                grid.add(gameObject);
             }
         }
     }
