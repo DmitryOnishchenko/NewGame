@@ -21,8 +21,8 @@ public class BattleState extends AbstractGameState {
     public static Grid grid;
 
     /* Game objects */
-    private List<GameObject> gameObjects = new FastRemoveArrayList<>(10000);
-    private List<GameObject> renderObjects = new FastRemoveArrayList<>(10000);
+    private List<GameObject> gameObjects = new FastRemoveArrayList<>(10_000);
+//    private List<GameObject> renderObjects = new FastRemoveArrayList<>(10_000);
 
     /* Input handler */
     private BattleStateInputHandler inputHandler = new BattleStateInputHandler(this);
@@ -118,20 +118,22 @@ public class BattleState extends AbstractGameState {
 //        Collections.sort(renderObjects);
 
 //        -Djava.util.Arrays.useLegacyMergeSort=true
-        renderObjects.clear();
-        synchronized (gameObjects) {
-            renderObjects.addAll(gameObjects);
-        }
-        Collections.sort(renderObjects);
-        for (GameObject gameObject: renderObjects) {
-            gameObject.render(g2, deltaTime);
-        }
+//        renderObjects.clear();
 //        synchronized (gameObjects) {
-//            Collections.sort(gameObjects);
-//            for (GameObject gameObject: gameObjects) {
-//                gameObject.render(g2, deltaTime);
-//            }
+//            renderObjects.addAll(gameObjects);
 //        }
+//        Collections.sort(renderObjects);
+//        for (GameObject gameObject: renderObjects) {
+//            gameObject.render(g2, deltaTime);
+//        }
+
+
+        synchronized (gameObjects) {
+            Collections.sort(gameObjects);
+            for (GameObject gameObject: gameObjects) {
+                gameObject.render(g2, deltaTime);
+            }
+        }
 
         /* Background graphics: Level One */
         g2.drawImage(backgroundLevelOne, 0, 0, null);

@@ -36,7 +36,8 @@ public class EngineV2 extends AbstractGameLoop {
     /* Threads */
     private UpdateThread updateThread;
     private RenderThread renderThread;
-    private static ExecutorService service = Executors.newFixedThreadPool(50);
+    private InputHandlerThread inputHandlerThread;
+    private static ExecutorService service = Executors.newFixedThreadPool(32);
 
     /* Stats */
     private boolean SHOW_INFO = true;
@@ -60,6 +61,9 @@ public class EngineV2 extends AbstractGameLoop {
         currentFrame = initFrame();
         currentFrame.setAccelerationPriority(1);
         currentG2D = getGraphics(currentFrame);
+
+        /* InputHandlerThread */
+        inputHandlerThread = new InputHandlerThread(this);
 
         /* Updater */
         updateThread = new UpdateThread(this, updateStats);
@@ -120,11 +124,11 @@ public class EngineV2 extends AbstractGameLoop {
 		/* Draw frame */
         Graphics graphics = getGraphics();
         graphics.drawImage(currentFrame, 0, 0, null);
-        graphics.dispose();
     }
 
     @Override
     public void run() {
+        inputHandlerThread.start();
         updateThread.start();
         renderThread.start();
     }
