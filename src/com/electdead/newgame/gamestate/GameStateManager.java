@@ -1,5 +1,7 @@
 package com.electdead.newgame.gamestate;
 
+import com.electdead.newgame.gamestate.battle.BattleState;
+
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.util.Stack;

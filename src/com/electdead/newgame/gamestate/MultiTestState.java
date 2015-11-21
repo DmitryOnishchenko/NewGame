@@ -38,13 +38,13 @@ public class MultiTestState extends AbstractGameState {
     public void processInput(KeyEvent event) {
         if (event != null) {
             gameObjects.add(new TestGameObject());
-            EngineV2.inputHandled();
+//            EngineV2.inputHandled();
         }
     }
 
     @Override
     public void update() {
-        EngineV2.startProcess(gameObjects.size());
+//        EngineV2.startProcess(gameObjects.size());
     }
 
     @Override

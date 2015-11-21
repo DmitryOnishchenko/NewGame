@@ -1,5 +1,6 @@
 package com.electdead.newgame.gameobjectV2.ai;
 
+import com.electdead.newgame.engine.EngineV2;
 import com.electdead.newgame.gameobjectV2.Animation;
 import com.electdead.newgame.gameobjectV2.BasicGameObject;
 import com.electdead.newgame.gameobjectV2.action.Action;
@@ -15,6 +16,10 @@ public class AiContainer {
     public AiComponent maxPriorityComponent;
     public AiComponent[] aiComponents;
 
+    //TODO test
+    private int delayTimer;
+    private int trigger = 100 / EngineV2.MS_PER_UPDATE;;
+
     public AiContainer(BasicGameObject object) {
         this.object = object;
         init();
@@ -26,7 +31,7 @@ public class AiContainer {
         aiComponents = new AiComponent[3];
 
 		/* Find enemy [0] */
-        aiComponents[0] = new SearchEnemyAIComponent(this, 0);
+        aiComponents[0] = new SearchEnemyAiComponent(this, 0);
 
 		/* Attack [1] */
         AiComponent attackAiComponent = new AttackAiComponent(this, 2);
@@ -61,7 +66,8 @@ public class AiContainer {
 
     public void update() {
         // if not locked by action
-        if (!locked) {
+        if (/*delayTimer++ >= trigger && */!locked) {
+            delayTimer = 0;
             // hardcode maxPriorityComponent
             maxPriorityComponent = aiComponents[2];
 

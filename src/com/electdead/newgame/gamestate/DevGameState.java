@@ -1,7 +1,6 @@
 package com.electdead.newgame.gamestate;
 
 import com.electdead.newgame.assets.Assets;
-import com.electdead.newgame.engine.EngineV2;
 import com.electdead.newgame.engine.GridOld;
 import com.electdead.newgame.gameobject.GameObjectOld;
 import com.electdead.newgame.gameobject.GameObjectType;
@@ -153,7 +152,7 @@ public class DevGameState extends AbstractGameState {
 
         int needToProcess = grid.size();
         if (needToProcess != 0) {
-            EngineV2.startProcess(needToProcess);
+//            EngineV2.startProcess(needToProcess);
         }
 
         if (SWARM && ++testSpawnTimer > 2) {

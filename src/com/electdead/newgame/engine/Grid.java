@@ -1,6 +1,7 @@
 package com.electdead.newgame.engine;
 
 import com.electdead.newgame.gameobjectV2.BasicGameObject;
+import com.electdead.newgame.gamestate.battle.BattleStateSettings;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -47,6 +48,8 @@ public class Grid {
 
         if (row >= ROWS || col >= COLS ||
             row <= -1 || col <= -1) {
+            gameObject.delete = true;
+            BattleStateSettings.NEED_DELETE = true;
             return;
         }
 
@@ -59,14 +62,6 @@ public class Grid {
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLS; col++) {
                 cells[row][col].update();
-            }
-        }
-    }
-
-    public void relocate() {
-        for (int row = 0; row < ROWS; row++) {
-            for (int col = 0; col < COLS; col++) {
-                cells[row][col].relocate();
             }
         }
     }

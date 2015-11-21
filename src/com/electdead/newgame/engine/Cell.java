@@ -3,6 +3,7 @@ package com.electdead.newgame.engine;
 import com.electdead.newgame.gameobject.GameObjectType;
 import com.electdead.newgame.gameobject.Side;
 import com.electdead.newgame.gameobjectV2.BasicGameObject;
+import com.electdead.newgame.gamestate.battle.BattleStateSettings;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -112,23 +113,22 @@ public class Cell {
         if (gameObject.x() < Grid.INDENT_LEFT) {
             //TODO remake
             gameObject.delete = true;
+            BattleStateSettings.NEED_DELETE = true;
             return;
         }
 
         if (row != newRow || col != newCol) {
             gameObject.relocate = true;
+            BattleStateSettings.NEED_RELOCATE = true;
         }
-    }
-
-    public void relocate() {
-        relocateObjects(leftUnits);
-        relocateObjects(rightUnits);
-        relocateObjects(projectiles);
     }
 
     private void updateObjects(Collection<BasicGameObject> collection) {
         for (BasicGameObject gameObject : collection) {
-//            object.update();
+            gameObject.updateAi();
+            gameObject.updateAction();
+            gameObject.updatePhysics();
+            gameObject.updateGraphics();
         }
     }
 
@@ -138,22 +138,12 @@ public class Cell {
             BasicGameObject gameObject = it.next();
             if (gameObject.delete) {
                 it.remove();
+                BattleStateSettings.NEED_DELETE = false;
             } else if (gameObject.relocate) {
                 gameObject.relocate = false;
                 it.remove();
                 grid.add(gameObject);
-            }
-        }
-    }
-
-    private void relocateObjects(Collection<BasicGameObject> collection) {
-        Iterator<BasicGameObject> it = collection.iterator();
-        while (it.hasNext()) {
-            BasicGameObject gameObject = it.next();
-            if (gameObject.relocate) {
-                gameObject.relocate = false;
-                it.remove();
-                grid.add(gameObject);
+                BattleStateSettings.NEED_RELOCATE = false;
             }
         }
     }

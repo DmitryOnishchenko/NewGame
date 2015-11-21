@@ -1,6 +1,6 @@
 package com.electdead.newgame.gameobject.unit.actions;
 
-import com.electdead.newgame.engine.EngineV1Old;
+import com.electdead.newgame.engine.EngineV2;
 import com.electdead.newgame.gameobject.unit.UnitOld;
 import com.electdead.newgame.graphics.AnimationOld;
 
@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 
 public class DieAction extends Action {
     private int delayTimer = 0;
-    private int deleteTrigger = 20000 / EngineV1Old.MS_PER_UPDATE;
+    private int deleteTrigger = 20000 / EngineV2.MS_PER_UPDATE;
     private boolean finished = false;
     private Action lastAction;
     private BufferedImage[] lastSprite;

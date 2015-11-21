@@ -1,39 +1,47 @@
 package com.electdead.newgame.engine;
 
-import com.electdead.newgame.engine.thread.*;
 import com.electdead.newgame.gameobjectV2.GameObject;
 import com.electdead.newgame.gamestate.GameStateManager;
 import com.electdead.newgame.input.EngineInputHandler;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.awt.image.VolatileImage;
-import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @SuppressWarnings("serial")
 public class EngineV2 extends AbstractGameLoop {
-    /* Graphics */
-    public static final int MAX_FPS = 120;
+    /* Update parameters */
     public static final int UPDATES_PER_SEC = 50;
     public static final int MS_PER_UPDATE = 1000 / UPDATES_PER_SEC;
-    public static final boolean useFpsLimit = true;
-    private VolatileImage frame;
-    private Graphics2D frameGraphics;
+
+    /* Render parameters */
+    public static final int MAX_FPS = 120;
+    public static final int MS_PER_FRAME = 1000 / MAX_FPS;
+    public static final boolean USE_FPS_LIMIT = true;
+
+    /* Graphics */
+    private VolatileImage currentFrame;
+    private Graphics2D currentG2D;
 
     /* Managers */
     private GameStateManager gsm;
     private static EngineInputHandler inputHandler;
 
-    /* Threads */
-    private static Updater inputUpdater;
-    private static Updater aiUpdater;
-    private static Updater actionUpdater;
-    private static Updater physicsUpdater;
-    private static Updater graphicsUpdater;
+    /* Game objects */
+    public static List<GameObject> gameObjects;
+    public static List<GameObject> renderObjects;
 
-    /* GameObjects */
-    public static volatile List<GameObject> gameObjects = Collections.emptyList();
+    /* Threads */
+    private UpdateThread updateThread;
+    private RenderThread renderThread;
+    private static ExecutorService service = Executors.newFixedThreadPool(50);
+
+    /* Stats */
+    private boolean SHOW_INFO = true;
+    private UpdateStats updateStats = new UpdateStats();
+    private RenderStats renderStats = new RenderStats();
 
     public EngineV2(int width, int height) {
         super(width, height, MAX_FPS);
@@ -47,52 +55,30 @@ public class EngineV2 extends AbstractGameLoop {
         gsm = new GameStateManager();
         gsm.init();
 
+
         setDoubleBuffered(true);
-        frame = initFrame();
-        frame.setAccelerationPriority(1);
-        frameGraphics = getGraphics(frame);
+        currentFrame = initFrame();
+        currentFrame.setAccelerationPriority(1);
+        currentG2D = getGraphics(currentFrame);
 
-        /* UpdateMethods init */
-        UpdateMethod inputUpdateMethod      = new InputUpdateMethod();
-        UpdateMethod aiUpdateMethod         = new AiUpdateMethod();
-        UpdateMethod actionUpdateMethod     = new ActionUpdateMethod();
-        UpdateMethod physicsUpdateMethod    = new PhysicsUpdateMethod();
-        UpdateMethod graphicsUpdateMethod   = new GraphicsUpdateMethod();
+        /* Updater */
+        updateThread = new UpdateThread(this, updateStats);
 
-        /* Threads init */
-        inputUpdater    = new Updater("InputUpdater", inputUpdateMethod, true);
-        aiUpdater       = new Updater("AiUpdater", aiUpdateMethod, false);
-        actionUpdater   = new Updater("ActionUpdater", actionUpdateMethod, false);
-        physicsUpdater  = new Updater("PhysicsUpdater", physicsUpdateMethod, false);
-        graphicsUpdater = new Updater("GraphicsUpdater", graphicsUpdateMethod, false);
-
-        /* Updaters queue */
-        inputUpdater.setNextUpdater(aiUpdater);
-        aiUpdater.setNextUpdater(actionUpdater);
-        actionUpdater.setNextUpdater(physicsUpdater);
-        physicsUpdater.setNextUpdater(graphicsUpdater);
-        /* Last to first */
-//        graphicsUpdater.setNextUpdater(aiUpdater);
-
-        /* Start threads */
-        inputUpdater.start();
-        aiUpdater.start();
-        actionUpdater.start();
-        physicsUpdater.start();
-        graphicsUpdater.start();
+        /* Render */
+        renderThread = new RenderThread(this, renderStats);
     }
 
     private VolatileImage initFrame() {
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsConfiguration gc = ge.getDefaultScreenDevice().getDefaultConfiguration();
-        VolatileImage volatileImage = gc.createCompatibleVolatileImage(width, height);
-        volatileImage.validate(gc);
+        VolatileImage frame = gc.createCompatibleVolatileImage(width, height);
+        frame.validate(gc);
 
-        return volatileImage;
+        return frame;
     }
 
-    private Graphics2D getGraphics(VolatileImage volatileImage) {
-        Graphics2D g2 = (Graphics2D) volatileImage.getGraphics();
+    private Graphics2D getGraphics(VolatileImage frame) {
+        Graphics2D g2 = (Graphics2D) frame.getGraphics();
         //TODO Test rendering hints
 		/* Test for text */
 //		g2Next.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
@@ -108,128 +94,46 @@ public class EngineV2 extends AbstractGameLoop {
 
     @Override
     public void processInput() {
-        KeyEvent keyEvent = inputHandler.getKeyEvent();
-        if (keyEvent != null) {
-            gsm.processInput(keyEvent);
-        }
+        gsm.processInput(inputHandler.getKeyEvent());
         inputHandler.clear();
     }
 
     @Override
     public void update() {
         gsm.update();
-        tps++;
     }
 
     @Override
     public void render(double deltaTime) {
 		/* Clear frame */
-//        frameGraphics.clearRect(0, 0, width, height);
-        frameGraphics.setPaint(Color.BLACK);
-        frameGraphics.fillRect(0, 0, width, height);
+        currentG2D.clearRect(0, 0, width, height);
 
 		/* Render state */
-        gsm.render(frameGraphics, deltaTime);
+        gsm.render(currentG2D, deltaTime);
 
 		/* FPS/TPS info */
-        if (showInfo) {
-            fps++;
-            frameGraphics.setPaint(Color.WHITE);
-            frameGraphics.drawString("FPS: " + fpsInfo + " | TPS: " + tpsInfo, 5, 18);
+        if (SHOW_INFO) {
+            currentG2D.setPaint(Color.WHITE);
+            currentG2D.drawString(renderStats.report() + "   " + updateStats.report(), 5, 18);
         }
 
 		/* Draw frame */
         Graphics graphics = getGraphics();
-        graphics.drawImage(frame, 0, 0, null);
+        graphics.drawImage(currentFrame, 0, 0, null);
         graphics.dispose();
     }
 
     @Override
     public void run() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                int showInfo = 50;
-                int delay = 0;
-
-                long timer = getTime();
-                long previous = getTime();
-                long lag = 0;
-
-                while (true) {
-                    long current = getTime();
-                    long elapsed = current - previous;
-                    previous = current;
-                    lag += elapsed;
-
-                    processInput();
-
-                    //test
-                    long start = getTime();
-                    while (lag >= MS_PER_UPDATE) {
-                        update();
-                        //TODO wait for last updater
-                        while (gameObjects.size() != 0 && !graphicsUpdater.isDone()) {
-                            Thread.yield();
-//                            try {
-//                                // wait
-//                                Thread.sleep(1);
-//                            } catch (InterruptedException e) {
-//                                e.printStackTrace();
-//                            }
-                        }
-                        lag -= MS_PER_UPDATE;
-                    }
-
-                    long end = getTime() - start;
-                    if (delay++ >= showInfo) {
-                        System.out.print("Update for: " + end);
-                    }
-
-                    start = getTime();
-                    double deltaTime = 1 - lag / MS_PER_UPDATE;
-                    render(deltaTime);
-
-                    end = getTime() - start;
-                    if (delay++ >= showInfo) {
-                        delay = 0;
-                        System.out.println("   Render for: " + end);
-                    }
-
-                    if (getTime() - timer >= 1000) {
-                        tpsInfo = tps;
-                        tps = 0;
-                        fpsInfo = fps;
-                        fps = 0;
-                        timer += 1000;
-                    }
-
-                    if (useFpsLimit) {
-                        long sleepFor = current + msPerFrame - getTime();
-                        try {
-                            if (sleepFor > 0) {
-                                Thread.sleep(sleepFor);
-                            }
-                        } catch (InterruptedException ex) { ex.printStackTrace(); }
-                    }
-                }
-            }
-        }).start();
+        updateThread.start();
+        renderThread.start();
     }
 
-    private long getTime() {
+    public static long getTime() {
         return System.currentTimeMillis();
     }
 
-    public static void startProcess(int needToProcess) {
-        inputUpdater.startProcess(needToProcess);
-    }
-
-    public static void loopEnded() {
-        inputUpdater.setDone(false);
-    }
-
-    public static void inputHandled() {
-        inputHandler.clear();
+    public static void submitTask(Runnable task) {
+        service.submit(task);
     }
 }

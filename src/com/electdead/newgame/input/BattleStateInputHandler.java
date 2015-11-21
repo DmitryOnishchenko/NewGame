@@ -1,7 +1,7 @@
 package com.electdead.newgame.input;
 
-import com.electdead.newgame.gamestate.BattleState;
-import com.electdead.newgame.gamestate.BattleStateSettings;
+import com.electdead.newgame.gamestate.battle.BattleState;
+import com.electdead.newgame.gamestate.battle.BattleStateSettings;
 
 import java.awt.event.KeyEvent;
 import java.util.Random;

@@ -1,19 +1,16 @@
 package com.electdead.newgame.gameobject.projectile;
 
 import com.electdead.newgame.assets.Assets;
-import com.electdead.newgame.engine.CellOld;
-import com.electdead.newgame.engine.EngineV1Old;
+import com.electdead.newgame.engine.EngineV2;
 import com.electdead.newgame.gameobject.GameObjectOld;
 import com.electdead.newgame.gameobject.GameObjectType;
 import com.electdead.newgame.gameobject.Side;
 import com.electdead.newgame.gameobject.unit.UnitOld;
-import com.electdead.newgame.gamestate.DevGameState;
+import com.electdead.newgame.gameobjectV2.BasicGameObject;
 import com.electdead.newgame.physics.Vector2F;
 
 import java.awt.*;
-import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
-import java.util.List;
 
 public class Projectile extends GameObjectOld {
     public Vector2F moveDir;
@@ -23,21 +20,22 @@ public class Projectile extends GameObjectOld {
 
     //TODO test
     private Vector2F tail;
-    public float speed = 500 / EngineV1Old.UPDATES_PER_SEC;
+    public float speed = 500 / EngineV2.UPDATES_PER_SEC;
     public Vector2F sp;
     private float acc = 0.1f;
     private float baseAcc = 0.46f;
-    public UnitOld target;
+    public BasicGameObject target;
 
     private boolean finished = false;
     private int delayTimer = 0;
-    private int deleteTrigger = 4000 / EngineV1Old.MS_PER_UPDATE;
+    private int deleteTrigger = 4000 / EngineV2.MS_PER_UPDATE;
 
     private int length = 16;
     private Vector2F startPoint;
     private int maxDistance = 500;
 
-    public Projectile(String name, Side side, GameObjectType type, int damage, float x, float y, UnitOld target) {
+    public Projectile(String name, Side side, GameObjectType type,
+                      int damage, float x, float y, BasicGameObject gameObject) {
         super(name, side, type, x, y);
         this.damage = damage;
         tail = pos.copy();
@@ -45,16 +43,16 @@ public class Projectile extends GameObjectOld {
         startPoint = pos.copy();
 
         //TEST
-        this.target = target;
-        double distance = Vector2F.getDistanceOnScreen(pos, target.pos);
+        this.target = gameObject;
+        double distance = Vector2F.getDistanceOnScreen(pos, gameObject.currentState.pos);
         float speedY = (float) -(distance / 100 * baseAcc);
-        float shift = pos.y - target.pos.y;
+        float shift = pos.y - gameObject.currentState.pos.y;
         float k = shift / 36f;
         speedY -= k;
 
         sp = side == Side.LEFT_ARMY ? new Vector2F(speed, speedY - 0.15f) : new Vector2F(-speed, speedY - 0.15f);
 //        if (side == Side.LEFT_ARMY) {
-//            System.out.println(pos.y + " | " + target.pos.y);
+//            System.out.println(pos.y + " | " + gameObject.pos.y);
 //        }
     }
 
@@ -94,10 +92,10 @@ public class Projectile extends GameObjectOld {
             return;
         }
 
-        getCell().move(this);
-
-        List<CellOld> cells = DevGameState.grid.getCellIfIntersectsWith(new Line2D.Float(pos.x, pos.y, tail.x, tail.y));
-
+//        getCell().move(this);
+//
+//        List<CellOld> cells = DevGameState.grid.getCellIfIntersectsWith(new Line2D.Float(pos.x, pos.y, tail.x, tail.y));
+//
 //        for (CellOld cell : cells) {
 //            List<GameObjectOld> list;
 //            if (side == Side.LEFT_ARMY) {

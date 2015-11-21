@@ -1,12 +1,12 @@
 package com.electdead.newgame.gameobject.unit.ai;
 
-import com.electdead.newgame.engine.EngineV1Old;
+import com.electdead.newgame.engine.EngineV2;
 import com.electdead.newgame.gameobject.unit.UnitOld;
 import com.electdead.newgame.physics.Vector2F;
 
 public class MoveAIComponentOld extends AIComponentOld {
     private int delayTimer = 0;
-    private int moveDirCorrectionTrigger = 250 / EngineV1Old.MS_PER_UPDATE;
+    private int moveDirCorrectionTrigger = 250 / EngineV2.MS_PER_UPDATE;
 
     public MoveAIComponentOld(AIContainerOld aic, int priority) {
         super(aic, priority);

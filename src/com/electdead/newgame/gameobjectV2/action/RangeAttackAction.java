@@ -2,7 +2,7 @@ package com.electdead.newgame.gameobjectV2.action;
 
 import com.electdead.newgame.gameobject.GameObjectType;
 import com.electdead.newgame.gameobject.projectile.Projectile;
-import com.electdead.newgame.gameobject.unit.UnitOld;
+import com.electdead.newgame.gameobjectV2.BasicGameObject;
 import com.electdead.newgame.gameobjectV2.ai.AiComponent;
 import com.electdead.newgame.physics.Vector2F;
 
@@ -26,6 +26,7 @@ public class RangeAttackAction extends Action {
             checkAnimationDir();
             //TODO spawn projectile
 //            spawnProjectile(object);
+            object.target.takeDamage(object.currentState.damage);
         }
     }
 
@@ -52,13 +53,13 @@ public class RangeAttackAction extends Action {
         aiComponent.container.locked = false;
     }
 
-    public void spawnProjectile(UnitOld unit) {
+    public void spawnProjectile(BasicGameObject gameObject) {
 //        Projectile arrow = new Projectile("woodenArrow", object.side, object.x(), object.y());
-        Projectile arrow = new Projectile("woodenArrow", unit.side, GameObjectType.PROJECTILE,
-                unit.damage, unit.x(), unit.y(), unit.target);
+        Projectile arrow = new Projectile("woodenArrow", gameObject.side, GameObjectType.PROJECTILE,
+                gameObject.currentState.damage, gameObject.x(), gameObject.y(), gameObject.target);
 
-        Vector2F newDir = unit.target.pos.copy();
-        newDir.sub(unit.pos);
+        Vector2F newDir = gameObject.target.currentState.pos.copy();
+        newDir.sub(gameObject.currentState.pos);
         newDir.normalize();
         arrow.moveDir = newDir;
 

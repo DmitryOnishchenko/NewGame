@@ -3,7 +3,7 @@ package com.electdead.newgame.graphics;
 import com.electdead.newgame.assets.Assets;
 import com.electdead.newgame.gameobject.Side;
 import com.electdead.newgame.gameobjectV2.BasicGameObject;
-import com.electdead.newgame.gamestate.BattleStateSettings;
+import com.electdead.newgame.gamestate.battle.BattleStateSettings;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

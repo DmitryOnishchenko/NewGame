@@ -11,13 +11,6 @@ public abstract class AbstractGameLoop extends JPanel implements Runnable {
     protected int maxFps;
     protected int msPerFrame;
 
-    /* Info */
-    protected boolean showInfo = true;
-    protected int tps = 0;
-    protected int tpsInfo = 0;
-    protected int fps = 0;
-    protected int fpsInfo = 0;
-
     public AbstractGameLoop(int width, int height, int maxFps) {
         this.width = width;
         this.height = height;

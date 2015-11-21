@@ -1,7 +1,7 @@
 package com.electdead.newgame.gameobject.unit.ai;
 
 import com.electdead.newgame.engine.CellOld;
-import com.electdead.newgame.engine.EngineV1Old;
+import com.electdead.newgame.engine.EngineV2;
 import com.electdead.newgame.gameobject.GameObjectOld;
 import com.electdead.newgame.gameobject.unit.UnitOld;
 import com.electdead.newgame.gamestate.DevGameState;
@@ -11,7 +11,7 @@ import java.util.List;
 
 public class SearchEnemyAIComponentOld extends AIComponentOld {
     private int delayTimer = 0;
-    private int repeatSearchTrigger = 1000 / EngineV1Old.MS_PER_UPDATE;
+    private int repeatSearchTrigger = 1000 / EngineV2.MS_PER_UPDATE;
 
     public SearchEnemyAIComponentOld(AIContainerOld aic, int priority) {
         super(aic, priority);
