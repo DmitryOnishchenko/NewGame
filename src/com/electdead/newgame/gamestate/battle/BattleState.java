@@ -76,23 +76,23 @@ public class BattleState extends AbstractGameState {
         }
 
         /* Dirty flag */
-        if (BattleStateSettings.NEED_DELETE) {
-            synchronized (gameObjects) {
-                // delete objects
-                Iterator<GameObject> iterator = gameObjects.iterator();
-                while (iterator.hasNext()) {
-                    if (iterator.next().delete) {
-                        iterator.remove();
-                    }
-                }
-            }
-            BattleStateSettings.NEED_DELETE = false;
-        }
+//        if (BattleStateSettings.NEED_DELETE) {
+//            synchronized (gameObjects) {
+//                // delete objects
+//                Iterator<GameObject> iterator = gameObjects.iterator();
+//                while (iterator.hasNext()) {
+//                    if (iterator.next().delete) {
+//                        iterator.remove();
+//                    }
+//                }
+//            }
+//            BattleStateSettings.NEED_DELETE = false;
+//        }
 
         /* Dirty flag */
-        if (BattleStateSettings.NEED_DELETE || BattleStateSettings.NEED_RELOCATE) {
-            grid.checkDelete();
-        }
+//        if (BattleStateSettings.NEED_DELETE || BattleStateSettings.NEED_RELOCATE) {
+//            grid.checkDelete();
+//        }
         grid.update();
 
 

@@ -21,7 +21,7 @@ public class Cell {
     private List<BasicGameObject> rightUnits = new FastRemoveArrayList<>(100);
     private List<BasicGameObject> projectiles = new FastRemoveArrayList<>(100);
 
-    private List<BasicGameObject> list = new FastRemoveArrayList<>(1000);
+    private List<BasicGameObject> allObjects = new FastRemoveArrayList<>(1000);
 
     public Cell(Grid grid, int row, int col, Rectangle2D.Float bounds) {
         this.grid = grid;
@@ -35,16 +35,55 @@ public class Cell {
     }
 
     public void update() {
-        updateObjects(leftUnits);
-        updateObjects(rightUnits);
-        updateObjects(projectiles);
+        updateObjects(allObjects);
+//        updateObjects(leftUnits);
+//        updateObjects(rightUnits);
+//        updateObjects(projectiles);
     }
 
-    public void renderCell(Graphics2D g2, double deltaTime) {
-        g2.setPaint(Color.BLUE);
-        g2.draw(bounds);
-        g2.setPaint(Color.RED);
-        g2.drawString(row + "|" + col, (int) (bounds.getX() + 2), (int) (bounds.getY() + 12));
+    private void updateObjects(Collection<BasicGameObject> collection) {
+        Iterator<BasicGameObject> iterator = collection.iterator();
+        while (iterator.hasNext()) {
+            BasicGameObject gameObject = iterator.next();
+            if (gameObject.delete) {
+                iterator.remove();
+//                BattleStateSettings.NEED_DELETE = false;
+            } else if (gameObject.relocate) {
+                gameObject.relocate = false;
+                iterator.remove();
+                grid.add(gameObject);
+//                BattleStateSettings.NEED_RELOCATE = false;
+            } else {
+                gameObject.updateAi();
+                gameObject.updateAction();
+                gameObject.updatePhysics();
+                gameObject.updateGraphics();
+            }
+        }
+
+//        for (BasicGameObject gameObject : collection) {
+//            gameObject.updateAi();
+//            gameObject.updateAction();
+//            gameObject.updatePhysics();
+//            gameObject.updateGraphics();
+//        }
+    }
+
+    public void render(Graphics2D g2, double deltaTime) {
+        if (BattleStateSettings.DEBUG_GRID) {
+            g2.setPaint(Color.BLUE);
+            g2.draw(bounds);
+            g2.setPaint(Color.RED);
+            g2.drawString(row + "|" + col, (int) (bounds.getX() + 2), (int) (bounds.getY() + 12));
+        }
+
+        renderObjects(allObjects, g2, deltaTime);
+    }
+
+    private void renderObjects(Collection<BasicGameObject> collection, Graphics2D g2, double deltaTime) {
+        for (BasicGameObject gameObject : collection) {
+            gameObject.render(g2, deltaTime);
+        }
     }
 
     public void clear() {
@@ -61,11 +100,11 @@ public class Cell {
     }
 
     public List<BasicGameObject> getAllUnits() {
-        list.clear();
-        list.addAll(leftUnits);
-        list.addAll(rightUnits);
+        allObjects.clear();
+        allObjects.addAll(leftUnits);
+        allObjects.addAll(rightUnits);
 
-        return list;
+        return allObjects;
     }
 
     public List<BasicGameObject> getLeftUnits() {
@@ -86,6 +125,7 @@ public class Cell {
         } else if (gameObject.type == GameObjectType.PROJECTILE) {
             addProjectile(gameObject);
         }
+        allObjects.add(gameObject);
     }
 
     private void addUnit(BasicGameObject gameObject) {
@@ -113,35 +153,26 @@ public class Cell {
         if (gameObject.x() < Grid.INDENT_LEFT) {
             //TODO remake
             gameObject.delete = true;
-            BattleStateSettings.NEED_DELETE = true;
+//            BattleStateSettings.NEED_DELETE = true;
             return;
         }
 
         if (row != newRow || col != newCol) {
             gameObject.relocate = true;
-            BattleStateSettings.NEED_RELOCATE = true;
-        }
-    }
-
-    private void updateObjects(Collection<BasicGameObject> collection) {
-        for (BasicGameObject gameObject : collection) {
-            gameObject.updateAi();
-            gameObject.updateAction();
-            gameObject.updatePhysics();
-            gameObject.updateGraphics();
+//            BattleStateSettings.NEED_RELOCATE = true;
         }
     }
 
     private void deleteObjects(List<BasicGameObject> collection) {
-        Iterator<BasicGameObject> it = collection.iterator();
-        while (it.hasNext()) {
-            BasicGameObject gameObject = it.next();
+        Iterator<BasicGameObject> iterator = collection.iterator();
+        while (iterator.hasNext()) {
+            BasicGameObject gameObject = iterator.next();
             if (gameObject.delete) {
-                it.remove();
+                iterator.remove();
                 BattleStateSettings.NEED_DELETE = false;
             } else if (gameObject.relocate) {
                 gameObject.relocate = false;
-                it.remove();
+                iterator.remove();
                 grid.add(gameObject);
                 BattleStateSettings.NEED_RELOCATE = false;
             }
