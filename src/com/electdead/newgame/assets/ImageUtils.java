@@ -37,6 +37,7 @@ public class ImageUtils {
         int resizedHeight = (int) (originalImage.getWidth() * scale);
 
         BufferedImage resizedImage = new BufferedImage(resizedWidth, resizedHeight, BufferedImage.TYPE_INT_ARGB);
+//        BufferedImage resizedImage = new BufferedImage(resizedWidth, resizedHeight, BufferedImage.TYPE_4BYTE_ABGR_PRE);
         Graphics2D g = resizedImage.createGraphics();
         g.drawImage(originalImage, 0, 0, resizedWidth, resizedHeight, null);
         g.dispose();

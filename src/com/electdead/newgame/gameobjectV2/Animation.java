@@ -26,8 +26,8 @@ public class Animation {
 
     public void next() {
         if (++animationTimer >= action.object.gModel.getAnimationSpeed()) {
-            currentSprite++;
-            if (currentSprite == sprites.length) {
+//            currentSprite++;
+            if (++currentSprite == sprites.length) {
                 currentSprite = 0;
                 if (action.needFullAnimation)
                     action.animationFinished();

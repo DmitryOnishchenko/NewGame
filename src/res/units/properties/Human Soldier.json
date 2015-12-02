@@ -5,7 +5,7 @@
   "maxHp": 100,
   "armor": 10,
   "damage": 30,
-  "defaultSpeed": 48,
+  "defaultSpeed": 0,
   "defaultSpeedTemp": 48,
   "spawnPrice": 40,
   "pricePerHead": 10,

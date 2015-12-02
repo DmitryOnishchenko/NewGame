@@ -82,7 +82,7 @@ public class EngineV2 extends AbstractGameLoop {
     }
 
     private Graphics2D getGraphics(VolatileImage frame) {
-        Graphics2D g2 = (Graphics2D) frame.getGraphics();
+        Graphics2D g2 = frame.createGraphics();
         //TODO Test rendering hints
 		/* Test for text */
 //		g2Next.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);

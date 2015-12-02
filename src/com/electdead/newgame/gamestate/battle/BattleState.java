@@ -37,7 +37,7 @@ public class BattleState extends AbstractGameState {
     private BufferedImage backgroundImage
             = new BufferedImage(MainApp.WIDTH, MainApp.HEIGHT, BufferedImage.TYPE_INT_ARGB);
 
-    private Graphics2D backgroundGraphics = (Graphics2D) backgroundImage.getGraphics();
+    private Graphics2D backgroundGraphics = (Graphics2D) backgroundImage.createGraphics();
 
     /* Blood sprites */
     private ArrayList<BufferedImage> bloodSprites = new ArrayList<>();
@@ -60,7 +60,10 @@ public class BattleState extends AbstractGameState {
         backgroundGraphics.drawImage(backgroundLevelZero, 0, 0, null);
 
         /* Test */
-        createDemoUnit("Human Soldier", 200, 500);
+        for (int i = 0; i < 6_000; i++) {
+//            createDemoUnit("Human Soldier", 200, 500);
+            createDemoUnit("Human Soldier", BattleStateSettings.leftSpawnPoint, getRandomPointY());
+        }
 //        createDemoUnit("Orc Soldier", 400, 500);
     }
 
@@ -128,11 +131,15 @@ public class BattleState extends AbstractGameState {
 //        }
 
 
+
+
+
+
 //        synchronized (gameObjects) {
 //            Collections.sort(gameObjects);
-//            for (GameObject gameObject: gameObjects) {
-//                gameObject.render(g2, deltaTime);
-//            }
+            for (GameObject gameObject: gameObjects) {
+                gameObject.render(g2, deltaTime);
+            }
 //        }
 
         /* Background graphics: Level One */
@@ -169,19 +176,19 @@ public class BattleState extends AbstractGameState {
     /* Benchmark-Demo test */
     public void demoMode() {
         createDemoUnit("Human Soldier", BattleStateSettings.leftSpawnPoint, getRandomPointY());
-        createDemoUnit("Orc Soldier", BattleStateSettings.rightSpawnPoint, getRandomPointY());
-
-        if (++BattleStateSettings.testSpawnTimer2 >= 8) {
-            createDemoUnit("Orc Soldier", BattleStateSettings.rightSpawnPoint, getRandomPointY());
-        }
-
-        if (++BattleStateSettings.testSpawnTimer2 >= 10) {
-            BattleStateSettings.testSpawnTimer2 = 0;
-            createDemoUnit("Orc Soldier", BattleStateSettings.rightSpawnPoint, getRandomPointY());
-            createDemoUnit("Orc Archer", BattleStateSettings.rightSpawnPoint, getRandomPointY());
-            createDemoUnit("Human Archer", BattleStateSettings.leftSpawnPoint, getRandomPointY());
-            createDemoUnit("Human Archer", BattleStateSettings.leftSpawnPoint, getRandomPointY());
-        }
+//        createDemoUnit("Orc Soldier", BattleStateSettings.rightSpawnPoint, getRandomPointY());
+//
+//        if (++BattleStateSettings.testSpawnTimer2 >= 8) {
+//            createDemoUnit("Orc Soldier", BattleStateSettings.rightSpawnPoint, getRandomPointY());
+//        }
+//
+//        if (++BattleStateSettings.testSpawnTimer2 >= 10) {
+//            BattleStateSettings.testSpawnTimer2 = 0;
+//            createDemoUnit("Orc Soldier", BattleStateSettings.rightSpawnPoint, getRandomPointY());
+//            createDemoUnit("Orc Archer", BattleStateSettings.rightSpawnPoint, getRandomPointY());
+//            createDemoUnit("Human Archer", BattleStateSettings.leftSpawnPoint, getRandomPointY());
+//            createDemoUnit("Human Archer", BattleStateSettings.leftSpawnPoint, getRandomPointY());
+//        }
     }
 
     private Random random = new Random();
