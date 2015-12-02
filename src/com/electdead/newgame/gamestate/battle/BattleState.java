@@ -22,7 +22,7 @@ public class BattleState extends AbstractGameState {
 
     /* Game objects */
     private List<GameObject> gameObjects = new FastRemoveArrayList<>(10_000);
-//    private List<GameObject> renderObjects = new FastRemoveArrayList<>(10_000);
+    private List<GameObject> renderObjects = new FastRemoveArrayList<>(10_000);
 
     /* Input handler */
     private BattleStateInputHandler inputHandler = new BattleStateInputHandler(this);
@@ -60,7 +60,7 @@ public class BattleState extends AbstractGameState {
         backgroundGraphics.drawImage(backgroundLevelZero, 0, 0, null);
 
         /* Test */
-//        createDemoUnit("Human Soldier", 200, 500);
+        createDemoUnit("Human Soldier", 200, 500);
 //        createDemoUnit("Orc Soldier", 400, 500);
     }
 
@@ -122,25 +122,25 @@ public class BattleState extends AbstractGameState {
 //        synchronized (gameObjects) {
 //            renderObjects.addAll(gameObjects);
 //        }
-//        Collections.sort(renderObjects);
-//        for (GameObject gameObject: renderObjects) {
+//        Collections.sort(gameObjects);
+//        for (GameObject gameObject: gameObjects) {
 //            gameObject.render(g2, deltaTime);
 //        }
 
 
-        synchronized (gameObjects) {
-            Collections.sort(gameObjects);
-            for (GameObject gameObject: gameObjects) {
-                gameObject.render(g2, deltaTime);
-            }
-        }
+//        synchronized (gameObjects) {
+//            Collections.sort(gameObjects);
+//            for (GameObject gameObject: gameObjects) {
+//                gameObject.render(g2, deltaTime);
+//            }
+//        }
 
         /* Background graphics: Level One */
         g2.drawImage(backgroundLevelOne, 0, 0, null);
 
         /* Render info */
         g2.setPaint(Color.WHITE);
-        g2.drawString("GameObjects: " + grid.getAllObjects().size() + " | Units: " + grid.size(), 5, 36);
+        g2.drawString("GameObjects: " + grid.size() + " | Units: " + grid.size(), 5, 36);
 
         /* Render debug menu*/
         debugMenu.render(g2);

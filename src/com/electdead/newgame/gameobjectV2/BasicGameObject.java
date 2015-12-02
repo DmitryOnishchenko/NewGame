@@ -177,6 +177,6 @@ public class BasicGameObject extends GameObject<BasicGameObject> {
 
     @Override
     public String toString() {
-        return name + ": " + currentState.currHp + "/" + pModel.getMaxHp();
+        return name + ": " + currentState.currHp + "/" + pModel.getMaxHp() + " | pos[" + x() + " - " + y() + "]";
     }
 }

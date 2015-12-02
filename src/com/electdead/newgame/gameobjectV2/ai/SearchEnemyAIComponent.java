@@ -22,13 +22,13 @@ public class SearchEnemyAiComponent extends AiComponent {
         // if target is null - search target
         if (delayTimer % 4 == 0 && object.target == null) {
 //            searchTarget();
-            EngineV2.submitTask(new SearchEnemyTask(object));
+//            EngineV2.submitTask(new SearchEnemyTask(object));
         }
         // search another target by trigger
         else if (delayTimer++ > repeatSearchTrigger) {
             delayTimer = 0;
 //            searchTarget();
-            EngineV2.submitTask(new SearchEnemyTask(object));
+//            EngineV2.submitTask(new SearchEnemyTask(object));
         }
 
         return false;

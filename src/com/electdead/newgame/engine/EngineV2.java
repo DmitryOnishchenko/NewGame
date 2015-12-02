@@ -13,7 +13,7 @@ import java.util.concurrent.Executors;
 @SuppressWarnings("serial")
 public class EngineV2 extends AbstractGameLoop {
     /* Update parameters */
-    public static final int UPDATES_PER_SEC = 50;
+    public static final int UPDATES_PER_SEC = 100;
     public static final int MS_PER_UPDATE = 1000 / UPDATES_PER_SEC;
 
     /* Render parameters */
@@ -59,7 +59,7 @@ public class EngineV2 extends AbstractGameLoop {
 
         setDoubleBuffered(true);
         currentFrame = initFrame();
-        currentFrame.setAccelerationPriority(1);
+//        currentFrame.setAccelerationPriority(1);
         currentG2D = getGraphics(currentFrame);
 
         /* InputHandlerThread */

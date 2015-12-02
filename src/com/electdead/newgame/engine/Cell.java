@@ -47,11 +47,12 @@ public class Cell {
             BasicGameObject gameObject = iterator.next();
             if (gameObject.delete) {
                 iterator.remove();
+                grid.size--;
 //                BattleStateSettings.NEED_DELETE = false;
             } else if (gameObject.relocate) {
                 gameObject.relocate = false;
                 iterator.remove();
-                grid.add(gameObject);
+                grid.rebase(gameObject);
 //                BattleStateSettings.NEED_RELOCATE = false;
             } else {
                 gameObject.updateAi();
@@ -77,7 +78,7 @@ public class Cell {
             g2.drawString(row + "|" + col, (int) (bounds.getX() + 2), (int) (bounds.getY() + 12));
         }
 
-        renderObjects(allObjects, g2, deltaTime);
+//        renderObjects(allObjects, g2, deltaTime);
     }
 
     private void renderObjects(Collection<BasicGameObject> collection, Graphics2D g2, double deltaTime) {
@@ -100,9 +101,9 @@ public class Cell {
     }
 
     public List<BasicGameObject> getAllUnits() {
-        allObjects.clear();
-        allObjects.addAll(leftUnits);
-        allObjects.addAll(rightUnits);
+//        allObjects.clear();
+//        allObjects.addAll(leftUnits);
+//        allObjects.addAll(rightUnits);
 
         return allObjects;
     }
@@ -121,9 +122,9 @@ public class Cell {
 
     public void add(BasicGameObject gameObject) {
         if (gameObject.type == GameObjectType.UNIT) {
-            addUnit(gameObject);
+//            addUnit(gameObject);
         } else if (gameObject.type == GameObjectType.PROJECTILE) {
-            addProjectile(gameObject);
+//            addProjectile(gameObject);
         }
         allObjects.add(gameObject);
     }
@@ -141,9 +142,9 @@ public class Cell {
     }
 
     public void checkDelete() {
-        deleteObjects(leftUnits);
-        deleteObjects(rightUnits);
-        deleteObjects(projectiles);
+//        deleteObjects(leftUnits);
+//        deleteObjects(rightUnits);
+//        deleteObjects(projectiles);
     }
 
     public void move(BasicGameObject gameObject) {
@@ -153,6 +154,7 @@ public class Cell {
         if (gameObject.x() < Grid.INDENT_LEFT) {
             //TODO remake
             gameObject.delete = true;
+            grid.size--;
 //            BattleStateSettings.NEED_DELETE = true;
             return;
         }
@@ -163,21 +165,21 @@ public class Cell {
         }
     }
 
-    private void deleteObjects(List<BasicGameObject> collection) {
-        Iterator<BasicGameObject> iterator = collection.iterator();
-        while (iterator.hasNext()) {
-            BasicGameObject gameObject = iterator.next();
-            if (gameObject.delete) {
-                iterator.remove();
-                BattleStateSettings.NEED_DELETE = false;
-            } else if (gameObject.relocate) {
-                gameObject.relocate = false;
-                iterator.remove();
-                grid.add(gameObject);
-                BattleStateSettings.NEED_RELOCATE = false;
-            }
-        }
-    }
+//    private void deleteObjects(List<BasicGameObject> collection) {
+//        Iterator<BasicGameObject> iterator = collection.iterator();
+//        while (iterator.hasNext()) {
+//            BasicGameObject gameObject = iterator.next();
+//            if (gameObject.delete) {
+//                iterator.remove();
+//                BattleStateSettings.NEED_DELETE = false;
+//            } else if (gameObject.relocate) {
+//                gameObject.relocate = false;
+//                iterator.remove();
+//                grid.add(gameObject);
+//                BattleStateSettings.NEED_RELOCATE = false;
+//            }
+//        }
+//    }
 
     public int sizeUnits() {
         return leftUnits.size() + rightUnits.size();

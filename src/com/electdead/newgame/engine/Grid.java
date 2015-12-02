@@ -1,7 +1,6 @@
 package com.electdead.newgame.engine;
 
 import com.electdead.newgame.gameobjectV2.BasicGameObject;
-import com.electdead.newgame.gamestate.battle.BattleStateSettings;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -18,6 +17,7 @@ public class Grid {
     public static final int INDENT_LEFT = -60;
     private Cell[][] cells = new Cell[ROWS][COLS];
 
+    public int size;
     private List<BasicGameObject> allObjects = new ArrayList<>(5000);
 
     public Grid() {
@@ -49,7 +49,25 @@ public class Grid {
         if (row >= ROWS || col >= COLS ||
             row <= -1 || col <= -1) {
             gameObject.delete = true;
-            BattleStateSettings.NEED_DELETE = true;
+//            BattleStateSettings.NEED_DELETE = true;
+            return;
+        }
+
+        Cell cell = cells[row][col];
+        gameObject.cell = cell;
+        size++;
+        cell.add(gameObject);
+    }
+
+    public void rebase(BasicGameObject gameObject) {
+        int row = (gameObject.y() - INDENT_TOP) / CELL_SIZE;
+        int col = (gameObject.x() - INDENT_LEFT) / CELL_SIZE;
+
+        if (row >= ROWS || col >= COLS ||
+                row <= -1 || col <= -1) {
+            gameObject.delete = true;
+            size--;
+//            BattleStateSettings.NEED_DELETE = true;
             return;
         }
 
@@ -86,14 +104,15 @@ public class Grid {
     }
 
     public int size() {
-        int amount = 0;
-        for (int row = 0; row < ROWS; row++) {
-            for (int col = 0; col < COLS; col++) {
-                amount += cells[row][col].sizeUnits();
-            }
-        }
+//        int amount = 0;
+//        for (int row = 0; row < ROWS; row++) {
+//            for (int col = 0; col < COLS; col++) {
+//                amount += cells[row][col].sizeUnits();
+//            }
+//        }
 
-        return amount;
+//        return amount;
+        return size;
     }
 
     public void checkDelete() {
