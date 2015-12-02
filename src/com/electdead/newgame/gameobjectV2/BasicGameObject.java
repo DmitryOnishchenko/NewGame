@@ -36,7 +36,7 @@ public class BasicGameObject extends GameObject<BasicGameObject> {
     public UnitGraphicsModel gModel;
 
     /* Target */
-    public BasicGameObject target;
+    public volatile BasicGameObject target;
 
     /* Box model */
     public Ellipse2D.Double hitBox;

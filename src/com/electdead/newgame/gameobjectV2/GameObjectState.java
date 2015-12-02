@@ -4,9 +4,9 @@ import com.electdead.newgame.physics.Vector2F;
 
 public class GameObjectState {
     public Vector2F pos;
-    public Vector2F moveDir;
+    public volatile Vector2F moveDir;
 
-    public int currHp;
+    public volatile int currHp;
     public int damage;
     public int armor;
     public float currentSpeed;

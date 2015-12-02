@@ -8,11 +8,10 @@ import com.electdead.newgame.gameobjectV2.action.MeleeAttackAction;
 import com.electdead.newgame.gameobjectV2.action.MoveAction;
 import com.electdead.newgame.gameobjectV2.action.RangeAttackAction;
 
-import java.awt.image.BufferedImage;
 import java.awt.image.VolatileImage;
 
 public class AiContainer {
-    public boolean locked;
+    public volatile boolean locked;
     public BasicGameObject object;
     public AiComponent maxPriorityComponent;
     public AiComponent[] aiComponents;

@@ -64,7 +64,8 @@ public class BattleState extends AbstractGameState {
 //            createDemoUnit("Human Soldier", 200, 500);
 //            createDemoUnit("Human Soldier", BattleStateSettings.leftSpawnPoint, getRandomPointY());
         }
-//        createDemoUnit("Orc Soldier", 400, 500);
+        createDemoUnit("Human Archer", 400, 500);
+        createDemoUnit("Orc Archer", 900, 500);
     }
 
     @Override
@@ -137,8 +138,14 @@ public class BattleState extends AbstractGameState {
 
         synchronized (gameObjects) {
             Collections.sort(gameObjects);
-            for (GameObject gameObject: gameObjects) {
-                gameObject.render(g2, deltaTime);
+            Iterator<GameObject> iterator = gameObjects.iterator();
+            while (iterator.hasNext()) {
+                GameObject gameObject = iterator.next();
+                if (gameObject.delete) {
+                    iterator.remove();
+                } else {
+                    gameObject.render(g2, deltaTime);
+                }
             }
         }
 

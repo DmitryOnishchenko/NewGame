@@ -14,6 +14,12 @@ public class MoveAction extends Action {
             return;
         }
 
+        //TODO temporary fix
+        if (object.target != null && !object.target.currentState.isAlive()) {
+            object.target = null;
+            object.currentState.moveDir = object.pModel.getMoveDir();
+        }
+
         checkAnimationDir();
 
         float shiftX                = object.currentState.currentSpeed * object.currentState.moveDir.x;

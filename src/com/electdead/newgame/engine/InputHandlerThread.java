@@ -17,7 +17,7 @@ public class InputHandlerThread extends Thread {
 
             engine.processInput();
 
-            long sleepFor = current + EngineV2.MS_PER_UPDATE - getTime();
+            long sleepFor = current + EngineV2.MS_PER_UPDATE / 2 - getTime();
             try {
                 if (sleepFor > 0) Thread.sleep(sleepFor);
             } catch (InterruptedException ex) { ex.printStackTrace(); }

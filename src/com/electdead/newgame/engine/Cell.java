@@ -7,8 +7,7 @@ import com.electdead.newgame.gamestate.battle.BattleStateSettings;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
-import java.util.Collection;
-import java.util.Iterator;
+import java.util.*;
 import java.util.List;
 
 public class Cell {
@@ -35,7 +34,9 @@ public class Cell {
     }
 
     public void update() {
-        updateObjects(allObjects);
+        synchronized (allObjects) {
+            updateObjects(allObjects);
+        }
 //        updateObjects(leftUnits);
 //        updateObjects(rightUnits);
 //        updateObjects(projectiles);
@@ -104,8 +105,13 @@ public class Cell {
 //        allObjects.clear();
 //        allObjects.addAll(leftUnits);
 //        allObjects.addAll(rightUnits);
+        List<BasicGameObject> list = Collections.emptyList();
 
-        return allObjects;
+        synchronized (allObjects) {
+            list = new ArrayList<>(allObjects);
+        }
+
+        return list;
     }
 
     public List<BasicGameObject> getLeftUnits() {
@@ -126,7 +132,9 @@ public class Cell {
         } else if (gameObject.type == GameObjectType.PROJECTILE) {
 //            addProjectile(gameObject);
         }
-        allObjects.add(gameObject);
+        synchronized (allObjects) {
+            allObjects.add(gameObject);
+        }
     }
 
     private void addUnit(BasicGameObject gameObject) {
