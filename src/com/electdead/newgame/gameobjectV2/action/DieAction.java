@@ -4,20 +4,20 @@ import com.electdead.newgame.engine.EngineV2;
 import com.electdead.newgame.gameobjectV2.Animation;
 import com.electdead.newgame.gameobjectV2.BasicGameObject;
 
-import java.awt.image.BufferedImage;
+import java.awt.image.VolatileImage;
 
 public class DieAction extends Action {
     private int delayTimer = 0;
     private int deleteTrigger = 20000 / EngineV2.MS_PER_UPDATE;
     private boolean finished = false;
     private Action lastAction;
-    private BufferedImage[] lastSprite;
+    private VolatileImage[] lastSprite;
 
     public DieAction(BasicGameObject object, Action lastAction) {
         super(null, true);
         this.object = object;
-        BufferedImage[] dieSpritesRight = object.gModel.getDieSpritesRight();
-        BufferedImage[] dieSpritesLeft = object.gModel.getDieSpritesLeft();
+        VolatileImage[] dieSpritesRight = object.gModel.getDieSpritesRight();
+        VolatileImage[] dieSpritesLeft = object.gModel.getDieSpritesLeft();
         animation = new Animation(this, dieSpritesRight, dieSpritesRight, dieSpritesLeft);
         this.lastAction = lastAction;
     }
@@ -39,7 +39,7 @@ public class DieAction extends Action {
     @Override
     public void animationFinished() {
         finished = true;
-        lastSprite = new BufferedImage[] {animation.sprites[animation.sprites.length - 1]};
+        lastSprite = new VolatileImage[] {animation.sprites[animation.sprites.length - 1]};
         animation = new Animation(this, lastSprite, lastSprite, lastSprite);
     }
 }

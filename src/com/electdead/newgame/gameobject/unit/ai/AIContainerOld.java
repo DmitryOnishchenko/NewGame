@@ -7,6 +7,7 @@ import com.electdead.newgame.gameobject.unit.actions.MoveAction;
 import com.electdead.newgame.graphics.AnimationOld;
 
 import java.awt.image.BufferedImage;
+import java.awt.image.VolatileImage;
 
 public class AIContainerOld {
     public boolean locked;
@@ -35,8 +36,8 @@ public class AIContainerOld {
         } else {
             attackAction = new MeleeAttackAction(attackAIComponent, unit, true);
         }
-        BufferedImage[] spritesRight = unit.graphModel.getFightSpritesRight();
-        BufferedImage[] spritesLeft = unit.graphModel.getFightSpritesLeft();
+        VolatileImage[] spritesRight = unit.graphModel.getFightSpritesRight();
+        VolatileImage[] spritesLeft = unit.graphModel.getFightSpritesLeft();
         AnimationOld attackAnimation = new AnimationOld(attackAction, spritesRight, spritesRight, spritesLeft);
         attackAction.setAnimation(attackAnimation);
         attackAIComponent.setAction(attackAction);

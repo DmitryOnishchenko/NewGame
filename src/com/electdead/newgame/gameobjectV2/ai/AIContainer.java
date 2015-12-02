@@ -9,6 +9,7 @@ import com.electdead.newgame.gameobjectV2.action.MoveAction;
 import com.electdead.newgame.gameobjectV2.action.RangeAttackAction;
 
 import java.awt.image.BufferedImage;
+import java.awt.image.VolatileImage;
 
 public class AiContainer {
     public boolean locked;
@@ -42,8 +43,8 @@ public class AiContainer {
         } else {
             attackAction = new MeleeAttackAction(attackAiComponent, true);
         }
-        BufferedImage[] spritesRight = object.gModel.getFightSpritesRight();
-        BufferedImage[] spritesLeft = object.gModel.getFightSpritesLeft();
+        VolatileImage[] spritesRight = object.gModel.getFightSpritesRight();
+        VolatileImage[] spritesLeft = object.gModel.getFightSpritesLeft();
         Animation attackAnimation = new Animation(attackAction, spritesRight, spritesRight, spritesLeft);
         attackAction.setAnimation(attackAnimation);
         attackAiComponent.action = attackAction;

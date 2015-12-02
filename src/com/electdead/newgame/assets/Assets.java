@@ -12,6 +12,7 @@ import org.json.simple.parser.JSONParser;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.awt.image.VolatileImage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -76,9 +77,9 @@ public class Assets {
             int baseLine 			= (int) (getInt(json, "baseLine") * SPRITE_SCALE);
             int animationSpeedMs 	= getInt(json, "animationSpeedMs");
 
-            BufferedImage[] moveSprites = getSprites(json, "move");
-            BufferedImage[] fightSprites = getSprites(json, "fight");
-            BufferedImage[] dieSprites = getSprites(json, "die");
+            VolatileImage[] moveSprites = getSprites(json, "move");
+            VolatileImage[] fightSprites = getSprites(json, "fight");
+            VolatileImage[] dieSprites = getSprites(json, "die");
 
             UnitPhysicsModel physModel = new UnitPhysicsModel();
             physModel.setRace(race);
@@ -164,7 +165,7 @@ public class Assets {
         return ((Long) json.get(name)).floatValue();
     }
 
-    private static BufferedImage[] getSprites(JSONObject json, String name) {
+    private static VolatileImage[] getSprites(JSONObject json, String name) {
         String spritesFile = (String) json.get(name + "SpritesFile");
         SpriteSheet spriteSheet = new SpriteSheet(ImageUtils.loadImage(MainApp.class, spritesFile));
 
@@ -178,10 +179,11 @@ public class Assets {
         int widthSprite = ((Long) json.get("widthSprite")).intValue();
         int heightSprite = ((Long) json.get("heightSprite")).intValue();
 
-        BufferedImage[] sprites = new BufferedImage[total];
+        VolatileImage[] sprites = new VolatileImage[total];
         for (int i = start; i < end; i++) {
-            sprites[i] = spriteSheet.getTile(i * widthSprite, 0, widthSprite, heightSprite);
-            sprites[i] = ImageUtils.resizeImage(sprites[i], SPRITE_SCALE);
+            BufferedImage image = spriteSheet.getTile(i * widthSprite, 0, widthSprite, heightSprite);
+            image = ImageUtils.resizeImage(image, SPRITE_SCALE);
+            sprites[i] = ImageUtils.convertToVolatileImage(image);
         }
 
         return sprites;

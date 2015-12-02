@@ -2,19 +2,19 @@ package com.electdead.newgame.graphics;
 
 import com.electdead.newgame.gameobject.unit.actions.Action;
 
-import java.awt.image.BufferedImage;
+import java.awt.image.VolatileImage;
 
 public class AnimationOld {
     public Action action;
     private int currentSprite = 0;
     private int animationTimer;
-    public BufferedImage[] sprites;
-    private BufferedImage[] spritesRight;
-    private BufferedImage[] spritesLeft;
+    public VolatileImage[] sprites;
+    private VolatileImage[] spritesRight;
+    private VolatileImage[] spritesLeft;
     public int previousDirX;
 
-    public AnimationOld(Action action, BufferedImage[] sprites,
-                        BufferedImage[] spritesRight, BufferedImage[] spritesLeft) {
+    public AnimationOld(Action action, VolatileImage[] sprites,
+                        VolatileImage[] spritesRight, VolatileImage[] spritesLeft) {
         this.action = action;
         this.sprites = sprites;
         this.spritesRight = spritesRight;
@@ -35,7 +35,7 @@ public class AnimationOld {
         }
     }
 
-    public BufferedImage get() {
+    public VolatileImage get() {
         return sprites[currentSprite];
     }
 

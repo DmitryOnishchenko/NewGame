@@ -3,19 +3,19 @@ package com.electdead.newgame.graphics;
 import com.electdead.newgame.assets.ImageUtils;
 import com.electdead.newgame.engine.EngineV2;
 
-import java.awt.image.BufferedImage;
+import java.awt.image.VolatileImage;
 
 public class UnitGraphicsModel {
     private int widthSprite;
     private int heightSprite;
     private int baseLine;
     private int animationSpeed;
-    private BufferedImage[] moveSpritesRight;
-    private BufferedImage[] moveSpritesLeft;
-    private BufferedImage[] fightSpritesRight;
-    private BufferedImage[] fightSpritesLeft;
-    private BufferedImage[] dieSpritesRight;
-    private BufferedImage[] dieSpritesLeft;
+    private VolatileImage[] moveSpritesRight;
+    private VolatileImage[] moveSpritesLeft;
+    private VolatileImage[] fightSpritesRight;
+    private VolatileImage[] fightSpritesLeft;
+    private VolatileImage[] dieSpritesRight;
+    private VolatileImage[] dieSpritesLeft;
 
     public UnitGraphicsModel() {}
 
@@ -28,17 +28,17 @@ public class UnitGraphicsModel {
 
     public int getAnimationSpeed() { return animationSpeed; }
 
-    public BufferedImage[] getMoveSpritesRight() { return moveSpritesRight; }
+    public VolatileImage[] getMoveSpritesRight() { return moveSpritesRight; }
 
-    public BufferedImage[] getMoveSpritesLeft() { return moveSpritesLeft; }
+    public VolatileImage[] getMoveSpritesLeft() { return moveSpritesLeft; }
 
-    public BufferedImage[] getFightSpritesRight() { return fightSpritesRight; }
+    public VolatileImage[] getFightSpritesRight() { return fightSpritesRight; }
 
-    public BufferedImage[] getFightSpritesLeft() { return fightSpritesLeft; }
+    public VolatileImage[] getFightSpritesLeft() { return fightSpritesLeft; }
 
-    public BufferedImage[] getDieSpritesRight() { return dieSpritesRight; }
+    public VolatileImage[] getDieSpritesRight() { return dieSpritesRight; }
 
-    public BufferedImage[] getDieSpritesLeft() { return dieSpritesLeft; }
+    public VolatileImage[] getDieSpritesLeft() { return dieSpritesLeft; }
 
     /* Setters */
     public void setWidthSprite(int widthSprite) { this.widthSprite = widthSprite; }
@@ -51,23 +51,23 @@ public class UnitGraphicsModel {
         this.animationSpeed = animationSpeedMs / EngineV2.MS_PER_UPDATE;
     }
 
-    public void setMoveSpritesRight(BufferedImage[] moveSpritesRight) {
+    public void setMoveSpritesRight(VolatileImage[] moveSpritesRight) {
         this.moveSpritesRight = moveSpritesRight;
         this.moveSpritesLeft = createMirror(moveSpritesRight);
     }
 
-    public void setFightSpritesRight(BufferedImage[] fightSpritesRight) {
+    public void setFightSpritesRight(VolatileImage[] fightSpritesRight) {
         this.fightSpritesRight = fightSpritesRight;
         this.fightSpritesLeft = createMirror(fightSpritesRight);
     }
 
-    public void setDieSpritesRight(BufferedImage[] dieSpritesRight) {
+    public void setDieSpritesRight(VolatileImage[] dieSpritesRight) {
         this.dieSpritesRight = dieSpritesRight;
         this.dieSpritesLeft = createMirror(dieSpritesRight);
     }
 
-    private BufferedImage[] createMirror(BufferedImage[] src) {
-        BufferedImage[] dst = new BufferedImage[src.length];
+    private VolatileImage[] createMirror(VolatileImage[] src) {
+        VolatileImage[] dst = new VolatileImage[src.length];
         System.arraycopy(src, 0, dst, 0, src.length);
         ImageUtils.flipHorizontally(dst);
         return dst;

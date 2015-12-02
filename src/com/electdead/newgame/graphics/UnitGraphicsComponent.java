@@ -6,7 +6,7 @@ import com.electdead.newgame.gameobjectV2.BasicGameObject;
 import com.electdead.newgame.gamestate.battle.BattleStateSettings;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
+import java.awt.image.VolatileImage;
 
 public class UnitGraphicsComponent implements GraphicsComponent {
     private BasicGameObject gameObject;
@@ -48,7 +48,7 @@ public class UnitGraphicsComponent implements GraphicsComponent {
                 }
             }
 
-            BufferedImage image = gameObject.action.animation.get();
+            VolatileImage image = gameObject.action.animation.get();
             g2.drawImage(image, spriteX(), spriteY(), null);
         }
     }
