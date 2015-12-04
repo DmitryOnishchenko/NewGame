@@ -7,7 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainApp {
-    public static final int WIDTH = 1280;
+    //TODO background res (temporary)
+    public static final int WIDTH = 1278;
     public static final int HEIGHT = 720;
 
     public static void main(String[] args) {
@@ -17,6 +18,7 @@ public class MainApp {
                 AbstractGameLoop engine = new EngineV2(WIDTH, HEIGHT);
                 gameWindow.add(engine);
                 gameWindow.setUndecorated(true);
+                gameWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
                 gameWindow.setVisible(true);
                 engine.start();
             }

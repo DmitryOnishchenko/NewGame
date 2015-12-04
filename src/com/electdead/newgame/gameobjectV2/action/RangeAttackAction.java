@@ -63,6 +63,9 @@ public class RangeAttackAction extends Action {
         newDir.normalize();
         arrow.moveDir = newDir;
 
-//        DevGameState.grid.add(arrow);
+//        synchronized (BattleState.gameObjects) {
+//            BattleState.gameObjects.add(arrow);
+//        }
+//        gameObject.cell.add(arrow);
     }
 }

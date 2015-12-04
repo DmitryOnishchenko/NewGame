@@ -41,7 +41,7 @@ public class EngineV2 extends AbstractGameLoop {
     private UpdateThread updateThread;
     private RenderThread renderThread;
     private InputHandlerThread inputHandlerThread;
-    private static ExecutorService service = Executors.newFixedThreadPool(32);
+    private static ExecutorService service = Executors.newFixedThreadPool(1);
 
     /* Stats */
     private boolean SHOW_INFO = true;
@@ -83,16 +83,16 @@ public class EngineV2 extends AbstractGameLoop {
         return frame;
     }
 
-    private Graphics2D getGraphics(VolatileImage frame) {
-        Graphics2D g2 = frame.createGraphics();
-        //TODO Test rendering hints
+//    private Graphics2D getGraphics(VolatileImage frame) {
+//        Graphics2D g2 = frame.createGraphics();
+//        //TODO Test rendering hints
 		/* Test for text */
 //		g2Next.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		/* Test for shapes */
 //        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        return g2;
-    }
+//        return g2;
+//    }
 
     public static EngineInputHandler getInputHandler() {
         return inputHandler;

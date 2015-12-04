@@ -43,7 +43,7 @@ public class Cell {
     }
 
     private void updateObjects(Collection<BasicGameObject> collection) {
-        Iterator<BasicGameObject> iterator = collection.iterator();
+        Iterator<BasicGameObject> iterator = allObjects.iterator();
         while (iterator.hasNext()) {
             BasicGameObject gameObject = iterator.next();
             if (gameObject.delete) {
@@ -89,9 +89,10 @@ public class Cell {
     }
 
     public void clear() {
-        leftUnits.clear();
-        rightUnits.clear();
-        projectiles.clear();
+        allObjects.clear();
+//        leftUnits.clear();
+//        rightUnits.clear();
+//        projectiles.clear();
     }
 
     public List<BasicGameObject> getAllObjects() {
@@ -190,7 +191,7 @@ public class Cell {
 //    }
 
     public int sizeUnits() {
-        return leftUnits.size() + rightUnits.size();
+        return allObjects.size();
     }
 }
 

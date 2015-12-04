@@ -35,6 +35,7 @@ public class Grid {
     }
 
     public void clear() {
+        size = 0;
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLS; col++) {
                 cells[row][col].clear();
@@ -104,15 +105,15 @@ public class Grid {
     }
 
     public int size() {
-//        int amount = 0;
-//        for (int row = 0; row < ROWS; row++) {
-//            for (int col = 0; col < COLS; col++) {
-//                amount += cells[row][col].sizeUnits();
-//            }
-//        }
+        int amount = 0;
+        for (int row = 0; row < ROWS; row++) {
+            for (int col = 0; col < COLS; col++) {
+                amount += cells[row][col].sizeUnits();
+            }
+        }
 
-//        return amount;
-        return size;
+        return amount;
+//        return size;
     }
 
     public void checkDelete() {

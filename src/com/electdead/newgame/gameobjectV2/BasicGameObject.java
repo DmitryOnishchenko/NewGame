@@ -7,6 +7,7 @@ import com.electdead.newgame.gameobject.Side;
 import com.electdead.newgame.gameobjectV2.action.Action;
 import com.electdead.newgame.gameobjectV2.action.DieAction;
 import com.electdead.newgame.gameobjectV2.ai.AiContainer;
+import com.electdead.newgame.gamestate.battle.BattleState;
 import com.electdead.newgame.graphics.GraphicsComponent;
 import com.electdead.newgame.graphics.UnitGraphicsComponent;
 import com.electdead.newgame.graphics.UnitGraphicsModel;
@@ -17,8 +18,11 @@ import com.electdead.newgame.physics.Vector2F;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
+import java.util.Random;
 
 public class BasicGameObject extends GameObject<BasicGameObject> {
     public static int ID = 1;
@@ -65,7 +69,7 @@ public class BasicGameObject extends GameObject<BasicGameObject> {
         this.currentState.pos   = new Vector2F(x, y);
         this.nextState.pos      = this.currentState.pos.copy();
 
-        init();
+//        init();
     }
 
     @Override
@@ -171,8 +175,25 @@ public class BasicGameObject extends GameObject<BasicGameObject> {
             aiContainer.locked = true;
             action = new DieAction(this, action);
             action.checkAnimationDir();
-//            drawBlood();
+            drawBlood();
         }
+    }
+
+    private void drawBlood() {
+        Random r = new Random();
+        AffineTransform at = new AffineTransform();
+        at.translate(currentState.pos.x, currentState.pos.y);
+        at.rotate(Math.PI / r.nextInt(4));
+        at.scale(r.nextDouble() + 0.2, r.nextDouble() + 0.2);
+
+        for (int i = 0; i < 5; i++) {
+            BattleState.backgroundGraphics.drawImage(randomBlood(), at, null);
+        }
+    }
+
+    public BufferedImage randomBlood() {
+        int index = (int) (Math.random() * 7);
+        return BattleState.bloodSprites.get(index);
     }
 
     @Override

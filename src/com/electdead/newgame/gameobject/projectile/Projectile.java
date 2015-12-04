@@ -2,17 +2,17 @@ package com.electdead.newgame.gameobject.projectile;
 
 import com.electdead.newgame.assets.Assets;
 import com.electdead.newgame.engine.EngineV2;
-import com.electdead.newgame.gameobject.GameObjectOld;
 import com.electdead.newgame.gameobject.GameObjectType;
 import com.electdead.newgame.gameobject.Side;
-import com.electdead.newgame.gameobject.unit.UnitOld;
 import com.electdead.newgame.gameobjectV2.BasicGameObject;
 import com.electdead.newgame.physics.Vector2F;
 
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
-public class Projectile extends GameObjectOld {
+public class Projectile extends BasicGameObject {
     public Vector2F moveDir;
     public int damage;
     private int attackRange = 4;
@@ -36,17 +36,18 @@ public class Projectile extends GameObjectOld {
 
     public Projectile(String name, Side side, GameObjectType type,
                       int damage, float x, float y, BasicGameObject gameObject) {
-        super(name, side, type, x, y);
+//        super(name, side, type, x, y);
+        super(name, x, y);
         this.damage = damage;
-        tail = pos.copy();
+        tail = currentState.pos.copy();
         zLevel = 0;
-        startPoint = pos.copy();
+        startPoint = currentState.pos.copy();
 
         //TEST
         this.target = gameObject;
-        double distance = Vector2F.getDistanceOnScreen(pos, gameObject.currentState.pos);
+        double distance = Vector2F.getDistanceOnScreen(currentState.pos, gameObject.currentState.pos);
         float speedY = (float) -(distance / 100 * baseAcc);
-        float shift = pos.y - gameObject.currentState.pos.y;
+        float shift = currentState.pos.y - gameObject.currentState.pos.y;
         float k = shift / 36f;
         speedY -= k;
 
@@ -58,7 +59,7 @@ public class Projectile extends GameObjectOld {
 
     //TODO update projectile
     @Override
-    public void update() {
+    public void updateAction() {
         if (finished) {
             if (delayTimer++ > deleteTrigger) {
                 delete = true;
@@ -66,8 +67,8 @@ public class Projectile extends GameObjectOld {
             return;
         }
 
-        tail.x = pos.x + moveDir.x * length;
-        tail.y = pos.y + moveDir.y * length;
+        tail.x = currentState.pos.x + moveDir.x * length;
+        tail.y = currentState.pos.y + moveDir.y * length;
 
 //        if (side == Side.LEFT_ARMY) {
 //            System.out.println();
@@ -75,46 +76,41 @@ public class Projectile extends GameObjectOld {
 
         //TEST
         float shiftX = sp.x;
-        pos.x += shiftX;
+        currentState.pos.x += shiftX;
         tail.x += shiftX;
 
         float shiftY = sp.y;
-        pos.y += shiftY;
+        currentState.pos.y += shiftY;
         tail.y += shiftY;
 
         sp.y += acc;
 
         //TODO maxDistance
-        double length = Vector2F.getDistanceOnScreen(startPoint, pos);
+        double length = Vector2F.getDistanceOnScreen(startPoint, currentState.pos);
         if (length > maxDistance) {
 //            delete = true;
             finished = true;
             return;
         }
 
-//        getCell().move(this);
-//
-//        List<CellOld> cells = DevGameState.grid.getCellIfIntersectsWith(new Line2D.Float(pos.x, pos.y, tail.x, tail.y));
+        cell.move(this);
+
+//        List<Cell> cells = BattleState.grid.getCellIfIntersectsWith(
+//                new Line2D.Float(currentState.pos.x, currentState.pos.y, tail.x, tail.y));
 //
 //        for (CellOld cell : cells) {
-//            List<GameObjectOld> list;
-//            if (side == Side.LEFT_ARMY) {
-//                list = cell.getRightUnits();
-//            } else list = cell.getLeftUnits();
-//
-//            for (GameObjectOld obj : list) {
-//                UnitOld enemy = (UnitOld) obj;
-//                if (intersects(this, enemy)) {
-//                    enemy.takeDamage(damage);
-////                    delete = true;
-////                    System.out.println(pos.y + " | " + target.pos.y);
-//                    delete = true;
-//                    break;
-//                }
-//            }
+            List<BasicGameObject> list = cell.getAllUnits();
+
+            for (BasicGameObject enemy : list) {
+                if (side != enemy.side && intersects(this, enemy)) {
+                    enemy.takeDamage(damage);
+                    delete = true;
+                    break;
+                }
+            }
 //        }
 
-        checkDelete();
+//        checkDelete();
     }
 
 //    @Override
@@ -126,21 +122,22 @@ public class Projectile extends GameObjectOld {
     @Override
     public void render(Graphics2D g2, double deltaTime) {
 //        g2.setPaint(side == Side.LEFT_ARMY ? Color.CYAN : Color.YELLOW);
-//        Ellipse2D.Float ell = new Ellipse2D.Float();
-//        ell.setFrameFromCenter(pos.x, pos.y, pos.x + attackRange, pos.y + attackRange);
-//        g2.fill(ell);
+        Ellipse2D.Float ell = new Ellipse2D.Float();
+        ell.setFrameFromCenter(currentState.pos.x, currentState.pos.y, currentState.pos.x + attackRange, currentState.pos.y + attackRange);
+        g2.fill(ell);
+
         g2.setPaint(Color.BLACK);
         g2.drawLine(x(), y(), (int) tail.x, (int) tail.y);
     }
 
-    public boolean intersects(Projectile projectile, UnitOld enemy) {
-        if (!enemy.isAlive()) {
+    public boolean intersects(Projectile projectile, BasicGameObject enemy) {
+        if (!enemy.currentState.isAlive()) {
             return false;
         }
 
-        Vector2F center = enemy.pos;
+        Vector2F center = enemy.currentState.pos;
         float radius = (float) enemy.hitBox.width / 2;
-        Vector2F head = projectile.pos;
+        Vector2F head = projectile.currentState.pos;
         Vector2F tail = projectile.tail;
 
         float x01 = head.x - center.x;

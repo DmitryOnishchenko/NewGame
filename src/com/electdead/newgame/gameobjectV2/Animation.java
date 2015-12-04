@@ -26,18 +26,28 @@ public class Animation {
 
     public void next() {
         if (++animationTimer >= action.object.gModel.getAnimationSpeed()) {
-//            currentSprite++;
-            if (++currentSprite == sprites.length) {
+            currentSprite++;
+            if (currentSprite == sprites.length) {
                 currentSprite = 0;
-                if (action.needFullAnimation)
+                if (action.needFullAnimation) {
                     action.animationFinished();
+                }
             }
             animationTimer = 0;
         }
     }
 
     public VolatileImage get() {
-        return sprites[currentSprite];
+        try {
+            if (currentSprite == sprites.length) {
+                currentSprite = sprites.length - 1;
+            }
+            return sprites[currentSprite];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            e.printStackTrace();
+            System.out.println("Return 0 index");
+            return sprites[0];
+        }
     }
 
     public void swapDir(float unitDirX) {

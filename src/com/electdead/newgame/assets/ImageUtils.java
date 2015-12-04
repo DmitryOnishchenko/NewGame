@@ -72,7 +72,8 @@ public class ImageUtils {
             AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
             tx.translate(-image.getWidth(null), 0);
             AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
-//            sprites[i] = op.filter(image, null);
+            BufferedImage img = op.filter(image.getSnapshot(), null);
+            sprites[i] = convertToVolatileImage(img);
         }
     }
 

@@ -42,9 +42,10 @@ public class UnitGraphicsComponent implements GraphicsComponent {
                     g2.setPaint(Color.RED);
                     g2.draw(gameObject.attackBox);
                 }
-                if (gameObject.target != null && BattleStateSettings.DEBUG_TARGET) {
+                BasicGameObject target = gameObject.target;
+                if (target != null && BattleStateSettings.DEBUG_TARGET) {
                     g2.setPaint(gameObject.side == Side.LEFT_ARMY ? Color.YELLOW : Color.BLUE);
-                    g2.drawLine(gameObject.x(), gameObject.y(), gameObject.target.x(), gameObject.target.y());
+                    g2.drawLine(gameObject.x(), gameObject.y(), target.x(), target.y());
                 }
             }
 
