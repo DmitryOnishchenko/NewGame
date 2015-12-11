@@ -50,8 +50,8 @@ public class RangeAttackAction extends Action {
     }
 
     public void spawnProjectile(UnitOld unit) {
-//        Projectile arrow = new Projectile("woodenArrow", object.side, object.x(), object.y());
-//        Projectile arrow = new Projectile("woodenArrow", unit.side, GameObjectType.PROJECTILE,
+//        ProjectileOld arrow = new ProjectileOld("woodenArrow", object.side, object.x(), object.y());
+//        ProjectileOld arrow = new ProjectileOld("woodenArrow", unit.side, GameObjectType.PROJECTILE,
 //                unit.damage, unit.x(), unit.y(), unit.target);
 //
 //        Vector2F newDir = unit.target.pos.copy();

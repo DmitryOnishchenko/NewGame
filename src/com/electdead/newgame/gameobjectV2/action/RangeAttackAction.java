@@ -1,9 +1,10 @@
 package com.electdead.newgame.gameobjectV2.action;
 
 import com.electdead.newgame.gameobject.GameObjectType;
-import com.electdead.newgame.gameobject.projectile.Projectile;
+import com.electdead.newgame.gameobject.projectile.ProjectileOld;
 import com.electdead.newgame.gameobjectV2.BasicGameObject;
 import com.electdead.newgame.gameobjectV2.ai.AiComponent;
+import com.electdead.newgame.gamestate.battle.BattleState;
 import com.electdead.newgame.physics.Vector2F;
 
 public class RangeAttackAction extends Action {
@@ -25,8 +26,8 @@ public class RangeAttackAction extends Action {
 
             checkAnimationDir();
             //TODO spawn projectile
-//            spawnProjectile(object);
-            object.target.takeDamage(object.currentState.damage);
+            spawnProjectile(object);
+//            object.target.takeDamage(object.currentState.damage);
         }
     }
 
@@ -54,8 +55,8 @@ public class RangeAttackAction extends Action {
     }
 
     public void spawnProjectile(BasicGameObject gameObject) {
-//        Projectile arrow = new Projectile("woodenArrow", object.side, object.x(), object.y());
-        Projectile arrow = new Projectile("woodenArrow", gameObject.side, GameObjectType.PROJECTILE,
+//        ProjectileOld arrow = new ProjectileOld("woodenArrow", object.side, object.x(), object.y());
+        ProjectileOld arrow = new ProjectileOld("woodenArrow", gameObject.side, GameObjectType.PROJECTILE,
                 gameObject.currentState.damage, gameObject.x(), gameObject.y(), gameObject.target);
 
         Vector2F newDir = gameObject.target.currentState.pos.copy();
@@ -63,9 +64,6 @@ public class RangeAttackAction extends Action {
         newDir.normalize();
         arrow.moveDir = newDir;
 
-//        synchronized (BattleState.gameObjects) {
-//            BattleState.gameObjects.add(arrow);
-//        }
-//        gameObject.cell.add(arrow);
+        BattleState.addObject(arrow);
     }
 }

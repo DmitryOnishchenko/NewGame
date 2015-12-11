@@ -22,7 +22,7 @@ public class BattleState extends AbstractGameState {
 
     /* Game objects */
     public static List<GameObject> gameObjects = new FastRemoveArrayList<>(10_000);
-    private List<GameObject> renderObjects = new FastRemoveArrayList<>(10_000);
+    public static List<BasicGameObject> addObjectsQueue = new FastRemoveArrayList<>(100);
 
     /* Input handler */
     private BattleStateInputHandler inputHandler = new BattleStateInputHandler(this);
@@ -64,7 +64,7 @@ public class BattleState extends AbstractGameState {
 //            createDemoUnit("Human Soldier", 200, 500);
 //            createDemoUnit("Human Soldier", /*BattleStateSettings.leftSpawnPoint*/ 100, getRandomPointY());
         }
-        createDemoUnit("Human Archer", 400, 500);
+        createDemoUnit("Human Archer", 100, 500);
         createDemoUnit("Orc Archer", 600, 500);
     }
 
@@ -99,6 +99,15 @@ public class BattleState extends AbstractGameState {
 //        }
         grid.update();
 
+        synchronized (addObjectsQueue) {
+            for (BasicGameObject gameObject : addObjectsQueue) {
+                synchronized (gameObjects) {
+                    gameObjects.add(gameObject);
+                }
+                grid.add(gameObject);
+            }
+            addObjectsQueue.clear();
+        }
 
         if (BattleStateSettings.DEMO_MODE) {
             //TODO run demo
@@ -163,10 +172,11 @@ public class BattleState extends AbstractGameState {
         BasicGameObject gameObject = new BasicGameObject(name, x, y);
         gameObject.init();
 
-        synchronized (gameObjects) {
-            gameObjects.add(gameObject);
-        }
-        grid.add(gameObject);
+        addObject(gameObject);
+    }
+
+    public static void addObject(BasicGameObject gameObject) {
+        addObjectsQueue.add(gameObject);
     }
 
     public void startNewGame() {

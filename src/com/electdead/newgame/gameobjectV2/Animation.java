@@ -44,7 +44,7 @@ public class Animation {
             }
             return sprites[currentSprite];
         } catch (ArrayIndexOutOfBoundsException e) {
-            e.printStackTrace();
+            // TODO Animation: fix ArrayIndexOutOfBoundsException
             System.out.println("Return 0 index");
             return sprites[0];
         }
