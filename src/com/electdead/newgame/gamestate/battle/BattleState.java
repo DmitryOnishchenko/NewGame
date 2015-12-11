@@ -60,12 +60,14 @@ public class BattleState extends AbstractGameState {
         backgroundGraphics.drawImage(backgroundLevelZero, 0, 0, null);
 
         /* Test */
-        for (int i = 0; i < 5_00; i++) {
-//            createDemoUnit("Human Soldier", 200, 500);
-//            createDemoUnit("Human Soldier", /*BattleStateSettings.leftSpawnPoint*/ 100, getRandomPointY());
-        }
-        createDemoUnit("Human Archer", 100, 500);
+//        for (int i = 0; i < 5_00; i++) {
+//        }
+//        createDemoUnit("Human Soldier", 200, 500);
+//        createDemoUnit("Orc Soldier", 300, 500);
+//        createDemoUnit("Orc Soldier", 600, 500);
+        createDemoUnit("Human Archer", 300, 500);
         createDemoUnit("Orc Archer", 600, 500);
+//        createDemoUnit("Orc Archer", 620, 500);
     }
 
     @Override
@@ -176,7 +178,9 @@ public class BattleState extends AbstractGameState {
     }
 
     public static void addObject(BasicGameObject gameObject) {
-        addObjectsQueue.add(gameObject);
+        synchronized (addObjectsQueue) {
+            addObjectsQueue.add(gameObject);
+        }
     }
 
     public void startNewGame() {

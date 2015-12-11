@@ -7,7 +7,7 @@ import java.awt.image.VolatileImage;
 
 public class Animation {
     public Action action;
-    private int currentSprite = 0;
+    public int currentSprite = 0;
     private int animationTimer;
     public VolatileImage[] sprites;
     private VolatileImage[] spritesRight;

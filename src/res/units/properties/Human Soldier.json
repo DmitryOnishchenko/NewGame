@@ -2,11 +2,10 @@
   "name": "Human Soldier",
   "side": "LEFT_ARMY",
   "race": "Human",
-  "maxHp": 100,
+  "maxHp": 140,
   "armor": 10,
   "damage": 30,
   "defaultSpeed": 48,
-  "defaultSpeedTemp": 48,
   "spawnPrice": 40,
   "pricePerHead": 10,
 

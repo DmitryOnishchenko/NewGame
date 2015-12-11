@@ -6,7 +6,7 @@ public class MeleeAttackAction extends Action {
     public MeleeAttackAction(AiComponent aiComponent, boolean needFullAnimation) {
         super(aiComponent, needFullAnimation);
         actionTrigger = (int) (object.pModel.getAttackSpeed());
-        actionDelay = actionTrigger;
+        actionDelay = actionTrigger / 2;
     }
 
     @Override

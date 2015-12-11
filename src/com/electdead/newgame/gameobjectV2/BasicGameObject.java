@@ -166,6 +166,8 @@ public class BasicGameObject extends GameObject<BasicGameObject> {
     }
 
     public void takeDamage(int damage) {
+        if (!currentState.isAlive()) return;
+
         int total = damage - currentState.armor;
         if (total <= 0) total = 1;
         currentState.currHp -= total;
