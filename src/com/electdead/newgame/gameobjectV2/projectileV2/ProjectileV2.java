@@ -89,13 +89,11 @@ public class ProjectileV2 extends BasicGameObject {
 
     public boolean intersects(ProjectileV2 projectileV2, BasicGameObject enemy) {
         if (!enemy.currentState.isAlive()) {
-            int enemySprite = enemy.action.animation.currentSprite;
-//            int animationLength = enemy.action.animation.sprites.length;
-
-//            if (enemySprite > animationLength / 4 || enemySprite == 0) {
-            if (enemySprite > 3 || enemySprite == 0) {
+            // TODO add multiarrow hit
+//            int enemySprite = enemy.action.animation.currentSprite;
+//            if (enemySprite > 3 || enemySprite == 0) {
                 return false;
-            }
+//            }
         }
 
         Vector2F center = enemy.currentState.pos;
