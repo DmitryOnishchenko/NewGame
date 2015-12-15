@@ -3,10 +3,10 @@ package com.electdead.newgame.input;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class EngineInputHandler extends KeyAdapter {
+public class KeyInputHandler extends KeyAdapter {
 	private volatile KeyEvent keyEvent;
 	
-	public EngineInputHandler() {}
+	public KeyInputHandler() {}
 	
 	@Override
 	public void keyPressed(KeyEvent event) {

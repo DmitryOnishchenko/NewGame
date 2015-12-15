@@ -8,10 +8,12 @@ import com.electdead.newgame.gameobjectV2.GameObject;
 import com.electdead.newgame.gamestate.AbstractGameState;
 import com.electdead.newgame.gamestate.GameStateManager;
 import com.electdead.newgame.input.BattleStateInputHandler;
+import com.electdead.newgame.input.MouseInputHandler;
 import com.electdead.newgame.main.MainApp;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.*;
 import java.util.List;
@@ -171,7 +173,17 @@ public class BattleState extends AbstractGameState {
     }
 
     public void createDemoUnit(String name, float x, float y) {
-        BasicGameObject gameObject = new BasicGameObject(name, x, y);
+        float x2 = x;
+        float y2 = y;
+
+        MouseEvent event = MouseInputHandler.getEvent();
+        if (event != null) {
+            Point p = event.getPoint();
+            x2 = p.x;
+            y2 = p.y;
+        }
+
+        BasicGameObject gameObject = new BasicGameObject(name, x2, y2);
         gameObject.init();
 
         addObject(gameObject);

@@ -2,7 +2,8 @@ package com.electdead.newgame.engine;
 
 import com.electdead.newgame.gameobjectV2.GameObject;
 import com.electdead.newgame.gamestate.GameStateManager;
-import com.electdead.newgame.input.EngineInputHandler;
+import com.electdead.newgame.input.KeyInputHandler;
+import com.electdead.newgame.input.MouseInputHandler;
 
 import java.awt.*;
 import java.awt.image.VolatileImage;
@@ -31,7 +32,8 @@ public class EngineV2 extends AbstractGameLoop {
 
     /* Managers */
     private GameStateManager gsm;
-    private static EngineInputHandler inputHandler;
+    private static KeyInputHandler keyInputHandler;
+    private static MouseInputHandler mouseInputHandler;
 
     /* Game objects */
     public static List<GameObject> gameObjects;
@@ -54,8 +56,11 @@ public class EngineV2 extends AbstractGameLoop {
     }
 
     public void init() {
-        inputHandler = new EngineInputHandler();
-        addKeyListener(inputHandler);
+        keyInputHandler = new KeyInputHandler();
+        addKeyListener(keyInputHandler);
+
+        mouseInputHandler = new MouseInputHandler();
+        addMouseMotionListener(mouseInputHandler);
 
         gsm = new GameStateManager();
         gsm.init();
@@ -94,14 +99,14 @@ public class EngineV2 extends AbstractGameLoop {
 //        return g2;
 //    }
 
-    public static EngineInputHandler getInputHandler() {
-        return inputHandler;
+    public static KeyInputHandler getKeyInputHandler() {
+        return keyInputHandler;
     }
 
     @Override
     public void processInput() {
-        gsm.processInput(inputHandler.getKeyEvent());
-        inputHandler.clear();
+        gsm.processInput(keyInputHandler.getKeyEvent());
+        keyInputHandler.clear();
     }
 
     @Override

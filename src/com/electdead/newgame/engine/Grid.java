@@ -44,13 +44,15 @@ public class Grid {
     }
 
     public void add(BasicGameObject gameObject) {
-        int row = (gameObject.y() - INDENT_TOP) / CELL_SIZE;
+        // TODO fix
+        int y = gameObject.y() - INDENT_TOP;
+
+        int row = y < 0 ? -1 : y / CELL_SIZE;
         int col = (gameObject.x() - INDENT_LEFT) / CELL_SIZE;
 
         if (row >= ROWS || col >= COLS ||
             row <= -1 || col <= -1) {
             gameObject.delete = true;
-//            BattleStateSettings.NEED_DELETE = true;
             return;
         }
 
