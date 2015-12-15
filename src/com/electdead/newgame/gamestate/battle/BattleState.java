@@ -67,8 +67,8 @@ public class BattleState extends AbstractGameState {
 //        createDemoUnit("Human Soldier", 200, 500);
 //        createDemoUnit("Orc Soldier", 300, 500);
 //        createDemoUnit("Orc Soldier", 600, 500);
-        createDemoUnit("Human Archer", 300, 500);
-        createDemoUnit("Orc Archer", 600, 500);
+//        createDemoUnit("Human Archer", 300, 500);
+//        createDemoUnit("Orc Archer", 600, 500);
 //        createDemoUnit("Orc Archer", 620, 500);
     }
 

@@ -2,7 +2,7 @@ package com.electdead.newgame.gamestate;
 
 import com.electdead.newgame.gamestate.battle.BattleState;
 
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.Stack;
 
@@ -11,9 +11,11 @@ public class GameStateManager {
 
     public GameStateManager() {
         states = new Stack<>();
-//        states.push(new DevGameState(this));
-//        states.push(new MultiTestState(this));
         states.push(new BattleState(this));
+    }
+
+    public Stack<AbstractGameState> getStates() {
+        return states;
     }
 
     public void init() {

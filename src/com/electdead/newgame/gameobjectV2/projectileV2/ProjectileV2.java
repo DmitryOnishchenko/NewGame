@@ -20,6 +20,7 @@ public class ProjectileV2 extends BasicGameObject {
 
     private Vector2F startPoint;
     private int maxDistance;
+    private float acc = 0;
 
     public ProjectileV2(String name, BasicGameObject gameObject) {
         super(name, gameObject.x(), gameObject.y());
@@ -84,7 +85,20 @@ public class ProjectileV2 extends BasicGameObject {
         g2.setPaint(Color.BLACK);
         int x = x();
         int y = y();
-        g2.drawLine(x, y - 12, (int) (tail.x), (int) (tail.y) - 12);
+
+        //TODO test
+        double distance = Vector2F.getDistanceOnScreen(startPoint, currentState.pos);
+        if (distance < (maxDistance - 50) / 2) {
+            acc += 0.33f;
+        } else {
+            acc -= 0.33f;
+        }
+
+        if (finished) {
+            acc = 0;
+        }
+
+        g2.drawLine(x, y - 12 - (int) acc, (int) (tail.x), (int) (tail.y) - 12 - (int) acc);
     }
 
     public boolean intersects(ProjectileV2 projectileV2, BasicGameObject enemy) {
